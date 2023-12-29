@@ -47,8 +47,14 @@ public class Utente {
     @Column(nullable = false)
     private boolean premium;
 
-    @OneToMany(mappedBy="idSegnalatore")
+    @OneToMany(mappedBy="Segnalatore")
     private List<Segnalazione> segnalazioni;
+
+    @OneToMany(mappedBy="Valutato")
+    private List<ValutazioneUtente> valutazioniRicevute;
+
+    @OneToMany(mappedBy="Valutatore")
+    private List<ValutazioneUtente> valutazioniEffettuate;
 
     @Override
     public String toString() {

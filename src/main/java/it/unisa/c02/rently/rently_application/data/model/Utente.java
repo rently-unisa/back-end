@@ -4,7 +4,8 @@ package it.unisa.c02.rently.rently_application.data.model;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import org.antlr.v4.runtime.misc.NotNull;
+
+import java.util.List;
 
 @Entity
 @Getter
@@ -25,6 +26,7 @@ public class Utente {
     }
 
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name="utente_id")
     private long id;
 
     @Column(length=100, unique=true, nullable = false)
@@ -44,6 +46,9 @@ public class Utente {
 
     @Column(nullable = false)
     private boolean premium;
+
+    @OneToMany(mappedBy="idSegnalatore")
+    private List<Segnalazione> segnalazioni;
 
     @Override
     public String toString() {

@@ -48,17 +48,17 @@ public class Noleggio {
 
     @ManyToOne
     @JoinColumn(referencedColumnName = "utente_id")
-    @OnDelete(action = OnDeleteAction.CASCADE)
+    @OnDelete(action = OnDeleteAction.SET_NULL)
     private Utente noleggiante;
 
     @ManyToOne
     @JoinColumn(referencedColumnName = "utente_id")
-    @OnDelete(action = OnDeleteAction.CASCADE)
+    @OnDelete(action = OnDeleteAction.SET_NULL)
     private Utente noleggiatore;
 
     @ManyToOne
     @JoinColumn(referencedColumnName = "annuncio_id")
-    @OnDelete(action = OnDeleteAction.CASCADE)
+    @OnDelete(action = OnDeleteAction.SET_NULL)
     private Annuncio annuncio;
 
     public enum EnumStato {

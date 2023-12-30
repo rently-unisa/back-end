@@ -32,7 +32,7 @@ public class Segnalazione {
 
     @ManyToOne
     @JoinColumn(referencedColumnName = "utente_id")
-    @OnDelete(action = OnDeleteAction.CASCADE)
+    @OnDelete(action = OnDeleteAction.SET_NULL)
     private Utente segnalatore;
 
     @Override

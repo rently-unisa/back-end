@@ -34,12 +34,12 @@ public class Messaggio {
 
     @ManyToOne
     @JoinColumn(referencedColumnName = "utente_id")
-    @OnDelete(action = OnDeleteAction.CASCADE)
+    @OnDelete(action = OnDeleteAction.SET_NULL)
     private Utente mittente;
 
     @ManyToOne
     @JoinColumn(referencedColumnName = "utente_id")
-    @OnDelete(action = OnDeleteAction.CASCADE)
+    @OnDelete(action = OnDeleteAction.SET_NULL)
     private Utente destinatario;
 
     @Override

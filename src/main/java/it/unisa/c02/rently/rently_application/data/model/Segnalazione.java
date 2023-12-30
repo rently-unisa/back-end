@@ -17,7 +17,7 @@ public class Segnalazione {
     public Segnalazione(EnumTipo tipo, String contenuto, Utente segnalatore) {
         this.tipo = tipo;
         this.contenuto = contenuto;
-        Segnalatore = segnalatore;
+        this.segnalatore = segnalatore;
     }
 
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
@@ -34,14 +34,14 @@ public class Segnalazione {
     @ManyToOne
     @JoinColumn(name = "utente_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
-    private Utente Segnalatore;
+    private Utente segnalatore;
 
     @Override
     public String toString() {
         return "Segnalazione{" +
                 "tipo=" + tipo +
                 ", contenuto='" + contenuto + '\'' +
-                ", Segnalatore=" + Segnalatore +
+                ", Segnalatore=" + segnalatore +
                 '}';
     }
 

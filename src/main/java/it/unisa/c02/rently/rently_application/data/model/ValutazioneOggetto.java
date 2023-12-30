@@ -9,17 +9,11 @@ import org.hibernate.annotations.OnDeleteAction;
 @Entity
 @Getter
 @Setter
-public class ValutazioneUtente {
+public class ValutazioneOggetto {
 
-    public ValutazioneUtente() {
+    public ValutazioneOggetto() {
     }
 
-    public ValutazioneUtente(int voto, String descrizione, Utente valutato, Utente valutatore) {
-        this.voto = voto;
-        this.descrizione = descrizione;
-        this.valutato = valutato;
-        this.valutatore = valutatore;
-    }
 
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
@@ -32,9 +26,9 @@ public class ValutazioneUtente {
 
     @Column(nullable = false)
     @ManyToOne
-    @JoinColumn(name = "utente_id")
+    @JoinColumn(name = "annuncio_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
-    private Utente valutato;
+    private Annuncio annuncio;
 
     @Column(nullable = false)
     @ManyToOne
@@ -44,11 +38,11 @@ public class ValutazioneUtente {
 
     @Override
     public String toString() {
-        return "ValutazioneUtente{" +
+        return "ValutazioneOggetto{" +
                 "voto=" + voto +
                 ", descrizione='" + descrizione + '\'' +
-                ", Valutato=" + valutato +
-                ", Valutatore=" + valutatore +
+                ", annuncio=" + annuncio +
+                ", valutatore=" + valutatore +
                 '}';
     }
 }

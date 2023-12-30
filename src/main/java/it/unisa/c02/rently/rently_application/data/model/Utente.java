@@ -10,19 +10,25 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-
 public class Utente {
 
     public Utente() {
     }
 
-    public Utente(String username, String nome, String cognome, String email, String password, boolean premium) {
+    public Utente(String username, String nome, String cognome, String email, String password, boolean premium, List<Segnalazione> segnalazioni, List<ValutazioneUtente> valutazioniRicevute, List<ValutazioneUtente> valutazioniEffettuate, List<ValutazioneOggetto> valutazioniOggettoEffettuate, List<Annuncio> annunci, List<Noleggio> noleggiPresi, List<Noleggio> noleggiDati) {
         this.username = username;
         this.nome = nome;
         this.cognome = cognome;
         this.email = email;
         this.password = password;
         this.premium = premium;
+        this.segnalazioni = segnalazioni;
+        this.valutazioniRicevute = valutazioniRicevute;
+        this.valutazioniEffettuate = valutazioniEffettuate;
+        this.valutazioniOggettoEffettuate = valutazioniOggettoEffettuate;
+        this.annunci = annunci;
+        this.noleggiPresi = noleggiPresi;
+        this.noleggiDati = noleggiDati;
     }
 
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
@@ -47,14 +53,26 @@ public class Utente {
     @Column(nullable = false)
     private boolean premium;
 
-    @OneToMany(mappedBy="Segnalatore")
+    @OneToMany(mappedBy="segnalatore")
     private List<Segnalazione> segnalazioni;
 
-    @OneToMany(mappedBy="Valutato")
+    @OneToMany(mappedBy="valutato")
     private List<ValutazioneUtente> valutazioniRicevute;
 
-    @OneToMany(mappedBy="Valutatore")
+    @OneToMany(mappedBy="valutatore")
     private List<ValutazioneUtente> valutazioniEffettuate;
+
+    @OneToMany(mappedBy="valutatore")
+    private List<ValutazioneOggetto> valutazioniOggettoEffettuate;
+
+    @OneToMany(mappedBy="utente")
+    private List<Annuncio> annunci;
+
+    @OneToMany(mappedBy="noleggiante")
+    private List<Noleggio> noleggiPresi;
+
+    @OneToMany(mappedBy="noleggiatore")
+    private List<Noleggio> noleggiDati;
 
     @Override
     public String toString() {

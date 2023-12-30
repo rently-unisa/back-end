@@ -30,15 +30,13 @@ public class ValutazioneUtente {
     @Column(length=255, nullable = false)
     private String descrizione;
 
-    @Column(nullable = false)
     @ManyToOne
-    @JoinColumn(name = "utente_id")
+    @JoinColumn(referencedColumnName = "utente_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Utente valutato;
 
-    @Column(nullable = false)
     @ManyToOne
-    @JoinColumn(name = "utente_id")
+    @JoinColumn(referencedColumnName = "utente_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Utente valutatore;
 
@@ -47,8 +45,8 @@ public class ValutazioneUtente {
         return "ValutazioneUtente{" +
                 "voto=" + voto +
                 ", descrizione='" + descrizione + '\'' +
-                ", Valutato=" + valutato +
-                ", Valutatore=" + valutatore +
+                ", valutato=" + valutato +
+                ", valutatore=" + valutatore +
                 '}';
     }
 }

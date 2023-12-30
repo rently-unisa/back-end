@@ -32,15 +32,13 @@ public class Messaggio {
     @Column(nullable = false)
     private java.sql.Timestamp orarioInvio;
 
-    @Column(nullable = false)
     @ManyToOne
-    @JoinColumn(name = "utente_id")
+    @JoinColumn(referencedColumnName = "utente_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Utente mittente;
 
-    @Column(nullable = false)
     @ManyToOne
-    @JoinColumn(name = "utente_id")
+    @JoinColumn(referencedColumnName = "utente_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Utente destinatario;
 
@@ -49,8 +47,8 @@ public class Messaggio {
         return "Messaggio{" +
                 "descrizione='" + descrizione + '\'' +
                 ", orarioInvio=" + orarioInvio +
-                ", Mittente=" + mittente +
-                ", Destinatario=" + destinatario +
+                ", mittente=" + mittente +
+                ", destinatario=" + destinatario +
                 '}';
     }
 }

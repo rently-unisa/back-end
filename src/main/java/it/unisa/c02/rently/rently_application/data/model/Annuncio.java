@@ -71,9 +71,8 @@ public class Annuncio {
     @Column(nullable = false)
     private Date dataFine;
 
-    @Column(nullable = false)
     @ManyToOne
-    @JoinColumn(name = "utente_id")
+    @JoinColumn(referencedColumnName = "utente_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Utente utente;
 

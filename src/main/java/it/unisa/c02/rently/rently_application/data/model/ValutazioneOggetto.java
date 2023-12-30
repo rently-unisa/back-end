@@ -14,7 +14,6 @@ public class ValutazioneOggetto {
     public ValutazioneOggetto() {
     }
 
-
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
@@ -24,15 +23,13 @@ public class ValutazioneOggetto {
     @Column(length=255, nullable = false)
     private String descrizione;
 
-    @Column(nullable = false)
     @ManyToOne
-    @JoinColumn(name = "annuncio_id")
+    @JoinColumn(referencedColumnName = "annuncio_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Annuncio annuncio;
 
-    @Column(nullable = false)
     @ManyToOne
-    @JoinColumn(name = "utente_id")
+    @JoinColumn(referencedColumnName = "utente_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Utente valutatore;
 

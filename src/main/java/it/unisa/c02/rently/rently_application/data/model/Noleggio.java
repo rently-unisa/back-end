@@ -46,24 +46,20 @@ public class Noleggio {
     @Column(nullable = false)
     private Date dataFine;
 
-    @Column(nullable = false)
     @ManyToOne
-    @JoinColumn(name = "utente_id")
+    @JoinColumn(referencedColumnName = "utente_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Utente noleggiante;
 
-    @Column(nullable = false)
     @ManyToOne
-    @JoinColumn(name = "utente_id")
+    @JoinColumn(referencedColumnName = "utente_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Utente noleggiatore;
 
-    @Column(nullable = false)
     @ManyToOne
-    @JoinColumn(name = "annuncio_id")
+    @JoinColumn(referencedColumnName = "annuncio_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Annuncio annuncio;
-
 
     public enum EnumStato {
         RICHIESTA, INIZIO, FINE, CONCLUSO

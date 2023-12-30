@@ -30,9 +30,8 @@ public class Segnalazione {
     @Column(length=255, nullable = false)
     private String contenuto;
 
-    @Column(nullable = false)
     @ManyToOne
-    @JoinColumn(name = "utente_id")
+    @JoinColumn(referencedColumnName = "utente_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Utente segnalatore;
 
@@ -41,7 +40,7 @@ public class Segnalazione {
         return "Segnalazione{" +
                 "tipo=" + tipo +
                 ", contenuto='" + contenuto + '\'' +
-                ", Segnalatore=" + segnalatore +
+                ", segnalatore=" + segnalatore +
                 '}';
     }
 

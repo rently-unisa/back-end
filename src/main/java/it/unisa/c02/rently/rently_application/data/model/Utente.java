@@ -1,10 +1,13 @@
 package it.unisa.c02.rently.rently_application.data.model;
 
 
+import it.unisa.c02.rently.rently_application.commons.psw.PswCoder;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.Setter;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 @Entity
@@ -15,20 +18,24 @@ public class Utente {
     public Utente() {
     }
 
-    public Utente(String username, String nome, String cognome, String email, String password, boolean premium, List<Segnalazione> segnalazioni, List<ValutazioneUtente> valutazioniRicevute, List<ValutazioneUtente> valutazioniEffettuate, List<ValutazioneOggetto> valutazioniOggettoEffettuate, List<Annuncio> annunci, List<Noleggio> noleggiPresi, List<Noleggio> noleggiDati) {
+
+    public Utente(String username, String nome, String cognome, String email, String password, boolean premium) {
         this.username = username;
         this.nome = nome;
         this.cognome = cognome;
         this.email = email;
         this.password = password;
         this.premium = premium;
-        this.segnalazioni = segnalazioni;
-        this.valutazioniRicevute = valutazioniRicevute;
-        this.valutazioniEffettuate = valutazioniEffettuate;
-        this.valutazioniOggettoEffettuate = valutazioniOggettoEffettuate;
-        this.annunci = annunci;
-        this.noleggiPresi = noleggiPresi;
-        this.noleggiDati = noleggiDati;
+    }
+
+    public Utente(long id, String username, String nome, String cognome, String email, String password, boolean premium) {
+        this.id = id;
+        this.username = username;
+        this.nome = nome;
+        this.cognome = cognome;
+        this.email = email;
+        this.password = password;
+        this.premium = premium;
     }
 
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
@@ -77,12 +84,23 @@ public class Utente {
     @Override
     public String toString() {
         return "Utente{" +
-                "username='" + username + '\'' +
+                "id=" + id +
+                ", username='" + username + '\'' +
                 ", nome='" + nome + '\'' +
                 ", cognome='" + cognome + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", premium=" + premium +
                 '}';
+    }
+
+    public void setPassword(String password) {
+        PswCoder coder = new PswCoder();
+        try {
+            this.password = coder.codificaPassword(password);
+
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
     }
 }

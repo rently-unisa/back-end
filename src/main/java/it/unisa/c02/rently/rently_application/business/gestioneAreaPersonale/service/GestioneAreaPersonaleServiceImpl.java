@@ -22,12 +22,10 @@ public class GestioneAreaPersonaleServiceImpl implements GestioneAreaPersonaleSe
     }
 
     @Override
-    public UtenteDTO getDatiPrivati(long id) {
+    public Utente getDatiPrivati(long id) {
         Optional<Utente> optional = gestioneAreaPersonaleDAO.findById(id);
         if(optional.isPresent()) {
-            Utente utente = optional.get();
-            UtenteDTO DTO = new UtenteDTO(id,utente.getUsername(),utente.getNome(), utente.getCognome(),utente.getEmail(), utente.getPassword(), utente.isPremium());
-            return DTO;
+            return optional.get();
         }
         else
             return null;

@@ -32,7 +32,7 @@ public class GestioneAreaPersonaleController {
     @PostMapping("/modifica-dati-utente")
     public String modifcaUtente(UtenteDTO utente, Model model, @RequestParam("nuovaPsw") String nuova, @RequestParam("confermaPsw")String conferma) throws NoSuchAlgorithmException {
 
-        UtenteDTO daModificare = gestioneAreaPersonaleService.getDatiPrivati(utente.getId());
+        Utente daModificare = gestioneAreaPersonaleService.getDatiPrivati(utente.getId());
 
         if (!utente.getPassword().isEmpty() && !nuova.isEmpty() && !conferma.isEmpty()) {
 

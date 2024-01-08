@@ -11,29 +11,24 @@ import java.security.NoSuchAlgorithmException;
 
 @RestController
 @RequiredArgsConstructor
-@SessionAttributes("loggedUser")
 @RequestMapping("/gestione-area-personale")
 public class GestioneAreaPersonaleController {
 
-    private final GestioneAreaPersonaleService gestioneAreaPersonaleService;
+    private final GestioneAreaPersonaleService AreaPersonaleService;
     @GetMapping("/profilo-utente")
-    public String profiloUtente(Model model) {
+    public Utente profiloUtente() {
 
-        Utente utente = (Utente) model.getAttribute("loggedUser");
+        Utente utente= new Utente(); //Prendi utente dalla sessione
         if(utente!= null){
-
-            model.addAttribute("utente", utente);
-            return "area-personale";
+            return AreaPersonaleService.getDatiPrivati(utente.getId());
         }
-
-        return "Ok"; // alla pagina di login
+        return null;
     }
 
     @PostMapping("/modifica-dati-utente")
-    public String modifcaUtente(UtenteDTO utente, Model model, @RequestParam("nuovaPsw") String nuova, @RequestParam("confermaPsw")String conferma) throws NoSuchAlgorithmException {
+    public Utente modifcaUtente(UtenteDTO utente, @RequestParam("nuovaPsw") String nuova, @RequestParam("confermaPsw")String conferma) throws NoSuchAlgorithmException {
 
-        Utente daModificare = gestioneAreaPersonaleService.getDatiPrivati(utente.getId());
-
+        Utente daModificare = AreaPersonaleService.getDatiPrivati(utente.getId()); //Prendi utente dalla sessione
         if (!utente.getPassword().isEmpty() && !nuova.isEmpty() && !conferma.isEmpty()) {
 
                 PswCoder coder = new PswCoder();
@@ -41,16 +36,11 @@ public class GestioneAreaPersonaleController {
 
                 if (daModificare.getPassword().equals(vecchiaPassword) && nuova.equals(conferma)) {
                     utente.setPassword(nuova);
-                } else {
-                    return "modifica-utente";
-                }
-
+                } else
+                    return null;
         }
-
         Utente modificato= new Utente(utente.getId(),utente.getUsername(),utente.getNome(), utente.getCognome(),utente.getEmail(), utente.getPassword(), utente.isPremium());
-        gestioneAreaPersonaleService.updateUtente(modificato);
-        model.addAttribute("loggedUser", modificato);
 
-        return "areaPersonale";
+        return AreaPersonaleService.updateUtente(modificato);
     }
 }

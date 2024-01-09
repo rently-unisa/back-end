@@ -5,7 +5,7 @@ import it.unisa.c02.rently.rently_application.data.model.Annuncio;
 import java.util.Date;
 import java.util.List;
 
-public interface RicercaService {
+public interface GestioneRicercaService {
 
     List<Annuncio> searchByCategoria(String categoria);
     List<Annuncio> searchByCondizione(String condizione);

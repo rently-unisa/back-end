@@ -1,6 +1,6 @@
 package it.unisa.c02.rently.rently_application.business.gestioneRicerca.controller;
 
-import it.unisa.c02.rently.rently_application.business.gestioneRicerca.service.RicercaService;
+import it.unisa.c02.rently.rently_application.business.gestioneRicerca.service.GestioneRicercaService;
 import it.unisa.c02.rently.rently_application.data.model.Annuncio;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -11,9 +11,9 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/ricerca")
-public class RicercaController {
+public class GestioneRicercaController {
 
-    private final RicercaService ricercaService;
+    private final GestioneRicercaService ricercaService;
 
     @GetMapping("/byCategoria")
     public List<Annuncio> searchByCategoria(@RequestParam String categoria) {

@@ -1,7 +1,6 @@
 package it.unisa.c02.rently.rently_application.business.gestioneRicerca.service;
 
 import it.unisa.c02.rently.rently_application.data.dao.GestioneAnnuncioDAO;
-import it.unisa.c02.rently.rently_application.data.dao.GestioneAnnuncioDAO;
 import it.unisa.c02.rently.rently_application.data.model.Annuncio;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -11,7 +10,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class RicercaServiceImpl implements RicercaService {
+public class GestioneRicercaServiceImpl implements GestioneRicercaService {
 
     private final GestioneAnnuncioDAO annuncioDAO;
 

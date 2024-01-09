@@ -1,9 +1,12 @@
 package it.unisa.c02.rently.rently_application.commons.psw;
 
+import org.springframework.stereotype.Component;
+
 import java.nio.charset.StandardCharsets;
 import java.security.NoSuchAlgorithmException;
 import java.security.MessageDigest;
 
+@Component
 public class PswCoder {
 
     public PswCoder() {

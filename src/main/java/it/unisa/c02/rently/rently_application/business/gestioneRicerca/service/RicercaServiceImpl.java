@@ -27,7 +27,7 @@ public class RicercaServiceImpl implements RicercaService {
 
     @Override
     public List<Annuncio> searchByData(Date inizio, Date fine) {
-        return annuncioDAO.findByDataBetween(inizio, fine);
+        return annuncioDAO.findByDataFineBetween(inizio, fine);
     }
 
     @Override
@@ -42,7 +42,7 @@ public class RicercaServiceImpl implements RicercaService {
 
     @Override
     public List<Annuncio> searchAnnunciPremium() {
-        return annuncioDAO.findByPremiumTrue();
+        return annuncioDAO.findAllPremium();
     }
 }
 

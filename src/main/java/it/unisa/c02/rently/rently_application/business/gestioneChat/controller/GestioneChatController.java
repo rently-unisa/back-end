@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/gestione-chat")
+@RequestMapping("/api/gestione-chat")
 public class GestioneChatController {
 
 }

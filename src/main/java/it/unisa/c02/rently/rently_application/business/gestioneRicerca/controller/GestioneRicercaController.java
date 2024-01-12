@@ -10,27 +10,27 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/ricerca")
+@RequestMapping("/api/ricerca")
 public class GestioneRicercaController {
 
     private final GestioneRicercaService ricercaService;
 
-    @GetMapping("/byCategoria")
+    @GetMapping("/categoria")
     public List<Annuncio> searchByCategoria(@RequestParam String categoria) {
         return ricercaService.searchByCategoria(categoria);
     }
 
-    @GetMapping("/byCondizione")
+    @GetMapping("/condizione")
     public List<Annuncio> searchByCondizione(@RequestParam String condizione) {
         return ricercaService.searchByCondizione(condizione);
     }
 
-    @GetMapping("/byData")
+    @GetMapping("/data")
     public List<Annuncio> searchByData(@RequestParam Date inizio, @RequestParam Date fine) {
         return ricercaService.searchByData(inizio, fine);
     }
 
-    @GetMapping("/byDescrizione")
+    @GetMapping("/descrizione")
     public List<Annuncio> searchByDescrizione(@RequestParam String descrizione) {
         return ricercaService.searchByDescrizione(descrizione);
     }

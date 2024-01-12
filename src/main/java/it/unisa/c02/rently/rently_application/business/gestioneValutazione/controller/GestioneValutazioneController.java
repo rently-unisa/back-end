@@ -14,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/api/valutazione")
 public class GestioneValutazioneController {
 
     private final GestioneValutazioneService ValutazioneService;

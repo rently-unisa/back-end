@@ -14,7 +14,7 @@ import java.util.Collections;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/autenticazione")
+@RequestMapping("/api/autenticazione")
 public class GestioneAutenticazioneController {
 
     private final GestioneAutenticazioneService autenticazioneService;

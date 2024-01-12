@@ -18,7 +18,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/gestione-annuncio")
+@RequestMapping("/api/gestione-annuncio")
 public class GestioneAnnuncioController {
 
     @Autowired
@@ -30,7 +30,7 @@ public class GestioneAnnuncioController {
     private final GestioneAnnuncioService gestioneAnnuncioService;
     private final GestioneAreaPersonaleService gestioneAreaPersonaleService;
     private final String uploadsPath = "annunci";
-    @PostMapping("/add")
+    @PostMapping("/aggiungi-annuncio")
     public ResponseEntity<String> addAnnuncio(@RequestPart("model") AnnuncioDTO data,
                                 @RequestPart("images") MultipartFile[] files) {
 

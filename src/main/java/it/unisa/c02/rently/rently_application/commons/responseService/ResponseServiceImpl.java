@@ -53,4 +53,21 @@ public class ResponseServiceImpl implements ResponseService {
     public ResponseEntity<String> InternalError() {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("");
     }
+
+    @Override
+    public ResponseEntity<String> Unauthorized(Object data) {
+        String json = "";
+        try {
+            json = new JsonHelper().getJsonFromObject(data);
+        }
+        catch (Exception ex)
+        {
+        }
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(json);
+    }
+
+    @Override
+    public ResponseEntity<String> Unauthorized() {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("");
+    }
 }

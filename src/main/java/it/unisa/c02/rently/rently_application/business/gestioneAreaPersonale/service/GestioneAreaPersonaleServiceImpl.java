@@ -31,7 +31,15 @@ public class GestioneAreaPersonaleServiceImpl implements GestioneAreaPersonaleSe
             return null;
     }
 
-
+    @Override
+    public Utente findByUsername(Utente utente) {
+        Optional<Utente> optional = gestioneAreaPersonaleDAO.findByUsername(utente.getUsername());
+        if(optional.isPresent()) {
+            return optional.get();
+        }
+        else
+            return null;
+    }
 
 
 }

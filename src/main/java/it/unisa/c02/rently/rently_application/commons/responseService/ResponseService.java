@@ -7,5 +7,7 @@ public interface ResponseService {
     public ResponseEntity<String> Ok();
     public ResponseEntity<String> InternalError(Object data);
     public ResponseEntity<String> InternalError();
+    public ResponseEntity<String> Unauthorized(Object data);
+    public ResponseEntity<String> Unauthorized();
 
 }

@@ -71,7 +71,7 @@ public class GestioneAutenticazioneController {
             Utente item = new Utente();
             item.setUsername(data.getUsername());
             item.setEmail(data.getEmail());
-            item.setPassword(data.getPassword());
+            item.setPassword( new PswCoder().codificaPassword(data.getPassword()));
             item.setNome(data.getNome());
             item.setCognome(data.getCognome());
             autenticazioneService.signUp(item);

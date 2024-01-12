@@ -34,7 +34,7 @@ public class GestioneAutenticazioneServiceImpl implements GestioneAutenticazione
     @Override
     public void signUp(Utente utente) throws NoSuchAlgorithmException {
         if (!checkEmail(utente.getEmail()) && !checkUsername(utente.getUsername())) {
-            utente.setPassword(pswCoder.codificaPassword(utente.getPassword()));
+            utente.setPassword(utente.getPassword());
             autenticazioneDAO.save(utente);
         }
     }

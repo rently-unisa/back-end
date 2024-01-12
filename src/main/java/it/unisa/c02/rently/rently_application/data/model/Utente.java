@@ -93,14 +93,4 @@ public class Utente {
                 ", premium=" + premium +
                 '}';
     }
-
-    public void setPassword(String password) {
-        PswCoder coder = new PswCoder();
-        try {
-            this.password = coder.codificaPassword(password);
-
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
-    }
 }

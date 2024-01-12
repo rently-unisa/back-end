@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -30,6 +31,35 @@ public class GestioneAnnuncioController {
     private final GestioneAnnuncioService gestioneAnnuncioService;
     private final GestioneAreaPersonaleService gestioneAreaPersonaleService;
     private final String uploadsPath = "annunci";
+
+    @GetMapping("/visualliza-annuncio")
+    public ResponseEntity<String> getAnnuncio(@RequestParam long id)
+    {
+        try {
+            Annuncio item = gestioneAnnuncioService.getAnnuncio(id).orElse(null);
+            return responseService.Ok(item);
+
+        }
+        catch (Exception ex) {
+            return responseService.InternalError();
+        }
+    }
+
+    @GetMapping("/visualliza-annunci-utente")
+    public ResponseEntity<String> getAnnunciUtente(@RequestParam long id)
+    {
+        try {
+            Utente u = gestioneAreaPersonaleService.getDatiPrivati(id);
+            List<Annuncio> list = gestioneAnnuncioService.findAllByUtente(u);
+
+            return responseService.Ok(list);
+        }
+        catch (Exception ex) {
+            return responseService.InternalError();
+        }
+    }
+
+
     @PostMapping("/aggiungi-annuncio")
     public ResponseEntity<String> addAnnuncio(@RequestPart("model") AnnuncioDTO data,
                                 @RequestPart("images") MultipartFile[] files) {

@@ -18,7 +18,7 @@ public class NoleggioService {
 
     private final GestioneNoleggioService noleggioService;
 
-    @Scheduled(fixedDelay = 1000)
+    @Scheduled(fixedDelay = 30000)
     public void updateFineNoleggio() throws InterruptedException {
         try {
             java.sql.Date date = new java.sql.Date(Calendar.getInstance().getTime().getTime());

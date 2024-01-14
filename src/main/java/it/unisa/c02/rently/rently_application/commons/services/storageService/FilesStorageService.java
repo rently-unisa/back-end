@@ -1,4 +1,4 @@
-package it.unisa.c02.rently.rently_application.commons.storageService;
+package it.unisa.c02.rently.rently_application.commons.services.storageService;
 
 import java.nio.file.Path;
 import java.util.stream.Stream;

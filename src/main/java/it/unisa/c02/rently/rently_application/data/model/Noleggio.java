@@ -62,7 +62,7 @@ public class Noleggio {
     private Annuncio annuncio;
 
     public enum EnumStato {
-        RICHIESTA, ACCETTATA, RIFIUTATA, INIZIO, FINE, CONCLUSO
+        RICHIESTA, ACCETTATA, RIFIUTATA, INIZIO, IN_CORSO, FINE, CONCLUSO
     }
 
     @Override

@@ -1,12 +1,10 @@
-package it.unisa.c02.rently.rently_application.commons.storageService;
+package it.unisa.c02.rently.rently_application.commons.services.storageService;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Random;
 import java.util.stream.Stream;
 
 import org.springframework.core.io.Resource;

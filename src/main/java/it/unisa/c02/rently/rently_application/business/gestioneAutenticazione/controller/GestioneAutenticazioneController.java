@@ -2,12 +2,11 @@ package it.unisa.c02.rently.rently_application.business.gestioneAutenticazione.c
 
 import it.unisa.c02.rently.rently_application.business.gestioneAutenticazione.service.GestioneAutenticazioneService;
 import it.unisa.c02.rently.rently_application.commons.psw.PswCoder;
-import it.unisa.c02.rently.rently_application.commons.responseService.ResponseService;
+import it.unisa.c02.rently.rently_application.commons.services.responseService.ResponseService;
 import it.unisa.c02.rently.rently_application.data.dto.ResponseDTO;
 import it.unisa.c02.rently.rently_application.data.model.Utente;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;

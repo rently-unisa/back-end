@@ -1,4 +1,4 @@
-package it.unisa.c02.rently.rently_application.commons.responseService;
+package it.unisa.c02.rently.rently_application.commons.services.responseService;
 
 import org.springframework.http.ResponseEntity;
 

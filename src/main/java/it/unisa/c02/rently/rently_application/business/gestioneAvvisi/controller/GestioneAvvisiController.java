@@ -3,7 +3,7 @@ import it.unisa.c02.rently.rently_application.business.gestioneAnnuncio.service.
 import it.unisa.c02.rently.rently_application.business.gestioneAreaPersonale.service.GestioneAreaPersonaleService;
 import it.unisa.c02.rently.rently_application.business.gestioneAvvisi.service.GestioneAvvisiService;
 import it.unisa.c02.rently.rently_application.commons.mail.EmailService;
-import it.unisa.c02.rently.rently_application.commons.responseService.ResponseService;
+import it.unisa.c02.rently.rently_application.commons.services.responseService.ResponseService;
 import it.unisa.c02.rently.rently_application.data.dto.SegnalazioneDTO;
 import it.unisa.c02.rently.rently_application.data.model.*;
 import lombok.RequiredArgsConstructor;

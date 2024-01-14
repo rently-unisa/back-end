@@ -64,8 +64,10 @@ public class GestioneNoleggioServiceImpl implements GestioneNoleggioService {
         return noleggioDAO.findById(id).orElse(null);
     }
 
+
     @Override
-    public boolean checkFineNoleggio(Noleggio noleggio) {
-        return false;
+    public List<Noleggio> checkFineNoleggio(Date dateNow) {
+        return noleggioDAO.checkFineNoleggio(dateNow);
     }
+
 }

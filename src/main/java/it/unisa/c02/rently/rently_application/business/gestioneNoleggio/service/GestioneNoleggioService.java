@@ -20,5 +20,5 @@ public interface GestioneNoleggioService {
 
 
     Noleggio getNoleggio(long id);
-    boolean checkFineNoleggio(Noleggio noleggio);
+    List<Noleggio> checkFineNoleggio(Date dateNow);
 }

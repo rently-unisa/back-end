@@ -1,8 +1,8 @@
 package it.unisa.c02.rently.rently_application.business.gestioneAnnuncio.controller;
 import it.unisa.c02.rently.rently_application.business.gestioneAnnuncio.service.GestioneAnnuncioService;
 import it.unisa.c02.rently.rently_application.business.gestioneAreaPersonale.service.GestioneAreaPersonaleService;
-import it.unisa.c02.rently.rently_application.commons.responseService.ResponseService;
-import it.unisa.c02.rently.rently_application.commons.storageService.FilesStorageService;
+import it.unisa.c02.rently.rently_application.commons.services.responseService.ResponseService;
+import it.unisa.c02.rently.rently_application.commons.services.storageService.FilesStorageService;
 import it.unisa.c02.rently.rently_application.data.dto.AnnuncioDTO;
 import it.unisa.c02.rently.rently_application.data.model.Annuncio;
 import it.unisa.c02.rently.rently_application.data.model.Utente;
@@ -15,7 +15,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor

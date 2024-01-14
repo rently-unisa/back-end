@@ -26,5 +26,4 @@ public interface GestioneNoleggioDAO extends JpaRepository<Noleggio, Long> {
     @Query("SELECT t.id FROM Noleggio t where (t.stato = 'IN_CORSO') and (t.dataFine <= ?1)")
     List<Noleggio> checkFineNoleggio (Date dateNow);
 
-    List<Noleggio> getFine (Date dateNow);
 }

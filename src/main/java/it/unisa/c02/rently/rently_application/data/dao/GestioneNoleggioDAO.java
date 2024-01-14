@@ -6,17 +6,19 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
 @Repository
 public interface GestioneNoleggioDAO extends JpaRepository<Noleggio, Long> {
 
-    Noleggio findById(long id);
+
     List<Noleggio> findByNoleggiante(Utente noleggiante);
     List<Noleggio> findByNoleggiatore(Utente noleggiatore);
     @Query("select n from Utente u, Noleggio n WHERE u = n.noleggiante and n.stato = 'RICHIESTA'")
     List<Noleggio> findRichiesteByNoleggiante(Utente noleggiante);
     @Query("select n from Utente u, Noleggio n WHERE u = n.noleggiatore and n.stato = 'RICHIESTA'")
     List<Noleggio> findRichiesteByNoleggiatore(Utente noleggiatore);
+    @Query("SELECT n FROM Noleggio n where (n.annuncio=?1) and ((n.dataInizio>=?2 and n.dataInizio<=?3) or (n.dataFine<= ?3 and n.dataFine>=?2 )) and n.stato != 'CONCLUSO'")
+    List<Noleggio> checkDisponibilita (long id_annuncio, Date data_inizio, Date data_fine);
 }

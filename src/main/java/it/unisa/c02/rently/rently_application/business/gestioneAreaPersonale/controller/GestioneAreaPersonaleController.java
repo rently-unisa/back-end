@@ -11,7 +11,7 @@ import java.security.NoSuchAlgorithmException;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/gestione-area-personale")
+@RequestMapping("/api/area-personale")
 public class GestioneAreaPersonaleController {
 
     private final GestioneAreaPersonaleService AreaPersonaleService;

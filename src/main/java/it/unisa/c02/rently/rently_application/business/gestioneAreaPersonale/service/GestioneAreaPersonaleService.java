@@ -7,5 +7,6 @@ public interface GestioneAreaPersonaleService {
 
     Utente updateUtente(Utente utente);
     Utente getDatiPrivati(long id);
+    Utente findByUsername(Utente utente);
 
 }

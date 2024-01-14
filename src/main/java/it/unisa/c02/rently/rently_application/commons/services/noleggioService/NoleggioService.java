@@ -22,7 +22,12 @@ public class NoleggioService {
     public void updateFineNoleggio() throws InterruptedException {
         try {
             java.sql.Date date = new java.sql.Date(Calendar.getInstance().getTime().getTime());
-            noleggioService.checkFineNoleggio(date);
+            List<Noleggio> list = noleggioService.checkFineNoleggio(date);
+
+            for(Noleggio item:list) {
+                item.setStato(Noleggio.EnumStato.FINE);
+                noleggioService.updateStatoNoleggio(item);
+            }
         } catch (Exception ex)
         {
             ;

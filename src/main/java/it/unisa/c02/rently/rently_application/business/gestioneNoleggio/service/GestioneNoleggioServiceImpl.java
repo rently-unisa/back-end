@@ -48,10 +48,9 @@ public class GestioneNoleggioServiceImpl implements GestioneNoleggioService {
     }
 
     @Override
-    public boolean updateStatoNoleggio(Noleggio noleggio) {
-        return false;
+    public Noleggio updateStatoNoleggio(Noleggio noleggio) {
+        return noleggioDAO.save(noleggio);
     }
-
 
 
     @Override

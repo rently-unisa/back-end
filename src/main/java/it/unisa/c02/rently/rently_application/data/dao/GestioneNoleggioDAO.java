@@ -23,7 +23,8 @@ public interface GestioneNoleggioDAO extends JpaRepository<Noleggio, Long> {
     @Query("SELECT n FROM Noleggio n where (n.annuncio=?1) and ((n.dataInizio>=?2 and n.dataInizio<=?3) or (n.dataFine<= ?3 and n.dataFine>=?2 )) and n.stato != 'CONCLUSO'")
     List<Noleggio> checkDisponibilita (long id_annuncio, Date data_inizio, Date data_fine);
 
-    @Modifying(clearAutomatically = true)
-    @Query("UPDATE Noleggio n SET n.stato = 'FINE' WHERE n.id IN (SELECT t.id FROM Noleggio t where (t.stato = 'IN_CORSO') and (t.dataFine <= ?1))")
+    @Query("SELECT t.id FROM Noleggio t where (t.stato = 'IN_CORSO') and (t.dataFine <= ?1)")
     List<Noleggio> checkFineNoleggio (Date dateNow);
+
+    List<Noleggio> getFine (Date dateNow);
 }

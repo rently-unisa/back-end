@@ -15,9 +15,8 @@ public interface GestioneNoleggioService {
     List<Noleggio> getRichiesteByNoleggiatore(Utente noleggiatore);
     boolean addNoleggio(Noleggio noleggio);
     boolean deleteNoleggio(Noleggio noleggio);
-    boolean updateStatoNoleggio(Noleggio noleggio);
+    Noleggio updateStatoNoleggio(Noleggio noleggio);
     List<Noleggio>  checkDisponibilita(long id_annuncio, Date inizio, Date fine);
-
 
     Noleggio getNoleggio(long id);
     List<Noleggio> checkFineNoleggio(Date dateNow);

@@ -43,7 +43,7 @@ public class GestioneAnnuncioServiceImpl implements GestioneAnnuncioService {
 
     @Override
     public List<Annuncio> findAllByUtente(Utente utente) {
-        return null;
+        return gestioneAnnuncioDAO.findByUtente(utente);
     }
 
 

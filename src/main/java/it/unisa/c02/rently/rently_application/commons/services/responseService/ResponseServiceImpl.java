@@ -1,20 +1,9 @@
-package it.unisa.c02.rently.rently_application.commons.responseService;
+package it.unisa.c02.rently.rently_application.commons.services.responseService;
 
 import it.unisa.c02.rently.rently_application.commons.jsonHelper.JsonHelper;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.util.FileSystemUtils;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.stream.Stream;
 
 @Service
 public class ResponseServiceImpl implements ResponseService {

@@ -1,13 +1,12 @@
 package it.unisa.c02.rently.rently_application.business.gestioneNoleggio.service;
 
 import it.unisa.c02.rently.rently_application.data.dao.GestioneNoleggioDAO;
-import it.unisa.c02.rently.rently_application.data.model.Annuncio;
 import it.unisa.c02.rently.rently_application.data.model.Noleggio;
 import it.unisa.c02.rently.rently_application.data.model.Utente;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
 @Service
@@ -49,22 +48,25 @@ public class GestioneNoleggioServiceImpl implements GestioneNoleggioService {
     }
 
     @Override
-    public boolean updateStatoNoleggio(Noleggio noleggio) {
-        return false;
+    public Noleggio updateStatoNoleggio(Noleggio noleggio) {
+        return noleggioDAO.save(noleggio);
     }
 
+
     @Override
-    public boolean checkDisponibilita(Annuncio annuncio, Date inizio, Date fine) {
-        return false;
+    public List<Noleggio> checkDisponibilita(long id_annuncio, Date inizio, Date fine) {
+        return noleggioDAO.checkDisponibilita( id_annuncio, inizio, fine);
     }
 
     @Override
     public Noleggio getNoleggio(long id) {
-        return noleggioDAO.findById(id);
+        return noleggioDAO.findById(id).orElse(null);
     }
 
+
     @Override
-    public boolean checkFineNoleggio(Noleggio noleggio) {
-        return false;
+    public List<Noleggio> checkFineNoleggio(Date dateNow) {
+        return noleggioDAO.checkFineNoleggio(dateNow);
     }
+
 }

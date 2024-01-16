@@ -4,7 +4,7 @@ import it.unisa.c02.rently.rently_application.data.model.Annuncio;
 import it.unisa.c02.rently.rently_application.data.model.Noleggio;
 import it.unisa.c02.rently.rently_application.data.model.Utente;
 
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
 public interface GestioneNoleggioService {
@@ -15,8 +15,9 @@ public interface GestioneNoleggioService {
     List<Noleggio> getRichiesteByNoleggiatore(Utente noleggiatore);
     boolean addNoleggio(Noleggio noleggio);
     boolean deleteNoleggio(Noleggio noleggio);
-    boolean updateStatoNoleggio(Noleggio noleggio);
-    boolean checkDisponibilita(Annuncio annuncio, Date inizio, Date fine);
+    Noleggio updateStatoNoleggio(Noleggio noleggio);
+    List<Noleggio>  checkDisponibilita(long id_annuncio, Date inizio, Date fine);
+
     Noleggio getNoleggio(long id);
-    boolean checkFineNoleggio(Noleggio noleggio);
+    List<Noleggio> checkFineNoleggio(Date dateNow);
 }

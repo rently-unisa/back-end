@@ -17,9 +17,9 @@ import java.util.List;
 @RequestMapping("/api/valutazione")
 public class GestioneValutazioneController {
 
-    private final GestioneValutazioneService ValutazioneService;
-    private final GestioneAreaPersonaleService AreaPersonaleService;
-    private final GestioneAnnuncioService AnnuncioService;
+    private final GestioneValutazioneService valutazioneService;
+    private final GestioneAreaPersonaleService areaPersonaleService;
+    private final GestioneAnnuncioService annuncioService;
     @PostMapping("/aggiungi-valutazione-utente")
     public ValutazioneUtente aggiungiValutazioneUtente(@RequestBody ValutazioneDTO valutazioneDTO) {
 
@@ -27,11 +27,11 @@ public class GestioneValutazioneController {
         ValutazioneUtente valutazione = new ValutazioneUtente();
         valutazione.setVoto(valutazioneDTO.getVoto());
         valutazione.setDescrizione(valutazioneDTO.getDescrizione());
-        valutazione.setValutato(AreaPersonaleService.getDatiPrivati(valutazioneDTO.getValutato()));
+        valutazione.setValutato(areaPersonaleService.getDatiPrivati(valutazioneDTO.getValutato()));
         //set del valutatore con l'utente della sessione
 
         if(valutazione.getValutato()!= null && valutazione.getValutatore()!= null){
-            return ValutazioneService.addValutazioneUtente(valutazione);
+            return valutazioneService.addValutazioneUtente(valutazione);
         }
         else
             return null;
@@ -40,9 +40,9 @@ public class GestioneValutazioneController {
     @GetMapping("/visualizza-valutazioni-utente")
     public List<ValutazioneUtente> visualizzaValutazioniUtente(@RequestParam long valutato){
 
-        Utente utente = AreaPersonaleService.getDatiPrivati(valutato);
+        Utente utente = areaPersonaleService.getDatiPrivati(valutato);
         if(utente!= null){
-            return ValutazioneService.findAllByUtente(utente);
+            return valutazioneService.findAllByUtente(utente);
         }
         else
             return null;
@@ -51,9 +51,9 @@ public class GestioneValutazioneController {
     @GetMapping("/visualizza-media-valutazioni-utente")
     public double visualizzaMediaValutazioniUtente(@RequestParam long valutato){
 
-        Utente utente = AreaPersonaleService.getDatiPrivati(valutato);
+        Utente utente = areaPersonaleService.getDatiPrivati(valutato);
         if(utente!= null){
-            return ValutazioneService.mediaValutazioniUtenteByUtente(utente);
+            return valutazioneService.mediaValutazioniUtenteByUtente(utente);
         }
         else
             return 0;
@@ -66,11 +66,11 @@ public class GestioneValutazioneController {
         ValutazioneOggetto valutazione = new ValutazioneOggetto();
         valutazione.setVoto(valutazioneDTO.getVoto());
         valutazione.setDescrizione(valutazioneDTO.getDescrizione());
-        valutazione.setAnnuncio(AnnuncioService.getAnnuncio(valutazioneDTO.getValutato()).orElse(null));
+        valutazione.setAnnuncio(annuncioService.getAnnuncio(valutazioneDTO.getValutato()).orElse(null));
         //set del valutatore con l'utente della sessione
 
         if(valutazione.getAnnuncio()!= null && valutazione.getValutatore()!= null){
-            return ValutazioneService.addValutazioneOggetto(valutazione);
+            return valutazioneService.addValutazioneOggetto(valutazione);
         }
         else
             return null;
@@ -79,9 +79,9 @@ public class GestioneValutazioneController {
     @GetMapping("/visualizza-valutazioni-annuncio")
     public List<ValutazioneOggetto> visualizzaValutazioniAnnuncio(@RequestParam long valutato){
 
-        Annuncio annuncio = AnnuncioService.getAnnuncio(valutato).orElse(null);
+        Annuncio annuncio = annuncioService.getAnnuncio(valutato).orElse(null);
         if(annuncio!= null){
-            return ValutazioneService.findAllByAnnuncio(annuncio);
+            return valutazioneService.findAllByAnnuncio(annuncio);
         }
         else
             return null;
@@ -90,9 +90,9 @@ public class GestioneValutazioneController {
     @GetMapping("/visualizza-media-valutazioni-annuncio")
     public double visualizzaMediaValutazioniOggetto(@RequestParam long valutato){
 
-        Annuncio annuncio = AnnuncioService.getAnnuncio(valutato).orElse(null);
+        Annuncio annuncio = annuncioService.getAnnuncio(valutato).orElse(null);
         if(annuncio!= null){
-            return ValutazioneService.mediaValutazioniOggettoByAnnuncio(annuncio);
+            return valutazioneService.mediaValutazioniOggettoByAnnuncio(annuncio);
         }
         else
             return 0;

@@ -14,13 +14,13 @@ import java.security.NoSuchAlgorithmException;
 @RequestMapping("/api/area-personale")
 public class GestioneAreaPersonaleController {
 
-    private final GestioneAreaPersonaleService AreaPersonaleService;
+    private final GestioneAreaPersonaleService areaPersonaleService;
     @GetMapping("/profilo-utente")
     public Utente profiloUtente() {
 
         Utente utente= new Utente(); //Prendi utente dalla sessione
         if(utente!= null){
-            return AreaPersonaleService.getDatiPrivati(utente.getId());
+            return areaPersonaleService.getDatiPrivati(utente.getId());
         }
         return null;
     }
@@ -28,7 +28,7 @@ public class GestioneAreaPersonaleController {
     @PostMapping("/modifica-dati-utente")
     public Utente modifcaUtente(UtenteDTO utente, @RequestParam("nuovaPsw") String nuova, @RequestParam("confermaPsw")String conferma) throws NoSuchAlgorithmException {
 
-        Utente daModificare = AreaPersonaleService.getDatiPrivati(utente.getId()); //Prendi utente dalla sessione
+        Utente daModificare = areaPersonaleService.getDatiPrivati(utente.getId()); //Prendi utente dalla sessione
         if (!utente.getPassword().isEmpty() && !nuova.isEmpty() && !conferma.isEmpty()) {
 
                 PswCoder coder = new PswCoder();
@@ -41,6 +41,6 @@ public class GestioneAreaPersonaleController {
         }
         Utente modificato= new Utente(utente.getId(),utente.getUsername(),utente.getNome(), utente.getCognome(),utente.getEmail(), utente.getPassword(), utente.isPremium());
 
-        return AreaPersonaleService.updateUtente(modificato);
+        return areaPersonaleService.updateUtente(modificato);
     }
 }

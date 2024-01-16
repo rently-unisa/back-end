@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 public class GestioneAvvisiController {
 
     private final GestioneAvvisiService avvisiService;
-    private final GestioneAreaPersonaleService AreaPersonaleService;
+    private final GestioneAreaPersonaleService areaPersonaleService;
     private final ResponseService responseService;
     private final EmailService emailService;
     private final GestioneAnnuncioService annuncioService;
@@ -31,7 +31,7 @@ public class GestioneAvvisiController {
             Segnalazione segnalazione = new Segnalazione();
             segnalazione.setContenuto(segnalazioneDTO.getContenuto());
             segnalazione.setTipo(Segnalazione.EnumTipo.valueOf(segnalazioneDTO.getTipo()));
-            Utente user = AreaPersonaleService.getDatiPrivati(segnalazione.getId());
+            Utente user = areaPersonaleService.getDatiPrivati(segnalazione.getId());
             if (user != null) {
                 segnalazione.setSegnalatore(user);
             }

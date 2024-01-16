@@ -12,7 +12,7 @@ import java.util.List;
 @Repository
 public interface GestioneAnnuncioDAO extends JpaRepository<Annuncio, Long> {
 
-    List<Annuncio> findAByUtente(Utente utente);
+    List<Annuncio> findByUtente(Utente utente);
     List<Annuncio> findByCategoria(String categoria);
     List<Annuncio> findByCondizione(String condizione);
     List<Annuncio> findByDataFineBetween(Date inizio, Date fine);

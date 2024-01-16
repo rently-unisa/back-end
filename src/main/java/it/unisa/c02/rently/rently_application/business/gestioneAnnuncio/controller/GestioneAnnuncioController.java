@@ -21,15 +21,11 @@ import java.util.List;
 @RequestMapping("/api/gestione-annuncio")
 public class GestioneAnnuncioController {
 
-    @Autowired
-    FilesStorageService storageService;
-
-    @Autowired
-    ResponseService responseService;
-
+    private final FilesStorageService storageService;
+    private final ResponseService responseService;
     private final GestioneAnnuncioService gestioneAnnuncioService;
     private final GestioneAreaPersonaleService gestioneAreaPersonaleService;
-    private final String uploadsPath = "annunci";
+    private final static String uploadsPath = "annunci";
 
     @GetMapping("/visualliza-annuncio")
     public ResponseEntity<String> getAnnuncio(@RequestParam long id)

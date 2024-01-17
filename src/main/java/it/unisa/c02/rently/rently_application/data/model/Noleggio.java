@@ -9,7 +9,7 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import java.math.BigDecimal;
 import java.sql.Date;
-import java.util.List;
+
 
 @Entity
 @Getter

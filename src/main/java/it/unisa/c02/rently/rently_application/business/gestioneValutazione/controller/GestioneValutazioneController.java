@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -57,7 +58,12 @@ public class GestioneValutazioneController {
 
         Utente utente = areaPersonaleService.getDatiPrivati(valutato);
         if(utente!= null){
-            List<ValutazioneUtente> list = valutazioneService.findAllByUtente(utente);
+            List<ValutazioneUtente> valutazioni = valutazioneService.findAllByUtente(utente);
+            List<ValutazioneDTO> list = new ArrayList<ValutazioneDTO>();
+            for (ValutazioneUtente vu: valutazioni) {
+                ValutazioneDTO item = new ValutazioneDTO().convertFromValutazioneUtente(vu);
+                list.add(item);
+            }
             return responseService.Ok(list);
         }
         else
@@ -99,7 +105,12 @@ public class GestioneValutazioneController {
 
         Annuncio annuncio = annuncioService.getAnnuncio(valutato).orElse(null);
         if(annuncio!= null){
-            List<ValutazioneOggetto> list = valutazioneService.findAllByAnnuncio(annuncio);
+            List<ValutazioneOggetto> valutazioni = valutazioneService.findAllByAnnuncio(annuncio);
+            List<ValutazioneDTO> list = new ArrayList<ValutazioneDTO>();
+            for (ValutazioneOggetto vo: valutazioni) {
+                ValutazioneDTO item = new ValutazioneDTO().convertFromValutazioneOggetto(vo);
+                list.add(item);
+            }
             return responseService.Ok(list);
         }
         else

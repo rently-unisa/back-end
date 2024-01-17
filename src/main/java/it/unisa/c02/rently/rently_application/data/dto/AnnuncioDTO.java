@@ -6,12 +6,15 @@ import lombok.Setter;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.Date;
 
 @Getter
 @Setter
 public class AnnuncioDTO implements Serializable {
 
+    private long id;
     private String nome;
 
     private String strada;
@@ -36,6 +39,7 @@ public class AnnuncioDTO implements Serializable {
 
     public AnnuncioDTO convertFromModel(Annuncio a) {
         AnnuncioDTO item = new AnnuncioDTO();
+        item.setId(a.getId());
         item.setNome(a.getNome());
         item.setStrada(a.getStrada());
         item.setCitta(a.getCitta());
@@ -49,5 +53,11 @@ public class AnnuncioDTO implements Serializable {
         item.setIdUtente(a.getUtente().getId());
 
         return item;
+    }
+
+    public void setServerImage(Annuncio a, String serverPath) {
+        //Path path = Paths.get(serverPath, "annunci", String.valueOf(a.getId()), a.getImmagine());
+        String path = String.format("%s/%s/%s/%s", serverPath, "annunci", String.valueOf(a.getId()), a.getImmagine());
+        this.setImmagine(path);
     }
 }

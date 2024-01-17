@@ -9,6 +9,8 @@ import it.unisa.c02.rently.rently_application.commons.services.responseService.R
 import it.unisa.c02.rently.rently_application.commons.services.storageService.FilesStorageService;
 import it.unisa.c02.rently.rently_application.data.dto.AnnuncioDTO;
 import it.unisa.c02.rently.rently_application.data.model.Annuncio;
+import jakarta.servlet.ServletContext;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,6 +37,7 @@ public class GestioneRicercaController {
 
     private final GestioneRicercaService ricercaService;
     private final ResponseService responseService;
+    private final HttpServletRequest httpServletRequest;
 
     @GetMapping("/categoria")
     public ResponseEntity<String>  searchByCategoria(@RequestParam String categoria) {
@@ -95,8 +98,16 @@ public class GestioneRicercaController {
     public ResponseEntity<String> searchAnnunciPremium() {
         List<Annuncio> annunci =  ricercaService.searchAnnunciPremium();
         List<AnnuncioDTO> list = new ArrayList<AnnuncioDTO>();
+
+        String serverAddress = String.format(
+                "%s://%s:%d",
+                httpServletRequest.getScheme(),
+                httpServletRequest.getServerName(),
+                httpServletRequest.getServerPort());
+
         for (Annuncio a: annunci) {
             AnnuncioDTO item = new AnnuncioDTO().convertFromModel(a);
+            item.setServerImage(a, serverAddress);
             list.add(item);
         }
         return responseService.Ok(list);

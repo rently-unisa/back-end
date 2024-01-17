@@ -21,6 +21,14 @@ public class ValutazioneUtente {
         this.valutatore = valutatore;
     }
 
+    public ValutazioneUtente(long id, int voto, String descrizione, Utente valutato, Utente valutatore) {
+        this.id = id;
+        this.voto = voto;
+        this.descrizione = descrizione;
+        this.valutato = valutato;
+        this.valutatore = valutatore;
+    }
+
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 

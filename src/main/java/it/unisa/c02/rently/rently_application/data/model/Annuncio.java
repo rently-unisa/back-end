@@ -36,6 +36,23 @@ public class Annuncio {
         this.valutazioni = valutazioni;
     }
 
+    public Annuncio(long id, String nome, String strada, String citta, String CAP, String descrizione, BigDecimal prezzo, String immagine, EnumCategoria categoria, EnumCondizione condizione, Date dataFine, Utente utente, List<Noleggio> noleggi, List<ValutazioneOggetto> valutazioni) {
+        this.id = id;
+        this.nome = nome;
+        this.strada = strada;
+        this.citta = citta;
+        this.CAP = CAP;
+        this.descrizione = descrizione;
+        this.prezzo = prezzo;
+        this.immagine = immagine;
+        this.categoria = categoria;
+        this.condizione = condizione;
+        this.dataFine = dataFine;
+        this.utente = utente;
+        this.noleggi = noleggi;
+        this.valutazioni = valutazioni;
+    }
+
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="annuncio_id")
     private long id;

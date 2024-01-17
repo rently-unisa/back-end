@@ -29,6 +29,17 @@ public class Noleggio {
         this.annuncio = annuncio;
     }
 
+    public Noleggio(long id, EnumStato stato, BigDecimal prezzoTotale, Date dataInizio, Date dataFine, Utente noleggiante, Utente noleggiatore, Annuncio annuncio) {
+        this.id = id;
+        this.stato = stato;
+        this.prezzoTotale = prezzoTotale;
+        this.dataInizio = dataInizio;
+        this.dataFine = dataFine;
+        this.noleggiante = noleggiante;
+        this.noleggiatore = noleggiatore;
+        this.annuncio = annuncio;
+    }
+
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     @Column
     private long id;

@@ -14,6 +14,21 @@ public class ValutazioneOggetto {
     public ValutazioneOggetto() {
     }
 
+    public ValutazioneOggetto(int voto, String descrizione, Annuncio annuncio, Utente valutatore) {
+        this.voto = voto;
+        this.descrizione = descrizione;
+        this.annuncio = annuncio;
+        this.valutatore = valutatore;
+    }
+
+    public ValutazioneOggetto(long id, int voto, String descrizione, Annuncio annuncio, Utente valutatore) {
+        this.id = id;
+        this.voto = voto;
+        this.descrizione = descrizione;
+        this.annuncio = annuncio;
+        this.valutatore = valutatore;
+    }
+
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 

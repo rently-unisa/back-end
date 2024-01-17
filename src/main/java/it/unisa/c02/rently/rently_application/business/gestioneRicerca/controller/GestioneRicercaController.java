@@ -37,28 +37,58 @@ public class GestioneRicercaController {
     private final ResponseService responseService;
 
     @GetMapping("/categoria")
-    public List<Annuncio> searchByCategoria(@RequestParam String categoria) {
-        return ricercaService.searchByCategoria(categoria);
+    public ResponseEntity<String>  searchByCategoria(@RequestParam String categoria) {
+        List<Annuncio> annunci = ricercaService.searchByCategoria(categoria);
+        List<AnnuncioDTO> list = new ArrayList<AnnuncioDTO>();
+        for (Annuncio a: annunci) {
+            AnnuncioDTO item = new AnnuncioDTO().convertFromModel(a);
+            list.add(item);
+        }
+        return responseService.Ok(list);
     }
 
     @GetMapping("/condizione")
-    public List<Annuncio> searchByCondizione(@RequestParam String condizione) {
-        return ricercaService.searchByCondizione(condizione);
+    public ResponseEntity<String> searchByCondizione(@RequestParam String condizione) {
+        List<Annuncio> annunci = ricercaService.searchByCondizione(condizione);
+        List<AnnuncioDTO> list = new ArrayList<AnnuncioDTO>();
+        for (Annuncio a: annunci) {
+            AnnuncioDTO item = new AnnuncioDTO().convertFromModel(a);
+            list.add(item);
+        }
+        return responseService.Ok(list);
     }
 
     @GetMapping("/data")
-    public List<Annuncio> searchByData(@RequestParam Date inizio, @RequestParam Date fine) {
-        return ricercaService.searchByData(inizio, fine);
+    public ResponseEntity<String> searchByData(@RequestParam Date inizio, @RequestParam Date fine) {
+        List<Annuncio> annunci = ricercaService.searchByData(inizio, fine);
+        List<AnnuncioDTO> list = new ArrayList<AnnuncioDTO>();
+        for (Annuncio a: annunci) {
+            AnnuncioDTO item = new AnnuncioDTO().convertFromModel(a);
+            list.add(item);
+        }
+        return responseService.Ok(list);
     }
 
     @GetMapping("/descrizione")
-    public List<Annuncio> searchByDescrizione(@RequestParam String descrizione) {
-        return ricercaService.searchByDescrizione(descrizione);
+    public ResponseEntity<String> searchByDescrizione(@RequestParam String descrizione) {
+        List<Annuncio> annunci =  ricercaService.searchByDescrizione(descrizione);
+        List<AnnuncioDTO> list = new ArrayList<AnnuncioDTO>();
+        for (Annuncio a: annunci) {
+            AnnuncioDTO item = new AnnuncioDTO().convertFromModel(a);
+            list.add(item);
+        }
+        return responseService.Ok(list);
     }
 
     @GetMapping("/all")
-    public List<Annuncio> searchAll() {
-        return ricercaService.searchAll();
+    public ResponseEntity<String> searchAll() {
+        List<Annuncio> annunci =  ricercaService.searchAll();
+        List<AnnuncioDTO> list = new ArrayList<AnnuncioDTO>();
+        for (Annuncio a: annunci) {
+            AnnuncioDTO item = new AnnuncioDTO().convertFromModel(a);
+            list.add(item);
+        }
+        return responseService.Ok(list);
     }
 
     @GetMapping("/premium")

@@ -15,7 +15,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-public class Annuncio implements Serializable {
+public class Annuncio {
 
     public Annuncio() {
     }

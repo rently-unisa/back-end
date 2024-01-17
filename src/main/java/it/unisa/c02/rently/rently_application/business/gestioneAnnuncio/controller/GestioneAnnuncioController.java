@@ -19,6 +19,17 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/gestione-annuncio")
+@CrossOrigin(
+        origins = {
+                "*",
+        },
+        methods = {
+                RequestMethod.OPTIONS,
+                RequestMethod.GET,
+                RequestMethod.PUT,
+                RequestMethod.DELETE,
+                RequestMethod.POST
+        })
 public class GestioneAnnuncioController {
 
     private final FilesStorageService storageService;

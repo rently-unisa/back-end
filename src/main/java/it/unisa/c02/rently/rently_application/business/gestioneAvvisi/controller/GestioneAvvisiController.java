@@ -14,6 +14,17 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/avvisi")
+@CrossOrigin(
+        origins = {
+                "*",
+        },
+        methods = {
+                RequestMethod.OPTIONS,
+                RequestMethod.GET,
+                RequestMethod.PUT,
+                RequestMethod.DELETE,
+                RequestMethod.POST
+        })
 public class GestioneAvvisiController {
 
     private final GestioneAvvisiService avvisiService;

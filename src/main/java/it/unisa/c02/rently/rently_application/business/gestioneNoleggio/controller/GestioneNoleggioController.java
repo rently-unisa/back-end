@@ -14,6 +14,17 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/noleggio")
+@CrossOrigin(
+        origins = {
+                "*",
+        },
+        methods = {
+                RequestMethod.OPTIONS,
+                RequestMethod.GET,
+                RequestMethod.PUT,
+                RequestMethod.DELETE,
+                RequestMethod.POST
+        })
 public class GestioneNoleggioController {
 
     private final GestioneNoleggioService noleggioService;

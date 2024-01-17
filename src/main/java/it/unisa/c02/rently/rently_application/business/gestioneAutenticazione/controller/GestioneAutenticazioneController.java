@@ -4,6 +4,8 @@ import it.unisa.c02.rently.rently_application.business.gestioneAutenticazione.se
 import it.unisa.c02.rently.rently_application.commons.psw.PswCoder;
 import it.unisa.c02.rently.rently_application.commons.services.responseService.ResponseService;
 import it.unisa.c02.rently.rently_application.data.dto.ResponseDTO;
+import it.unisa.c02.rently.rently_application.data.dto.UtenteDTO;
+import it.unisa.c02.rently.rently_application.data.dto.UtenteLoginDTO;
 import it.unisa.c02.rently.rently_application.data.model.Utente;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +13,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
-import it.unisa.c02.rently.rently_application.data.DTO.UtenteDTO;
 
 import java.security.NoSuchAlgorithmException;
 import java.util.Collections;
@@ -19,7 +20,6 @@ import java.util.Collections;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/autenticazione")
-// HelloController.java
 @CrossOrigin(
         origins = {
                 "*",
@@ -38,21 +38,21 @@ public class GestioneAutenticazioneController {
 
     private final GestioneAutenticazioneService autenticazioneService;
 
-    @GetMapping("/login")
-    public ResponseEntity<String> login(@RequestParam String email, @RequestParam String password) {
+    @PostMapping("/login")
+    public ResponseEntity<String> login(@RequestBody UtenteLoginDTO data) {
 
         ResponseDTO response = new ResponseDTO();
         response.message = "Login fallito";
 
         try {
-            String oPassword = new PswCoder().codificaPassword(password);
-            Utente utente = autenticazioneService.login(email, oPassword);
+            String oPassword = new PswCoder().codificaPassword(data.getPassword());
+            Utente utente = autenticazioneService.login(data.getEmail(), oPassword);
             if (utente != null) {
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(utente, null, Collections.emptyList());
                 SecurityContextHolder.getContext().setAuthentication(authentication);
                 return responseService.Ok(utente);
             } else {
-                return responseService.InternalError(utente);
+                return responseService.InternalError(response);
             }
         } catch (Exception ex)
         {

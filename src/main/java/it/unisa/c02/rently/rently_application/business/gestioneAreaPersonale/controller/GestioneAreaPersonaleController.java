@@ -1,10 +1,11 @@
 package it.unisa.c02.rently.rently_application.business.gestioneAreaPersonale.controller;
 import it.unisa.c02.rently.rently_application.business.gestioneAreaPersonale.service.GestioneAreaPersonaleService;
 import it.unisa.c02.rently.rently_application.commons.psw.PswCoder;
-import it.unisa.c02.rently.rently_application.data.DTO.UtenteDTO;
+import it.unisa.c02.rently.rently_application.commons.services.responseService.ResponseService;
+import it.unisa.c02.rently.rently_application.data.dto.UtenteDTO;
 import it.unisa.c02.rently.rently_application.data.model.Utente;
 import lombok.RequiredArgsConstructor;
-import org.springframework.ui.Model;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.NoSuchAlgorithmException;
@@ -12,35 +13,63 @@ import java.security.NoSuchAlgorithmException;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/area-personale")
+@CrossOrigin(
+        origins = {
+                "*",
+        },
+        methods = {
+                RequestMethod.OPTIONS,
+                RequestMethod.GET,
+                RequestMethod.PUT,
+                RequestMethod.DELETE,
+                RequestMethod.POST
+})
 public class GestioneAreaPersonaleController {
+
+    private final ResponseService responseService;
 
     private final GestioneAreaPersonaleService areaPersonaleService;
     @GetMapping("/profilo-utente")
-    public Utente profiloUtente() {
+    public ResponseEntity<String> profiloUtente(@RequestParam("id") long id) {
 
-        Utente utente= new Utente(); //Prendi utente dalla sessione
-        if(utente!= null){
-            return areaPersonaleService.getDatiPrivati(utente.getId());
+        Utente utente = null;
+
+        try {
+            utente= areaPersonaleService.getDatiPrivati(id);
+
+            if(utente == null){
+                return responseService.InternalError(utente);
+            }
+        } catch (Exception ex) {
+            return responseService.InternalError();
         }
-        return null;
+
+        return responseService.Ok(utente);
     }
 
     @PostMapping("/modifica-dati-utente")
-    public Utente modifcaUtente(UtenteDTO utente, @RequestParam("nuovaPsw") String nuova, @RequestParam("confermaPsw")String conferma) throws NoSuchAlgorithmException {
+    public ResponseEntity<String>  modificaUtente(@RequestBody UtenteDTO data) {
 
-        Utente daModificare = areaPersonaleService.getDatiPrivati(utente.getId()); //Prendi utente dalla sessione
-        if (!utente.getPassword().isEmpty() && !nuova.isEmpty() && !conferma.isEmpty()) {
+        Utente item = areaPersonaleService.getDatiPrivati(data.getId());
 
+        try {
+            if (!data.getNuovaPassword().isEmpty() && !data.getConfermaNuovaPassword().isEmpty()) {
                 PswCoder coder = new PswCoder();
-                String vecchiaPassword = coder.codificaPassword(utente.getPassword());
+                item.setPassword(coder.codificaPassword(data.getNuovaPassword()));
+            }
 
-                if (daModificare.getPassword().equals(vecchiaPassword) && nuova.equals(conferma)) {
-                    utente.setPassword(nuova);
-                } else
-                    return null;
+            item.setNome(data.getNome());
+            item.setCognome(data.getCognome());
+            item.setEmail(data.getEmail());
+            item.setPremium(data.isPremium());
+            item.setUsername(data.getUsername());
+
+            item = areaPersonaleService.updateUtente(item);
+
+
+        } catch (Exception ex) {
+            return responseService.InternalError();
         }
-        Utente modificato= new Utente(utente.getId(),utente.getUsername(),utente.getNome(), utente.getCognome(),utente.getEmail(), utente.getPassword(), utente.isPremium());
-
-        return areaPersonaleService.updateUtente(modificato);
+        return responseService.Ok(item);
     }
 }

@@ -1,9 +1,15 @@
 package it.unisa.c02.rently.rently_application.commons.services.responseService;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
 import it.unisa.c02.rently.rently_application.commons.jsonHelper.JsonHelper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 @Service
 public class ResponseServiceImpl implements ResponseService {
@@ -17,7 +23,6 @@ public class ResponseServiceImpl implements ResponseService {
         catch (Exception ex)
         {
         }
-
         return ResponseEntity.status(HttpStatus.CREATED).body(json);
     }
 

@@ -1,4 +1,4 @@
-package it.unisa.c02.rently.rently_application.data.DTO;
+package it.unisa.c02.rently.rently_application.data.dto;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -11,13 +11,16 @@ public class UtenteDTO {
 
     }
 
-    public UtenteDTO(long id, String username, String nome, String cognome, String email, String password, boolean premium) {
+    public UtenteDTO(long id, String username, String nome, String cognome, String email, String password,
+                     String nuovaPassword, String confermaNuovaPassword, boolean premium) {
         this.id = id;
         this.username = username;
         this.nome = nome;
         this.cognome = cognome;
         this.email = email;
         this.password = password;
+        this.nuovaPassword = nuovaPassword;
+        this.confermaNuovaPassword = confermaNuovaPassword;
         this.premium = premium;
     }
 
@@ -45,6 +48,8 @@ public class UtenteDTO {
     private String email;
 
     private String password;
+    private String nuovaPassword;
+    private String confermaNuovaPassword;
 
     private boolean premium;
 }

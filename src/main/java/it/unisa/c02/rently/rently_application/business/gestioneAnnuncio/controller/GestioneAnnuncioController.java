@@ -6,6 +6,7 @@ import it.unisa.c02.rently.rently_application.commons.services.storageService.Fi
 import it.unisa.c02.rently.rently_application.data.dto.AnnuncioDTO;
 import it.unisa.c02.rently.rently_application.data.model.Annuncio;
 import it.unisa.c02.rently.rently_application.data.model.Utente;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +19,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/gestione-annuncio")
+@RequestMapping("/api/annuncio")
 @CrossOrigin(
         origins = {
                 "*",
@@ -36,9 +37,10 @@ public class GestioneAnnuncioController {
     private final ResponseService responseService;
     private final GestioneAnnuncioService gestioneAnnuncioService;
     private final GestioneAreaPersonaleService gestioneAreaPersonaleService;
+    private final HttpServletRequest httpServletRequest;
     private final static String uploadsPath = "annunci";
 
-    @GetMapping("/visualliza-annuncio")
+    @GetMapping("/visualizza-annuncio")
     public ResponseEntity<String> getAnnuncio(@RequestParam long id)
     {
         try {
@@ -51,12 +53,25 @@ public class GestioneAnnuncioController {
         }
     }
 
-    @GetMapping("/visualliza-annunci-utente")
+    @GetMapping("/visualizza-annunci-utente")
     public ResponseEntity<String> getAnnunciUtente(@RequestParam long id)
     {
         try {
             Utente u = gestioneAreaPersonaleService.getDatiPrivati(id);
-            List<Annuncio> list = gestioneAnnuncioService.findAllByUtente(u);
+            List<Annuncio> annunci = gestioneAnnuncioService.findAllByUtente(u);
+            List<AnnuncioDTO> list = new ArrayList<AnnuncioDTO>();
+
+            String serverAddress = String.format(
+                    "%s://%s:%d",
+                    httpServletRequest.getScheme(),
+                    httpServletRequest.getServerName(),
+                    httpServletRequest.getServerPort());
+
+            for (Annuncio a: annunci) {
+                AnnuncioDTO item = new AnnuncioDTO().convertFromModel(a);
+                item.setServerImage(a, serverAddress);
+                list.add(item);
+            }
 
             return responseService.Ok(list);
         }
@@ -108,6 +123,17 @@ public class GestioneAnnuncioController {
 
             return responseService.Ok(newItem);
 
+        }
+        catch (Exception ex) {
+            return responseService.InternalError();
+        }
+    }
+
+    @GetMapping("/delete-annuncio")
+    public ResponseEntity<String> deleteAnnuncio(@RequestParam long id) {
+        try {
+            gestioneAnnuncioService.deleteAnnuncio(id);
+            return responseService.Ok();
         }
         catch (Exception ex) {
             return responseService.InternalError();

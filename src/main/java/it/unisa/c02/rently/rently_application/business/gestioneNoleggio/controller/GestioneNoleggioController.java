@@ -1,5 +1,6 @@
 package it.unisa.c02.rently.rently_application.business.gestioneNoleggio.controller;
 
+import it.unisa.c02.rently.rently_application.business.gestioneAnnuncio.service.GestioneAnnuncioService;
 import it.unisa.c02.rently.rently_application.business.gestioneAreaPersonale.service.GestioneAreaPersonaleService;
 import it.unisa.c02.rently.rently_application.business.gestioneNoleggio.service.GestioneNoleggioService;
 import it.unisa.c02.rently.rently_application.commons.services.responseService.ResponseService;
@@ -17,7 +18,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/noleggio")
+@RequestMapping("/api/noleggio")
 @CrossOrigin(
         origins = {
                 "*",
@@ -34,6 +35,7 @@ public class GestioneNoleggioController {
     private final GestioneNoleggioService noleggioService;
     private final ResponseService responseService;
     private final GestioneAreaPersonaleService areaPersonaleService;
+    private final GestioneAnnuncioService annuncioService;
 
     @GetMapping("/noleggiante")
     public ResponseEntity<String> getNoleggiByNoleggiante(@RequestParam long idUtente) {
@@ -114,5 +116,43 @@ public class GestioneNoleggioController {
         else
             return responseService.InternalError();
     }
+    @PostMapping("/aggiungi-noleggio")
+    public ResponseEntity<String> aggiungiNoleggio(@RequestBody NoleggioDTO data){
 
+        Noleggio item = new Noleggio();
+        item.setStato(Noleggio.EnumStato.valueOf(data.getStato()));
+        item.setPrezzoTotale(data.getPrezzoTotale());
+        item.setDataInizio(data.getDataInizio());
+        item.setDataFine(data.getDataFine());
+        item.setNoleggiante(areaPersonaleService.getDatiPrivati(data.getNoleggiante()));
+        item.setNoleggiatore(areaPersonaleService.getDatiPrivati(data.getNoleggiatore()));
+        item.setAnnuncio(annuncioService.getAnnuncio(data.getAnnuncio()).orElse(null));
+
+        if(item.getNoleggiante() != null && item.getNoleggiatore()!= null && item.getAnnuncio() != null){
+            item = noleggioService.addNoleggio(item);
+            return responseService.Ok(item);
+        }
+        else
+            return responseService.InternalError();
+    }
+    @PostMapping("/salva-noleggio")
+    public ResponseEntity<String> salvaNoleggio(@RequestBody NoleggioDTO data){
+
+        Noleggio item = new Noleggio();
+        item.setStato(Noleggio.EnumStato.valueOf(data.getStato()));
+        item.setPrezzoTotale(data.getPrezzoTotale());
+        item.setDataInizio(data.getDataInizio());
+        item.setDataFine(data.getDataFine());
+        item.setNoleggiante(areaPersonaleService.getDatiPrivati(data.getNoleggiante()));
+        item.setNoleggiatore(areaPersonaleService.getDatiPrivati(data.getNoleggiatore()));
+        item.setAnnuncio(annuncioService.getAnnuncio(data.getAnnuncio()).orElse(null));
+
+        if(item.getNoleggiante() != null && item.getNoleggiatore()!= null && item.getAnnuncio() != null){
+            item = noleggioService.updateStatoNoleggio(item);
+            return responseService.Ok(item);
+        }
+        else
+            return responseService.InternalError();
+
+    }
 }

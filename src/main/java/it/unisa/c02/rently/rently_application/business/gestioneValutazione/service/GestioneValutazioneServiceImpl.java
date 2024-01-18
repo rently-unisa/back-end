@@ -1,19 +1,14 @@
 package it.unisa.c02.rently.rently_application.business.gestioneValutazione.service;
 
 
-import it.unisa.c02.rently.rently_application.business.gestioneAreaPersonale.service.GestioneAreaPersonaleService;
-import it.unisa.c02.rently.rently_application.data.dao.GestioneAreaPersonaleDAO;
 import it.unisa.c02.rently.rently_application.data.dao.GestioneValutazioneOggettoDAO;
 import it.unisa.c02.rently.rently_application.data.dao.GestioneValutazioneUtenteDAO;
-import it.unisa.c02.rently.rently_application.data.model.Annuncio;
-import it.unisa.c02.rently.rently_application.data.model.Utente;
-import it.unisa.c02.rently.rently_application.data.model.ValutazioneOggetto;
-import it.unisa.c02.rently.rently_application.data.model.ValutazioneUtente;
+import it.unisa.c02.rently.rently_application.data.model.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
+
 
 @Service
 @RequiredArgsConstructor
@@ -38,7 +33,7 @@ public class GestioneValutazioneServiceImpl implements GestioneValutazioneServic
 
     @Override
     public double mediaValutazioniUtenteByUtente(Utente valutato) {
-        return (double)valutazioneUtenteDAO.mediaValutazioniUtenteById(valutato.getId());
+        return valutazioneUtenteDAO.mediaValutazioniUtenteById(valutato.getId());
     }
 
     @Override
@@ -58,7 +53,28 @@ public class GestioneValutazioneServiceImpl implements GestioneValutazioneServic
 
     @Override
     public double mediaValutazioniOggettoByAnnuncio(Annuncio annuncio) {
-        return (double)valutazioneOggettoDAO.mediaValutazioniOggettoById(annuncio.getId());
+        return valutazioneOggettoDAO.mediaValutazioniOggettoById(annuncio.getId());
+    }
+
+    @Override
+    public boolean valutazioneNoleggianteIsPresent(Noleggio n) {
+
+        ValutazioneUtente valutazione = valutazioneUtenteDAO.valutazioneNoleggianteIsPresent(n.getId());
+        return valutazione != null;
+    }
+
+    @Override
+    public boolean valutazioneNoleggiatoreIsPresent(Noleggio n) {
+
+        ValutazioneUtente valutazione = valutazioneUtenteDAO.valutazioneNoleggiatoreIsPresent(n.getId());
+        return valutazione != null;
+    }
+
+    @Override
+    public boolean valutazioneAnnuncioIsPresent(Noleggio n) {
+
+        ValutazioneOggetto valutazione = valutazioneOggettoDAO.valutazioneAnnuncioIsPresent(n.getId());
+        return valutazione != null;
     }
 
 

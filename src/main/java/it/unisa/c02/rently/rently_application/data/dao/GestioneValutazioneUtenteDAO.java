@@ -15,4 +15,10 @@ public interface GestioneValutazioneUtenteDAO extends JpaRepository<ValutazioneU
     List<ValutazioneUtente> findByValutato(Utente valutato);
     @Query("select AVG(v.voto) from ValutazioneUtente v where v.valutato = ?1")
     double mediaValutazioniUtenteById(long valutato);
+
+    @Query("select vu from Noleggio n, ValutazioneUtente vu where n.id =?1 and n = vu.noleggio and n.noleggiante = vu.valutato and  n.noleggiatore = vu.valutatore")
+    ValutazioneUtente valutazioneNoleggianteIsPresent(long idNoleggio);
+
+    @Query("select vu from Noleggio n, ValutazioneUtente vu where n.id =?1 and n = vu.noleggio and n.noleggiante = vu.valutatore and  n.noleggiatore = vu.valutato")
+    ValutazioneUtente valutazioneNoleggiatoreIsPresent(long idNoleggio);
 }

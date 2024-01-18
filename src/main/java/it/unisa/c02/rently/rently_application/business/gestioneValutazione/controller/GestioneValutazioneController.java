@@ -1,6 +1,7 @@
 package it.unisa.c02.rently.rently_application.business.gestioneValutazione.controller;
 import it.unisa.c02.rently.rently_application.business.gestioneAnnuncio.service.GestioneAnnuncioService;
 import it.unisa.c02.rently.rently_application.business.gestioneAreaPersonale.service.GestioneAreaPersonaleService;
+import it.unisa.c02.rently.rently_application.business.gestioneNoleggio.service.GestioneNoleggioService;
 import it.unisa.c02.rently.rently_application.business.gestioneValutazione.service.GestioneValutazioneService;
 import it.unisa.c02.rently.rently_application.commons.services.responseService.ResponseService;
 import it.unisa.c02.rently.rently_application.data.dto.ValutazioneDTO;
@@ -35,17 +36,24 @@ public class GestioneValutazioneController {
     private final GestioneAreaPersonaleService areaPersonaleService;
     private final GestioneAnnuncioService annuncioService;
     private final ResponseService responseService;
+    private final GestioneNoleggioService noleggioService;
+
     @PostMapping("/aggiungi-valutazione-utente")
     public ResponseEntity<String> aggiungiValutazioneUtente(@RequestBody ValutazioneDTO valutazioneDTO) {
 
         ValutazioneUtente valutazione = new ValutazioneUtente();
         Utente utente = areaPersonaleService.getDatiPrivati(valutazioneDTO.getValutatore());
         valutazione.setValutatore(utente);
-        valutazione.setVoto(valutazioneDTO.getVoto());
         valutazione.setDescrizione(valutazioneDTO.getDescrizione());
         valutazione.setValutato(areaPersonaleService.getDatiPrivati(valutazioneDTO.getValutato()));
+        valutazione.setNoleggio(noleggioService.getNoleggio(valutazioneDTO.getNoleggio()));
+        if(valutazioneDTO.getVoto() >= 0 && valutazioneDTO.getVoto() <= 10){
+            valutazione.setVoto(valutazioneDTO.getVoto());
+        } else{
+            return responseService.InternalError();
+        }
 
-        if(valutazione.getValutato()!= null && valutazione.getValutatore()!= null){
+        if(valutazione.getValutato()!= null && valutazione.getValutatore()!= null && valutazione.getNoleggio() != null){
             valutazione = valutazioneService.addValutazioneUtente(valutazione);
             return responseService.Ok(valutazione);
         }
@@ -59,7 +67,7 @@ public class GestioneValutazioneController {
         Utente utente = areaPersonaleService.getDatiPrivati(valutato);
         if(utente!= null){
             List<ValutazioneUtente> valutazioni = valutazioneService.findAllByUtente(utente);
-            List<ValutazioneDTO> list = new ArrayList<ValutazioneDTO>();
+            List<ValutazioneDTO> list = new ArrayList<>();
             for (ValutazioneUtente vu: valutazioni) {
                 ValutazioneDTO item = new ValutazioneDTO().convertFromValutazioneUtente(vu);
                 list.add(item);
@@ -88,11 +96,16 @@ public class GestioneValutazioneController {
         ValutazioneOggetto valutazione = new ValutazioneOggetto();
         Utente utente = areaPersonaleService.getDatiPrivati(valutazioneDTO.getValutatore());
         valutazione.setValutatore(utente);
-        valutazione.setVoto(valutazioneDTO.getVoto());
         valutazione.setDescrizione(valutazioneDTO.getDescrizione());
         valutazione.setAnnuncio(annuncioService.getAnnuncio(valutazioneDTO.getValutato()).orElse(null));
+        valutazione.setNoleggio(noleggioService.getNoleggio(valutazioneDTO.getNoleggio()));
+        if(valutazioneDTO.getVoto() >= 0 && valutazioneDTO.getVoto() <= 10){
+            valutazione.setVoto(valutazioneDTO.getVoto());
+        } else{
+            return responseService.InternalError();
+        }
 
-        if(valutazione.getAnnuncio()!= null && valutazione.getValutatore()!= null){
+        if(valutazione.getAnnuncio()!= null && valutazione.getValutatore()!= null && valutazione.getNoleggio() != null){
             valutazione = valutazioneService.addValutazioneOggetto(valutazione);
             return responseService.Ok(valutazione);
         }
@@ -106,7 +119,7 @@ public class GestioneValutazioneController {
         Annuncio annuncio = annuncioService.getAnnuncio(valutato).orElse(null);
         if(annuncio!= null){
             List<ValutazioneOggetto> valutazioni = valutazioneService.findAllByAnnuncio(annuncio);
-            List<ValutazioneDTO> list = new ArrayList<ValutazioneDTO>();
+            List<ValutazioneDTO> list = new ArrayList<>();
             for (ValutazioneOggetto vo: valutazioni) {
                 ValutazioneDTO item = new ValutazioneDTO().convertFromValutazioneOggetto(vo);
                 list.add(item);

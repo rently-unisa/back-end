@@ -101,9 +101,9 @@ public class GestioneValutazioneController {
     }
 
     @GetMapping("/visualizza-valutazioni-annuncio")
-    public ResponseEntity<String> visualizzaValutazioniAnnuncio(@RequestParam long valutato){
+    public ResponseEntity<String> visualizzaValutazioniAnnuncio(@RequestParam long id){
 
-        Annuncio annuncio = annuncioService.getAnnuncio(valutato).orElse(null);
+        Annuncio annuncio = annuncioService.getAnnuncio(id).orElse(null);
         if(annuncio!= null){
             List<ValutazioneOggetto> valutazioni = valutazioneService.findAllByAnnuncio(annuncio);
             List<ValutazioneDTO> list = new ArrayList<ValutazioneDTO>();
@@ -118,9 +118,9 @@ public class GestioneValutazioneController {
     }
 
     @GetMapping("/visualizza-media-valutazioni-annuncio")
-    public ResponseEntity<String> visualizzaMediaValutazioniOggetto(@RequestParam long valutato){
+    public ResponseEntity<String> visualizzaMediaValutazioniOggetto(@RequestParam long id){
 
-        Annuncio annuncio = annuncioService.getAnnuncio(valutato).orElse(null);
+        Annuncio annuncio = annuncioService.getAnnuncio(id).orElse(null);
         if(annuncio!= null){
             double media = valutazioneService.mediaValutazioniOggettoByAnnuncio(annuncio);
             return responseService.Ok(media);

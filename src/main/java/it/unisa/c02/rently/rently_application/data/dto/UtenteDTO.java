@@ -1,5 +1,6 @@
 package it.unisa.c02.rently.rently_application.data.dto;
 
+import it.unisa.c02.rently.rently_application.data.model.Utente;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -22,6 +23,18 @@ public class UtenteDTO {
         this.nuovaPassword = nuovaPassword;
         this.confermaNuovaPassword = confermaNuovaPassword;
         this.premium = premium;
+    }
+
+    public UtenteDTO convertFromModel(Utente u)
+    {
+        UtenteDTO item = new UtenteDTO();
+        item.setId(u.getId());
+        item.setUsername(u.getUsername());
+        item.setNome(u.getNome());
+        item.setCognome(u.getCognome());
+        item.setEmail(u.getEmail());
+        item.setPremium(u.isPremium());
+        return item;
     }
 
     @Override

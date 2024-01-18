@@ -87,10 +87,19 @@ public class GestioneRicercaController {
     public ResponseEntity<String> searchAll() {
         List<Annuncio> annunci =  ricercaService.searchAll();
         List<AnnuncioDTO> list = new ArrayList<AnnuncioDTO>();
+
+        String serverAddress = String.format(
+                "%s://%s:%d",
+                httpServletRequest.getScheme(),
+                httpServletRequest.getServerName(),
+                httpServletRequest.getServerPort());
+
         for (Annuncio a: annunci) {
             AnnuncioDTO item = new AnnuncioDTO().convertFromModel(a);
+            item.setServerImage(a, serverAddress);
             list.add(item);
         }
+
         return responseService.Ok(list);
     }
 
@@ -110,6 +119,7 @@ public class GestioneRicercaController {
             item.setServerImage(a, serverAddress);
             list.add(item);
         }
+
         return responseService.Ok(list);
     }
 }

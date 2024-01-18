@@ -33,18 +33,22 @@ public class GestioneAreaPersonaleController {
     public ResponseEntity<String> profiloUtente(@RequestParam("id") long id) {
 
         Utente utente = null;
+        UtenteDTO item = new UtenteDTO();
 
         try {
             utente= areaPersonaleService.getDatiPrivati(id);
 
             if(utente == null){
-                return responseService.InternalError(utente);
+                return responseService.InternalError(item);
+            }
+            else {
+                item = new UtenteDTO().convertFromModel(utente);
             }
         } catch (Exception ex) {
             return responseService.InternalError();
         }
 
-        return responseService.Ok(utente);
+        return responseService.Ok(item);
     }
 
     @PostMapping("/modifica-dati-utente")

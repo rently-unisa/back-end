@@ -48,9 +48,12 @@ public class GestioneAutenticazioneController {
             String oPassword = new PswCoder().codificaPassword(data.getPassword());
             Utente utente = autenticazioneService.login(data.getEmail(), oPassword);
             if (utente != null) {
+
+                UtenteDTO item = new UtenteDTO().convertFromModel(utente);
+
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(utente, null, Collections.emptyList());
                 SecurityContextHolder.getContext().setAuthentication(authentication);
-                return responseService.Ok(utente);
+                return responseService.Ok(item);
             } else {
                 return responseService.InternalError(response);
             }
@@ -67,19 +70,21 @@ public class GestioneAutenticazioneController {
         response.message = "";
 
         try {
-            Utente item = new Utente();
-            item.setUsername(data.getUsername());
-            item.setEmail(data.getEmail());
-            item.setPassword( new PswCoder().codificaPassword(data.getPassword()));
-            item.setNome(data.getNome());
-            item.setCognome(data.getCognome());
-            autenticazioneService.signUp(item);
+            Utente utente = new Utente();
+            utente.setUsername(data.getUsername());
+            utente.setEmail(data.getEmail());
+            utente.setPassword( new PswCoder().codificaPassword(data.getPassword()));
+            utente.setNome(data.getNome());
+            utente.setCognome(data.getCognome());
+            autenticazioneService.signUp(utente);
 
-            if(item.getUsername().equals("") || item.getPassword().equals(""))
+            if(utente.getUsername().equals("") || utente.getPassword().equals(""))
             {
                 response.message = "Utente non registrato";
                 return responseService.InternalError(response);
             }
+
+            UtenteDTO item = new UtenteDTO().convertFromModel(utente);
 
             return responseService.Ok(item);
         } catch (Exception ex)

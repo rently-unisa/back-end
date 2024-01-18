@@ -1,15 +1,15 @@
 package it.unisa.c02.rently.rently_application.business.gestioneNoleggio.controller;
 
+import it.unisa.c02.rently.rently_application.business.gestioneAnnuncio.service.GestioneAnnuncioService;
 import it.unisa.c02.rently.rently_application.business.gestioneAreaPersonale.service.GestioneAreaPersonaleService;
 import it.unisa.c02.rently.rently_application.business.gestioneNoleggio.service.GestioneNoleggioService;
+import it.unisa.c02.rently.rently_application.business.gestioneValutazione.service.GestioneValutazioneService;
 import it.unisa.c02.rently.rently_application.commons.services.responseService.ResponseService;
 import it.unisa.c02.rently.rently_application.data.dto.NoleggioDTO;
 import it.unisa.c02.rently.rently_application.data.model.Noleggio;
 import it.unisa.c02.rently.rently_application.data.model.Utente;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -17,7 +17,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/noleggio")
+@RequestMapping("/api/noleggio")
 @CrossOrigin(
         origins = {
                 "*",
@@ -34,6 +34,8 @@ public class GestioneNoleggioController {
     private final GestioneNoleggioService noleggioService;
     private final ResponseService responseService;
     private final GestioneAreaPersonaleService areaPersonaleService;
+    private final GestioneAnnuncioService annuncioService;
+    private final GestioneValutazioneService valutazioneService;
 
     @GetMapping("/noleggiante")
     public ResponseEntity<String> getNoleggiByNoleggiante(@RequestParam long idUtente) {
@@ -44,9 +46,17 @@ public class GestioneNoleggioController {
 
         if(noleggiante!=null){
             List<Noleggio> noleggi = noleggioService.getNoleggiByNoleggiante(noleggiante);
-            List<NoleggioDTO> list = new ArrayList<NoleggioDTO>();
+            List<NoleggioDTO> list = new ArrayList<>();
             for (Noleggio n: noleggi) {
                 NoleggioDTO item = new NoleggioDTO().convertFromModel(n);
+                item.setValutazioneAlNoleggiatore(valutazioneService.valutazioneNoleggiatoreIsPresent(n));
+                item.setValutazioneAnnuncio(valutazioneService.valutazioneAnnuncioIsPresent(n));
+                item.setValutazioneAlNoleggiante(valutazioneService.valutazioneNoleggianteIsPresent(n));
+                if(item.isValutazioneAlNoleggiante() && item.isValutazioneAlNoleggiatore() && item.isValutazioneAnnuncio()){
+
+                    item.setStato("CONCLUSOCONVALUTAZIONE");
+                }
+
                 list.add(item);
             }
             return responseService.Ok(list);
@@ -64,9 +74,16 @@ public class GestioneNoleggioController {
 
         if(noleggiatore!=null){
             List<Noleggio> noleggi = noleggioService.getNoleggiByNoleggiatore(noleggiatore);
-            List<NoleggioDTO> list = new ArrayList<NoleggioDTO>();
+            List<NoleggioDTO> list = new ArrayList<>();
             for (Noleggio n: noleggi) {
                 NoleggioDTO item = new NoleggioDTO().convertFromModel(n);
+                item.setValutazioneAlNoleggiatore(valutazioneService.valutazioneNoleggiatoreIsPresent(n));
+                item.setValutazioneAnnuncio(valutazioneService.valutazioneAnnuncioIsPresent(n));
+                item.setValutazioneAlNoleggiante(valutazioneService.valutazioneNoleggianteIsPresent(n));
+                if(item.isValutazioneAlNoleggiante() && item.isValutazioneAlNoleggiatore() && item.isValutazioneAnnuncio()){
+
+                    item.setStato("CONCLUSOCONVALUTAZIONE");
+                }
                 list.add(item);
             }
             return responseService.Ok(list);
@@ -84,7 +101,7 @@ public class GestioneNoleggioController {
 
         if(noleggiante!=null){
             List<Noleggio> noleggi = noleggioService.getRichiesteByNoleggiante(noleggiante);
-            List<NoleggioDTO> list = new ArrayList<NoleggioDTO>();
+            List<NoleggioDTO> list = new ArrayList<>();
             for (Noleggio n: noleggi) {
                 NoleggioDTO item = new NoleggioDTO().convertFromModel(n);
                 list.add(item);
@@ -104,7 +121,7 @@ public class GestioneNoleggioController {
 
         if(noleggiatore!=null){
             List<Noleggio> noleggi = noleggioService.getRichiesteByNoleggiatore(noleggiatore);
-            List<NoleggioDTO> list = new ArrayList<NoleggioDTO>();
+            List<NoleggioDTO> list = new ArrayList<>();
             for (Noleggio n: noleggi) {
                 NoleggioDTO item = new NoleggioDTO().convertFromModel(n);
                 list.add(item);
@@ -114,5 +131,43 @@ public class GestioneNoleggioController {
         else
             return responseService.InternalError();
     }
+    @PostMapping("/aggiungi-noleggio")
+    public ResponseEntity<String> aggiungiNoleggio(@RequestBody NoleggioDTO data){
 
+        Noleggio item = new Noleggio();
+        item.setStato(Noleggio.EnumStato.valueOf(data.getStato()));
+        item.setPrezzoTotale(data.getPrezzoTotale());
+        item.setDataInizio(data.getDataInizio());
+        item.setDataFine(data.getDataFine());
+        item.setNoleggiante(areaPersonaleService.getDatiPrivati(data.getNoleggiante()));
+        item.setNoleggiatore(areaPersonaleService.getDatiPrivati(data.getNoleggiatore()));
+        item.setAnnuncio(annuncioService.getAnnuncio(data.getAnnuncio()).orElse(null));
+
+        if(item.getNoleggiante() != null && item.getNoleggiatore()!= null && item.getAnnuncio() != null){
+            item = noleggioService.addNoleggio(item);
+            return responseService.Ok(item);
+        }
+        else
+            return responseService.InternalError();
+    }
+    @PostMapping("/salva-noleggio")
+    public ResponseEntity<String> salvaNoleggio(@RequestBody NoleggioDTO data){
+
+        Noleggio item = new Noleggio();
+        item.setStato(Noleggio.EnumStato.valueOf(data.getStato()));
+        item.setPrezzoTotale(data.getPrezzoTotale());
+        item.setDataInizio(data.getDataInizio());
+        item.setDataFine(data.getDataFine());
+        item.setNoleggiante(areaPersonaleService.getDatiPrivati(data.getNoleggiante()));
+        item.setNoleggiatore(areaPersonaleService.getDatiPrivati(data.getNoleggiatore()));
+        item.setAnnuncio(annuncioService.getAnnuncio(data.getAnnuncio()).orElse(null));
+
+        if(item.getNoleggiante() != null && item.getNoleggiatore()!= null && item.getAnnuncio() != null){
+            item = noleggioService.updateStatoNoleggio(item);
+            return responseService.Ok(item);
+        }
+        else
+            return responseService.InternalError();
+
+    }
 }

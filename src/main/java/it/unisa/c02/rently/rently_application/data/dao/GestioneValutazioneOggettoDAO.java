@@ -15,4 +15,7 @@ public interface GestioneValutazioneOggettoDAO extends JpaRepository<Valutazione
 
     @Query("select AVG(v.voto) from ValutazioneOggetto v where v.annuncio = ?1")
     double mediaValutazioniOggettoById(long annuncio);
+
+    @Query("select vo from Noleggio n, ValutazioneOggetto vo where n.id=?1 and n = vo.noleggio and n.annuncio = vo.annuncio and n.noleggiante = vo.valutatore")
+    ValutazioneOggetto valutazioneAnnuncioIsPresent(long idNoleggio);
 }

@@ -2,6 +2,7 @@ package it.unisa.c02.rently.rently_application.business.gestioneAvvisi.controlle
 import it.unisa.c02.rently.rently_application.business.gestioneAnnuncio.service.GestioneAnnuncioService;
 import it.unisa.c02.rently.rently_application.business.gestioneAreaPersonale.service.GestioneAreaPersonaleService;
 import it.unisa.c02.rently.rently_application.business.gestioneAvvisi.service.GestioneAvvisiService;
+import it.unisa.c02.rently.rently_application.business.gestioneNoleggio.service.GestioneNoleggioService;
 import it.unisa.c02.rently.rently_application.commons.mail.EmailService;
 import it.unisa.c02.rently.rently_application.commons.services.responseService.ResponseService;
 import it.unisa.c02.rently.rently_application.data.dto.SegnalazioneDTO;
@@ -32,6 +33,7 @@ public class GestioneAvvisiController {
     private final ResponseService responseService;
     private final EmailService emailService;
     private final GestioneAnnuncioService annuncioService;
+    private final GestioneNoleggioService noleggioService;
 
     @PostMapping("/aggiungi-segnalazione")
     public ResponseEntity<String> aggiungiSegnalazione(@RequestBody SegnalazioneDTO segnalazioneDTO) {
@@ -59,26 +61,35 @@ public class GestioneAvvisiController {
     }
 
     @GetMapping("/notifica-arrivo-richiesta-noleggio")
-    public ResponseEntity<String> notificaArrivoRichiestaNoleggio(@RequestBody Noleggio noleggio){
+    public ResponseEntity<String> notificaArrivoRichiestaNoleggio(@RequestParam long id_noleggio){
         try{
+            Noleggio noleggio = noleggioService.getNoleggio(id_noleggio);
+            if(noleggio== null){
+                return responseService.InternalError();
+            }
             Utente noleggiatore= noleggio.getNoleggiatore();
             Annuncio annuncio = annuncioService.getAnnuncio(noleggio.getAnnuncio().getId()).orElse(null);
             if(noleggiatore!= null && annuncio!=null){
                 String subject = "Nuova richiesta di noleggio";
                 String text = "Salve "+noleggiatore.getUsername()+",\nhai appena ricevuto una nuova richiesta di noleggio da parte di "+noleggio.getNoleggiante().getUsername()+" per"+
-                        "il tuo annuncio "+annuncio.getNome()+".\nAccedi a Rently e controlla le tue richieste per saperne di più!";
+                        " il tuo annuncio "+annuncio.getNome()+".\nAccedi a Rently e controlla le tue richieste per saperne di più!";
                 emailService.sendEmail(noleggiatore.getEmail(), subject,text);
                 return responseService.Ok();
-            }
-            return responseService.InternalError();
+            }else
+                return responseService.InternalError();
         }catch(Exception e){
+            e.printStackTrace();
             return responseService.InternalError();
         }
     }
 
     @GetMapping("/notifica-richiesta-noleggio-accettata")
-    public ResponseEntity<String> notificaRichiestaNoleggioAccettata(@RequestBody Noleggio noleggio){
+    public ResponseEntity<String> notificaRichiestaNoleggioAccettata(@RequestParam long id_noleggio){
         try{
+            Noleggio noleggio = noleggioService.getNoleggio(id_noleggio);
+            if(noleggio== null){
+                return responseService.InternalError();
+            }
             Utente noleggiante= noleggio.getNoleggiante();
             Annuncio annuncio = annuncioService.getAnnuncio(noleggio.getAnnuncio().getId()).orElse(null);
             if(noleggiante!= null && annuncio!=null){
@@ -88,16 +99,20 @@ public class GestioneAvvisiController {
 
                 emailService.sendEmail(noleggiante.getEmail(), subject,text);
                 return responseService.Ok();
-            }
-            return responseService.InternalError();
+            }else
+                return responseService.InternalError();
         }catch(Exception e){
             return responseService.InternalError();
         }
     }
 
     @GetMapping("/notifica-richiesta-noleggio-rifiutata")
-    public ResponseEntity<String> notificaRichiestaNoleggioRifiutata(@RequestBody Noleggio noleggio){
+    public ResponseEntity<String> notificaRichiestaNoleggioRifiutata(@RequestParam long id_noleggio){
         try{
+            Noleggio noleggio = noleggioService.getNoleggio(id_noleggio);
+            if(noleggio== null){
+                return responseService.InternalError();
+            }
             Utente noleggiante= noleggio.getNoleggiante();
             Annuncio annuncio = annuncioService.getAnnuncio(noleggio.getAnnuncio().getId()).orElse(null);
             if(noleggiante!= null && annuncio!=null){
@@ -107,16 +122,20 @@ public class GestioneAvvisiController {
 
                 emailService.sendEmail(noleggiante.getEmail(), subject,text);
                 return responseService.Ok();
-            }
-            return responseService.InternalError();
+            }else
+                return responseService.InternalError();
         }catch(Exception e){
             return responseService.InternalError();
         }
     }
 
     @GetMapping("/notifica-inizio-noleggio")
-    public ResponseEntity<String> notificaInizioNoleggio(@RequestBody Noleggio noleggio){
+    public ResponseEntity<String> notificaInizioNoleggio(@RequestParam long id_noleggio){
         try{
+            Noleggio noleggio = noleggioService.getNoleggio(id_noleggio);
+            if(noleggio== null){
+                return responseService.InternalError();
+            }
             Utente noleggiante= noleggio.getNoleggiante();
             Utente noleggiatore= noleggio.getNoleggiatore();
             Annuncio annuncio = annuncioService.getAnnuncio(noleggio.getAnnuncio().getId()).orElse(null);
@@ -130,16 +149,20 @@ public class GestioneAvvisiController {
                 emailService.sendEmail(noleggiante.getEmail(), subject,textNoleggiante);
                 emailService.sendEmail(noleggiatore.getEmail(), subject,textNoleggiatore);
                 return responseService.Ok();
-            }
-            return responseService.InternalError();
+            }else
+                return responseService.InternalError();
         }catch(Exception e){
             return responseService.InternalError();
         }
     }
 
     @GetMapping("/notifica-fine-noleggio")
-    public ResponseEntity<String> notificaFineNoleggio(@RequestBody Noleggio noleggio){
+    public ResponseEntity<String> notificaFineNoleggio(@RequestParam long id_noleggio){
         try{
+            Noleggio noleggio = noleggioService.getNoleggio(id_noleggio);
+            if(noleggio== null){
+                return responseService.InternalError();
+            }
             Utente noleggiante= noleggio.getNoleggiante();
             Utente noleggiatore= noleggio.getNoleggiatore();
             Annuncio annuncio = annuncioService.getAnnuncio(noleggio.getAnnuncio().getId()).orElse(null);
@@ -153,8 +176,8 @@ public class GestioneAvvisiController {
                 emailService.sendEmail(noleggiante.getEmail(), subject,textNoleggiante);
                 emailService.sendEmail(noleggiatore.getEmail(), subject,textNoleggiatore);
                 return responseService.Ok();
-            }
-            return responseService.InternalError();
+            }else
+                return responseService.InternalError();
         }catch(Exception e){
             return responseService.InternalError();
         }

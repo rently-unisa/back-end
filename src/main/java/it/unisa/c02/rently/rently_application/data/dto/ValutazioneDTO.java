@@ -13,11 +13,12 @@ public class ValutazioneDTO {
 
     }
 
-    public ValutazioneDTO(int voto, String descrizione, long valutato, long valutatore) {
+    public ValutazioneDTO(int voto, String descrizione, long valutato, long valutatore, long noleggio) {
         this.voto = voto;
         this.descrizione = descrizione;
         this.valutato = valutato;
         this.valutatore = valutatore;
+        this.noleggio = noleggio;
     }
 
     private int voto;
@@ -28,12 +29,15 @@ public class ValutazioneDTO {
 
     private long valutatore;
 
+    private long noleggio;
+
     public ValutazioneDTO convertFromValutazioneOggetto(ValutazioneOggetto vo) {
         ValutazioneDTO item = new ValutazioneDTO();
         item.setDescrizione(vo.getDescrizione());
         item.setVoto(vo.getVoto());
         item.setValutato(vo.getAnnuncio().getId());
         item.setValutatore(vo.getValutatore().getId());
+        item.setNoleggio(vo.getNoleggio().getId());
 
         return item;
     }
@@ -44,6 +48,7 @@ public class ValutazioneDTO {
         item.setVoto(vu.getVoto());
         item.setValutato(vu.getValutato().getId());
         item.setValutatore(vu.getValutatore().getId());
+        item.setNoleggio(vu.getNoleggio().getId());
 
         return item;
     }

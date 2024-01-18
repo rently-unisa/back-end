@@ -4,13 +4,16 @@ import it.unisa.c02.rently.rently_application.data.model.Noleggio;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Date;
 
 @Getter
 @Setter
-public class NoleggioDTO implements Serializable {
+public class NoleggioDTO {
+
+    public NoleggioDTO() {
+
+    }
 
     private long id;
 
@@ -27,6 +30,12 @@ public class NoleggioDTO implements Serializable {
     private long noleggiatore;
 
     private long annuncio;
+
+    private boolean valutazioneAlNoleggiante;
+
+    private boolean valutazioneAlNoleggiatore;
+
+    private boolean valutazioneAnnuncio;
 
     public NoleggioDTO convertFromModel(Noleggio n) {
         NoleggioDTO item = new NoleggioDTO();

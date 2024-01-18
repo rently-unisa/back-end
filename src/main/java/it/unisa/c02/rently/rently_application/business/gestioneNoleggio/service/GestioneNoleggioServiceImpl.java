@@ -36,15 +36,14 @@ public class GestioneNoleggioServiceImpl implements GestioneNoleggioService {
     }
 
     @Override
-    public boolean addNoleggio(Noleggio noleggio) {
-        noleggioDAO.save(noleggio);
-        return true;
+    public Noleggio addNoleggio(Noleggio noleggio) {
+        return noleggioDAO.save(noleggio);
     }
 
     @Override
-    public boolean deleteNoleggio(Noleggio noleggio) {
+    public void deleteNoleggio(Noleggio noleggio) {
         noleggioDAO.deleteById(noleggio.getId());
-        return true;
+
     }
 
     @Override

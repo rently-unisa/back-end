@@ -9,6 +9,7 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.util.List;
 
 
 @Entity
@@ -41,7 +42,7 @@ public class Noleggio {
     }
 
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column
+    @Column(name="noleggio_id")
     private long id;
 
     @Column(nullable = false)
@@ -72,9 +73,15 @@ public class Noleggio {
     @OnDelete(action = OnDeleteAction.SET_NULL)
     private Annuncio annuncio;
 
+    @OneToMany(mappedBy="noleggio")
+    private List<ValutazioneOggetto> valutazioniOggetto;
+
+    @OneToMany(mappedBy="noleggio")
+    private List<ValutazioneUtente> valutazioniUtente;
     public enum EnumStato {
-        RICHIESTA, ACCETTATA, RIFIUTATA, INIZIO, IN_CORSO, FINE, CONCLUSO
+        RICHIESTA, ACCETTATA, RIFIUTATA, INIZIO, IN_CORSO, FINE, CONCLUSO, CONCLUSOCONVALUTAZIONE
     }
+
 
     @Override
     public String toString() {

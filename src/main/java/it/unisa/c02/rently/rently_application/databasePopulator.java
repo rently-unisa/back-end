@@ -66,8 +66,8 @@ public class databasePopulator implements CommandLineRunner {
 
         // Aggiunta degli Annunci
 
-        Annuncio annuncio1 = new Annuncio(1,"Smartphone Samsung", "Via Roma", "Milano", "20121", "Telefono in ottime condizioni", new BigDecimal("30.00"), "img1.jpg", Annuncio.EnumCategoria.ELETTRONICA, Annuncio.EnumCondizione.OTTIMA, Date.valueOf("2024-10-05"), user2, null, null);
-        Annuncio annuncio2 = new Annuncio(2,"Libro di Fantascienza", "Corso Magenta", "Torino", "10123", "Romanzo di Isaac Asimov", new BigDecimal("5.00"), "img2.jpg", Annuncio.EnumCategoria.LIBRI, Annuncio.EnumCondizione.BUONA, Date.valueOf("2024-11-15"), user2, null, null);
+        Annuncio annuncio1 = new Annuncio(1,"Smartphone Samsung", "Via Roma", "Milan", "20121", "Telefono in ottime condizioni", new BigDecimal("30.00"), "img1.jpg", Annuncio.EnumCategoria.ELETTRONICA, Annuncio.EnumCondizione.OTTIMA, Date.valueOf("2024-10-05"), user2, null, null);
+        Annuncio annuncio2 = new Annuncio(2,"Libro di Fantascienza", "Corso Magenta", "Torin", "10123", "Romanzo di Isaac Asimov", new BigDecimal("5.00"), "img2.jpg", Annuncio.EnumCategoria.LIBRI, Annuncio.EnumCondizione.BUONA, Date.valueOf("2024-11-15"), user2, null, null);
         Annuncio annuncio3 = new Annuncio(3,"Lavatrice Whirlpool", "Via Garibaldi", "Roma", "00185", "Lavatrice con centrifuga", new BigDecimal("100.00"), "img3.jpg", Annuncio.EnumCategoria.ELETTRODOMESTICI, Annuncio.EnumCondizione.DISCRETA, Date.valueOf("2025-01-20"), user4, null, null);
         Annuncio annuncio4 = new Annuncio(4,"Tagliaerba Bosch", "Via Veneto", "Napoli", "80122", "Tagliaerba elettrico", new BigDecimal("60.00"), "img4.jpg", Annuncio.EnumCategoria.GIARDINO, Annuncio.EnumCondizione.OTTIMA, Date.valueOf("2024-12-10"), user8, null, null);
         Annuncio annuncio5 = new Annuncio(5,"Attrezzi da giardinaggio", "Via Dante", "Firenze", "50123", "Kit completo per giardinaggio", new BigDecimal("50.00"), "img5.jpg", Annuncio.EnumCategoria.GIARDINAGGIO, Annuncio.EnumCondizione.BUONA, Date.valueOf("2025-03-07"), user6, null, null);
@@ -132,15 +132,15 @@ public class databasePopulator implements CommandLineRunner {
         // Aggiunta Noleggio
 
         Noleggio noleggio1 = new Noleggio(1,Noleggio.EnumStato.CONCLUSO, new BigDecimal("100.00"), Date.valueOf("2024-02-01"), Date.valueOf("2024-02-07"), Date.valueOf("2024-01-28"), user1, user2, annuncio1);
-        Noleggio noleggio2 = new Noleggio(2,Noleggio.EnumStato.CONCLUSO, new BigDecimal("100.00"), Date.valueOf("2024-02-10"), Date.valueOf("2024-02-15"), Date.valueOf("2024-02-07"), user3, user2, annuncio2);
-        Noleggio noleggio3 = new Noleggio(3,Noleggio.EnumStato.CONCLUSO, new BigDecimal("100.00"), Date.valueOf("2024-03-05"), Date.valueOf("2024-03-10"), Date.valueOf("2024-03-02"), user3, user4, annuncio3);
-        Noleggio noleggio4 = new Noleggio(4,Noleggio.EnumStato.CONCLUSO, new BigDecimal("100.00"), Date.valueOf("2024-03-20"), Date.valueOf("2024-03-26"), Date.valueOf("2024-03-16"), user5, user8, annuncio4);
-        Noleggio noleggio5 = new Noleggio(5,Noleggio.EnumStato.CONCLUSO, new BigDecimal("100.00"), Date.valueOf("2024-03-13"), Date.valueOf("2024-03-18"), Date.valueOf("2024-03-10"), user5, user6, annuncio5);
-        Noleggio noleggio6 = new Noleggio(6,Noleggio.EnumStato.CONCLUSO, new BigDecimal("100.00"), Date.valueOf("2024-04-4"), Date.valueOf("2024-04-11"), Date.valueOf("2024-04-1"), user10, user8, annuncio6);
-        Noleggio noleggio7 = new Noleggio(7,Noleggio.EnumStato.CONCLUSO, new BigDecimal("100.00"), Date.valueOf("2024-04-3"), Date.valueOf("2024-04-8"), Date.valueOf("2024-04-1"), user9, user7, annuncio7);
-        Noleggio noleggio8 = new Noleggio(8,Noleggio.EnumStato.CONCLUSO, new BigDecimal("100.00"), Date.valueOf("2024-02-7"), Date.valueOf("2024-02-16"), Date.valueOf("2024-02-4"), user14, user12, annuncio8);
-        Noleggio noleggio9 = new Noleggio(9,Noleggio.EnumStato.CONCLUSO, new BigDecimal("100.00"), Date.valueOf("2024-03-01"), Date.valueOf("2024-03-04"), Date.valueOf("2024-02-27"), user15, user13, annuncio9);
-        Noleggio noleggio10= new Noleggio(10,Noleggio.EnumStato.CONCLUSO,new BigDecimal("100.00"), Date.valueOf("2024-03-09"),Date.valueOf("2024-03-15"), Date.valueOf("2024-03-03"), user10, user1, annuncio10);
+        Noleggio noleggio2 = new Noleggio(2,Noleggio.EnumStato.CONCLUSO, new BigDecimal("200.00"), Date.valueOf("2024-02-10"), Date.valueOf("2024-02-15"), Date.valueOf("2024-02-07"), user3, user2, annuncio2);
+        Noleggio noleggio3 = new Noleggio(3,Noleggio.EnumStato.CONCLUSO, new BigDecimal("300.00"), Date.valueOf("2024-03-05"), Date.valueOf("2024-03-10"), Date.valueOf("2024-03-02"), user3, user4, annuncio3);
+        Noleggio noleggio4 = new Noleggio(4,Noleggio.EnumStato.CONCLUSO, new BigDecimal("400.00"), Date.valueOf("2024-03-20"), Date.valueOf("2024-03-26"), Date.valueOf("2024-03-16"), user5, user8, annuncio4);
+        Noleggio noleggio5 = new Noleggio(5,Noleggio.EnumStato.CONCLUSO, new BigDecimal("500.00"), Date.valueOf("2024-03-13"), Date.valueOf("2024-03-18"), Date.valueOf("2024-03-10"), user5, user6, annuncio5);
+        Noleggio noleggio6 = new Noleggio(6,Noleggio.EnumStato.CONCLUSO, new BigDecimal("600.00"), Date.valueOf("2024-04-4"), Date.valueOf("2024-04-11"), Date.valueOf("2024-04-1"), user10, user8, annuncio6);
+        Noleggio noleggio7 = new Noleggio(7,Noleggio.EnumStato.CONCLUSO, new BigDecimal("700.00"), Date.valueOf("2024-04-3"), Date.valueOf("2024-04-8"), Date.valueOf("2024-04-1"), user9, user7, annuncio7);
+        Noleggio noleggio8 = new Noleggio(8,Noleggio.EnumStato.CONCLUSO, new BigDecimal("800.00"), Date.valueOf("2024-02-7"), Date.valueOf("2024-02-16"), Date.valueOf("2024-02-4"), user14, user12, annuncio8);
+        Noleggio noleggio9 = new Noleggio(9,Noleggio.EnumStato.CONCLUSO, new BigDecimal("900.00"), Date.valueOf("2024-03-01"), Date.valueOf("2024-03-04"), Date.valueOf("2024-02-27"), user15, user13, annuncio9);
+        Noleggio noleggio10= new Noleggio(10,Noleggio.EnumStato.CONCLUSO,new BigDecimal("99.00"), Date.valueOf("2024-03-09"),Date.valueOf("2024-03-15"), Date.valueOf("2024-03-03"), user10, user1, annuncio10);
 
         this.noleggioService.addNoleggio(noleggio1);
         this.noleggioService.addNoleggio(noleggio2);

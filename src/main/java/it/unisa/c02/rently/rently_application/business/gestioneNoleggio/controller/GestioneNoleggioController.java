@@ -39,8 +39,6 @@ public class GestioneNoleggioController {
 
     @GetMapping("/noleggiante")
     public ResponseEntity<String> getNoleggiByNoleggiante(@RequestParam long idUtente) {
-        //Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        //Utente noleggiante = (Utente) authentication.getPrincipal();
 
         Utente noleggiante = areaPersonaleService.getDatiPrivati(idUtente);
 
@@ -67,8 +65,6 @@ public class GestioneNoleggioController {
 
     @GetMapping("/noleggiatore")
     public ResponseEntity<String> getNoleggiByNoleggiatore(@RequestParam long idUtente) {
-        //Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        //Utente noleggiatore = (Utente) authentication.getPrincipal();
 
         Utente noleggiatore = areaPersonaleService.getDatiPrivati(idUtente);
 
@@ -94,8 +90,6 @@ public class GestioneNoleggioController {
 
     @GetMapping("/richieste/noleggiante")
     public ResponseEntity<String> getRichiesteByNoleggiante(@RequestParam long idUtente) {
-        //Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-       //Utente noleggiante = (Utente) authentication.getPrincipal();
 
         Utente noleggiante = areaPersonaleService.getDatiPrivati(idUtente);
 
@@ -114,8 +108,6 @@ public class GestioneNoleggioController {
 
     @GetMapping("/richieste/noleggiatore")
     public ResponseEntity<String> getRichiesteByNoleggiatore(@RequestParam long idUtente) {
-        //Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        //Utente noleggiatore = (Utente) authentication.getPrincipal();
 
         Utente noleggiatore = areaPersonaleService.getDatiPrivati(idUtente);
 

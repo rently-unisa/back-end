@@ -107,12 +107,12 @@ public class GestioneAnnuncioController {
             item.setNome(model.getNome());
             item.setStrada(model.getStrada());
             item.setCitta(model.getCitta());
-            item.setCAP(model.getCap());
+            item.setCAP(model.getCAP());
             item.setDescrizione(model.getDescrizione());
             item.setPrezzo(model.getPrezzo());
             item.setCategoria(Annuncio.EnumCategoria.valueOf(model.getCategoria().toUpperCase()));
             item.setCondizione(Annuncio.EnumCondizione.valueOf(model.getCondizione().toUpperCase()));
-            java.sql.Date date = java.sql.Date.valueOf(model.getDataFine());
+            java.sql.Date date = model.getDataFine();
             item.setDataFine(date);
 
             Utente user = gestioneAreaPersonaleService.getDatiPrivati(model.getIdUtente());

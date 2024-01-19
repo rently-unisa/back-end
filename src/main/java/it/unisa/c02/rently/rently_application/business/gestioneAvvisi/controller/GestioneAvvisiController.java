@@ -44,7 +44,7 @@ public class GestioneAvvisiController {
             Segnalazione segnalazione = new Segnalazione();
             segnalazione.setContenuto(segnalazioneDTO.getContenuto());
             segnalazione.setTipo(Segnalazione.EnumTipo.valueOf(segnalazioneDTO.getTipo()));
-            Utente user = areaPersonaleService.getDatiPrivati(segnalazione.getId());
+            Utente user = areaPersonaleService.getDatiPrivati(segnalazioneDTO.getSegnalatore());
             if (user != null) {
                 segnalazione.setSegnalatore(user);
             }

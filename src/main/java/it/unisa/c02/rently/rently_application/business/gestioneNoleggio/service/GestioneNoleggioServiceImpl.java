@@ -68,4 +68,10 @@ public class GestioneNoleggioServiceImpl implements GestioneNoleggioService {
         return noleggioDAO.checkFineNoleggio(dateNow);
     }
 
+    @Override
+    public List<Noleggio> findRichieste() {
+
+        return noleggioDAO.findRichieste();
+    }
+
 }

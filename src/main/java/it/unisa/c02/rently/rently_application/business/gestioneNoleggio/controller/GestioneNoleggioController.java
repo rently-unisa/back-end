@@ -139,6 +139,7 @@ public class GestioneNoleggioController {
         item.setPrezzoTotale(data.getPrezzoTotale());
         item.setDataInizio(data.getDataInizio());
         item.setDataFine(data.getDataFine());
+        item.setDataRichiesta(data.getDataRichiesta());
         item.setNoleggiante(areaPersonaleService.getDatiPrivati(data.getNoleggiante()));
         item.setNoleggiatore(areaPersonaleService.getDatiPrivati(data.getNoleggiatore()));
         item.setAnnuncio(annuncioService.getAnnuncio(data.getAnnuncio()).orElse(null));
@@ -158,6 +159,7 @@ public class GestioneNoleggioController {
         item.setPrezzoTotale(data.getPrezzoTotale());
         item.setDataInizio(data.getDataInizio());
         item.setDataFine(data.getDataFine());
+        item.setDataRichiesta(data.getDataRichiesta());
         item.setNoleggiante(areaPersonaleService.getDatiPrivati(data.getNoleggiante()));
         item.setNoleggiatore(areaPersonaleService.getDatiPrivati(data.getNoleggiatore()));
         item.setAnnuncio(annuncioService.getAnnuncio(data.getAnnuncio()).orElse(null));

@@ -1,6 +1,7 @@
 package it.unisa.c02.rently.rently_application.data.dto;
 
 import it.unisa.c02.rently.rently_application.data.model.Noleggio;
+import jakarta.persistence.Column;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -25,6 +26,8 @@ public class NoleggioDTO {
 
     private Date dataFine;
 
+    private Date dataRichiesta;
+
     private long noleggiante;
 
     private long noleggiatore;
@@ -44,6 +47,7 @@ public class NoleggioDTO {
         item.setPrezzoTotale(n.getPrezzoTotale());
         item.setDataInizio(n.getDataInizio());
         item.setDataFine(n.getDataFine());
+        item.setDataRichiesta(n.getDataRichiesta());
         item.setNoleggiante(n.getNoleggiante().getId());
         item.setNoleggiatore(n.getNoleggiatore().getId());
         item.setAnnuncio(n.getAnnuncio().getId());

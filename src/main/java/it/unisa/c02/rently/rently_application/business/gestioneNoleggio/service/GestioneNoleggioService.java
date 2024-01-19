@@ -16,8 +16,8 @@ public interface GestioneNoleggioService {
     Noleggio addNoleggio(Noleggio noleggio);
     void deleteNoleggio(Noleggio noleggio);
     Noleggio updateStatoNoleggio(Noleggio noleggio);
-    List<Noleggio>  checkDisponibilita(long id_annuncio, Date inizio, Date fine);
-
+    List<Noleggio> checkDisponibilita(long id_annuncio, Date inizio, Date fine);
+    List<Noleggio> findRichieste ();
     Noleggio getNoleggio(long id);
     List<Noleggio> checkFineNoleggio(Date dateNow);
 }

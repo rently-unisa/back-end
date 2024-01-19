@@ -131,16 +131,16 @@ public class databasePopulator implements CommandLineRunner {
 
         // Aggiunta Noleggio
 
-        Noleggio noleggio1 = new Noleggio(1,Noleggio.EnumStato.CONCLUSO, new BigDecimal("100.00"), Date.valueOf("2024-02-01"), Date.valueOf("2024-02-07"), user1, user2, annuncio1);
-        Noleggio noleggio2 = new Noleggio(2,Noleggio.EnumStato.CONCLUSO, new BigDecimal("100.00"), Date.valueOf("2024-02-10"), Date.valueOf("2024-02-15"), user3, user2, annuncio2);
-        Noleggio noleggio3 = new Noleggio(3,Noleggio.EnumStato.CONCLUSO, new BigDecimal("100.00"), Date.valueOf("2024-03-05"), Date.valueOf("2024-03-10"), user3, user4, annuncio3);
-        Noleggio noleggio4 = new Noleggio(4,Noleggio.EnumStato.CONCLUSO, new BigDecimal("100.00"), Date.valueOf("2024-03-20"), Date.valueOf("2024-03-26"), user5, user8, annuncio4);
-        Noleggio noleggio5 = new Noleggio(5,Noleggio.EnumStato.CONCLUSO, new BigDecimal("100.00"), Date.valueOf("2024-03-13"), Date.valueOf("2024-03-18"), user5, user6, annuncio5);
-        Noleggio noleggio6 = new Noleggio(6,Noleggio.EnumStato.CONCLUSO, new BigDecimal("100.00"), Date.valueOf("2024-04-4"), Date.valueOf("2024-04-11"), user10, user8, annuncio6);
-        Noleggio noleggio7 = new Noleggio(7,Noleggio.EnumStato.CONCLUSO, new BigDecimal("100.00"), Date.valueOf("2024-04-3"), Date.valueOf("2024-04-8"), user9, user7, annuncio7);
-        Noleggio noleggio8 = new Noleggio(8,Noleggio.EnumStato.CONCLUSO, new BigDecimal("100.00"), Date.valueOf("2024-02-7"), Date.valueOf("2024-02-16"), user14, user12, annuncio8);
-        Noleggio noleggio9 = new Noleggio(9,Noleggio.EnumStato.CONCLUSO, new BigDecimal("100.00"), Date.valueOf("2024-03-01"), Date.valueOf("2024-03-04"), user15, user13, annuncio9);
-        Noleggio noleggio10= new Noleggio(10,Noleggio.EnumStato.CONCLUSO, new BigDecimal("100.00"), Date.valueOf("2024-03-09"), Date.valueOf("2024-03-15"), user10, user1, annuncio10);
+        Noleggio noleggio1 = new Noleggio(1,Noleggio.EnumStato.CONCLUSO, new BigDecimal("100.00"), Date.valueOf("2024-02-01"), Date.valueOf("2024-02-07"), Date.valueOf("2024-01-28"), user1, user2, annuncio1);
+        Noleggio noleggio2 = new Noleggio(2,Noleggio.EnumStato.CONCLUSO, new BigDecimal("100.00"), Date.valueOf("2024-02-10"), Date.valueOf("2024-02-15"), Date.valueOf("2024-02-07"), user3, user2, annuncio2);
+        Noleggio noleggio3 = new Noleggio(3,Noleggio.EnumStato.CONCLUSO, new BigDecimal("100.00"), Date.valueOf("2024-03-05"), Date.valueOf("2024-03-10"), Date.valueOf("2024-03-02"), user3, user4, annuncio3);
+        Noleggio noleggio4 = new Noleggio(4,Noleggio.EnumStato.CONCLUSO, new BigDecimal("100.00"), Date.valueOf("2024-03-20"), Date.valueOf("2024-03-26"), Date.valueOf("2024-03-16"), user5, user8, annuncio4);
+        Noleggio noleggio5 = new Noleggio(5,Noleggio.EnumStato.CONCLUSO, new BigDecimal("100.00"), Date.valueOf("2024-03-13"), Date.valueOf("2024-03-18"), Date.valueOf("2024-03-10"), user5, user6, annuncio5);
+        Noleggio noleggio6 = new Noleggio(6,Noleggio.EnumStato.CONCLUSO, new BigDecimal("100.00"), Date.valueOf("2024-04-4"), Date.valueOf("2024-04-11"), Date.valueOf("2024-04-1"), user10, user8, annuncio6);
+        Noleggio noleggio7 = new Noleggio(7,Noleggio.EnumStato.CONCLUSO, new BigDecimal("100.00"), Date.valueOf("2024-04-3"), Date.valueOf("2024-04-8"), Date.valueOf("2024-04-1"), user9, user7, annuncio7);
+        Noleggio noleggio8 = new Noleggio(8,Noleggio.EnumStato.CONCLUSO, new BigDecimal("100.00"), Date.valueOf("2024-02-7"), Date.valueOf("2024-02-16"), Date.valueOf("2024-02-4"), user14, user12, annuncio8);
+        Noleggio noleggio9 = new Noleggio(9,Noleggio.EnumStato.CONCLUSO, new BigDecimal("100.00"), Date.valueOf("2024-03-01"), Date.valueOf("2024-03-04"), Date.valueOf("2024-02-27"), user15, user13, annuncio9);
+        Noleggio noleggio10= new Noleggio(10,Noleggio.EnumStato.CONCLUSO,new BigDecimal("100.00"), Date.valueOf("2024-03-09"),Date.valueOf("2024-03-15"), Date.valueOf("2024-03-03"), user10, user1, annuncio10);
 
         this.noleggioService.addNoleggio(noleggio1);
         this.noleggioService.addNoleggio(noleggio2);

@@ -20,22 +20,24 @@ public class Noleggio {
     public Noleggio() {
     }
 
-    public Noleggio(EnumStato stato, BigDecimal prezzoTotale, Date dataInizio, Date dataFine, Utente noleggiante, Utente noleggiatore, Annuncio annuncio) {
+    public Noleggio(EnumStato stato, BigDecimal prezzoTotale, Date dataInizio, Date dataFine, Date dataRichiesta, Utente noleggiante, Utente noleggiatore, Annuncio annuncio) {
         this.stato = stato;
         this.prezzoTotale = prezzoTotale;
         this.dataInizio = dataInizio;
         this.dataFine = dataFine;
+        this.dataRichiesta = dataRichiesta;
         this.noleggiante = noleggiante;
         this.noleggiatore = noleggiatore;
         this.annuncio = annuncio;
     }
 
-    public Noleggio(long id, EnumStato stato, BigDecimal prezzoTotale, Date dataInizio, Date dataFine, Utente noleggiante, Utente noleggiatore, Annuncio annuncio) {
+    public Noleggio(long id, EnumStato stato, BigDecimal prezzoTotale, Date dataInizio, Date dataFine, Date dataRichiesta, Utente noleggiante, Utente noleggiatore, Annuncio annuncio) {
         this.id = id;
         this.stato = stato;
         this.prezzoTotale = prezzoTotale;
         this.dataInizio = dataInizio;
         this.dataFine = dataFine;
+        this.dataRichiesta = dataRichiesta;
         this.noleggiante = noleggiante;
         this.noleggiatore = noleggiatore;
         this.annuncio = annuncio;
@@ -57,6 +59,9 @@ public class Noleggio {
 
     @Column(nullable = false)
     private Date dataFine;
+
+    @Column(nullable = false)
+    private Date dataRichiesta;
 
     @ManyToOne
     @JoinColumn(referencedColumnName = "utente_id")

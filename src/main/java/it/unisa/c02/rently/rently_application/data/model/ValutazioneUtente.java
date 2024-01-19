@@ -14,11 +14,21 @@ public class ValutazioneUtente {
     public ValutazioneUtente() {
     }
 
-    public ValutazioneUtente(int voto, String descrizione, Utente valutato, Utente valutatore) {
+    public ValutazioneUtente(int voto, String descrizione, Utente valutato, Utente valutatore, Noleggio noleggio) {
         this.voto = voto;
         this.descrizione = descrizione;
         this.valutato = valutato;
         this.valutatore = valutatore;
+        this.noleggio= noleggio;
+    }
+
+    public ValutazioneUtente(long id, int voto, String descrizione, Utente valutato, Utente valutatore, Noleggio noleggio) {
+        this.id = id;
+        this.voto = voto;
+        this.descrizione = descrizione;
+        this.valutato = valutato;
+        this.valutatore = valutatore;
+        this.noleggio= noleggio;
     }
 
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
@@ -40,6 +50,11 @@ public class ValutazioneUtente {
     @OnDelete(action = OnDeleteAction.SET_NULL)
     private Utente valutatore;
 
+    @ManyToOne
+    @JoinColumn(referencedColumnName = "noleggio_id")
+    @OnDelete(action = OnDeleteAction.SET_NULL)
+    private Noleggio noleggio;
+
     @Override
     public String toString() {
         return "ValutazioneUtente{" +
@@ -47,6 +62,7 @@ public class ValutazioneUtente {
                 ", descrizione='" + descrizione + '\'' +
                 ", valutato=" + valutato +
                 ", valutatore=" + valutatore +
+                ", noleggio=" + noleggio +
                 '}';
     }
 }

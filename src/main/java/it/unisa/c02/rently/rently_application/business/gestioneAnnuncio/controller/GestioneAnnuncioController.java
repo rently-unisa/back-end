@@ -6,32 +6,60 @@ import it.unisa.c02.rently.rently_application.commons.services.storageService.Fi
 import it.unisa.c02.rently.rently_application.data.dto.AnnuncioDTO;
 import it.unisa.c02.rently.rently_application.data.model.Annuncio;
 import it.unisa.c02.rently.rently_application.data.model.Utente;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.sql.Date;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/gestione-annuncio")
+@RequestMapping("/api/annuncio")
+@CrossOrigin(
+origins = {
+        "*",
+},
+methods = {
+        RequestMethod.OPTIONS,
+        RequestMethod.GET,
+        RequestMethod.PUT,
+        RequestMethod.DELETE,
+        RequestMethod.POST
+})
 public class GestioneAnnuncioController {
 
     private final FilesStorageService storageService;
     private final ResponseService responseService;
     private final GestioneAnnuncioService gestioneAnnuncioService;
     private final GestioneAreaPersonaleService gestioneAreaPersonaleService;
+    private final HttpServletRequest httpServletRequest;
+    private final ResourceLoader resourceLoader;
     private final static String uploadsPath = "annunci";
 
-    @GetMapping("/visualliza-annuncio")
+    @Value("${uploads.path}")
+    private String uploadPath;
+
+    @GetMapping("/visualizza-annuncio")
     public ResponseEntity<String> getAnnuncio(@RequestParam long id)
     {
         try {
-            Annuncio item = gestioneAnnuncioService.getAnnuncio(id).orElse(null);
+            Annuncio annuncio = gestioneAnnuncioService.getAnnuncio(id).orElse(null);
+            AnnuncioDTO item = new AnnuncioDTO().convertFromModel(annuncio);
+
+            String serverAddress = String.format(
+                    "%s://%s:%d",
+                    httpServletRequest.getScheme(),
+                    httpServletRequest.getServerName(),
+                    httpServletRequest.getServerPort());
+
+            item.setServerImage(annuncio, serverAddress);
+
             return responseService.Ok(item);
 
         }
@@ -40,12 +68,25 @@ public class GestioneAnnuncioController {
         }
     }
 
-    @GetMapping("/visualliza-annunci-utente")
+    @GetMapping("/visualizza-annunci-utente")
     public ResponseEntity<String> getAnnunciUtente(@RequestParam long id)
     {
         try {
             Utente u = gestioneAreaPersonaleService.getDatiPrivati(id);
-            List<Annuncio> list = gestioneAnnuncioService.findAllByUtente(u);
+            List<Annuncio> annunci = gestioneAnnuncioService.findAllByUtente(u);
+            List<AnnuncioDTO> list = new ArrayList<AnnuncioDTO>();
+
+            String serverAddress = String.format(
+                    "%s://%s:%d",
+                    httpServletRequest.getScheme(),
+                    httpServletRequest.getServerName(),
+                    httpServletRequest.getServerPort());
+
+            for (Annuncio a: annunci) {
+                AnnuncioDTO item = new AnnuncioDTO().convertFromModel(a);
+                item.setServerImage(a, serverAddress);
+                list.add(item);
+            }
 
             return responseService.Ok(list);
         }
@@ -55,48 +96,63 @@ public class GestioneAnnuncioController {
     }
 
 
-    @PostMapping("/aggiungi-annuncio")
-    public ResponseEntity<String> addAnnuncio(@RequestPart("model") AnnuncioDTO data,
-                                @RequestPart("images") MultipartFile[] files) {
+    @PostMapping(value = "aggiungi-annuncio")
+    public ResponseEntity<String> addAnnuncio(@ModelAttribute("model") AnnuncioDTO model,
+                                              @RequestParam("image") MultipartFile image) {
 
         try {
 
 
             Annuncio item = new Annuncio();
 
-            item.setNome(data.getNome());
-            item.setStrada(data.getStrada());
-            item.setCitta(data.getCitta());
-            item.setCAP(data.getCAP());
-            item.setDescrizione(data.getDescrizione());
-            item.setPrezzo(data.getPrezzo());
-            item.setImmagine(data.getImmagine());
-            item.setCategoria(Annuncio.EnumCategoria.valueOf(data.getCategoria()));
-            item.setCondizione(Annuncio.EnumCondizione.valueOf(data.getCondizione()));
-            item.setDataFine(data.getDataFine());
+            item.setNome(model.getNome());
+            item.setStrada(model.getStrada());
+            item.setCitta(model.getCitta());
+            item.setCap(model.getCap());
+            item.setDescrizione(model.getDescrizione());
+            item.setPrezzo(model.getPrezzo());
+            item.setCategoria(Annuncio.EnumCategoria.valueOf(model.getCategoria().toUpperCase()));
+            item.setCondizione(Annuncio.EnumCondizione.valueOf(model.getCondizione().toUpperCase()));
+            java.sql.Date date = Date.valueOf(model.getDataFine());
+            item.setDataFine(date);
 
-            Utente user = gestioneAreaPersonaleService.getDatiPrivati(data.getIdUtente());
+            Utente user = gestioneAreaPersonaleService.getDatiPrivati(model.getIdUtente());
             if (user != null) {
                 item.setUtente(user);
             }
 
+
             Annuncio newItem = gestioneAnnuncioService.addAnnuncio(item);
-            String basePath = uploadsPath + "/" + newItem.getId();
+            ClassLoader classLoader = getClass().getClassLoader();
+
+            String resourcePath = uploadPath ;
+            String basePath = resourcePath + "annunci" + "\\" + newItem.getId() + "\\";
             storageService.init(basePath);
 
-            List<String> fileNames = new ArrayList<>();
+            String fileName = storageService.generateRandomFileName();
+            String extension = image.getOriginalFilename().substring(image.getOriginalFilename().lastIndexOf('.') + 1);
+            fileName = (new StringBuilder()).append(fileName).append(".").append(extension).toString();
 
-            Arrays.asList(files).stream().forEach(file -> {
-                String fileName = storageService.generateRandomFileName();
-                String extension = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf('.') + 1);
-                fileName = (new StringBuilder()).append(fileName).append(".").append(extension).toString();
+            storageService.save(image, fileName);
+            newItem.setImmagine(fileName);
 
-                storageService.save(file, fileName);
-                fileNames.add(file.getOriginalFilename());
-            });
+            gestioneAnnuncioService.updateAnnuncio(newItem);
+            AnnuncioDTO annuncioDto = new AnnuncioDTO().convertFromModel(newItem);
 
-            return responseService.Ok(newItem);
 
+            return responseService.Ok(annuncioDto);
+
+        }
+        catch (Exception ex) {
+            return responseService.InternalError();
+        }
+    }
+
+    @GetMapping("/delete-annuncio")
+    public ResponseEntity<String> deleteAnnuncio(@RequestParam long id) {
+        try {
+            gestioneAnnuncioService.deleteAnnuncio(id);
+            return responseService.Ok();
         }
         catch (Exception ex) {
             return responseService.InternalError();

@@ -14,6 +14,23 @@ public class ValutazioneOggetto {
     public ValutazioneOggetto() {
     }
 
+    public ValutazioneOggetto(int voto, String descrizione, Annuncio annuncio, Utente valutatore, Noleggio noleggio) {
+        this.voto = voto;
+        this.descrizione = descrizione;
+        this.annuncio = annuncio;
+        this.valutatore = valutatore;
+        this.noleggio= noleggio;
+    }
+
+    public ValutazioneOggetto(long id, int voto, String descrizione, Annuncio annuncio, Utente valutatore, Noleggio noleggio) {
+        this.id = id;
+        this.voto = voto;
+        this.descrizione = descrizione;
+        this.annuncio = annuncio;
+        this.valutatore = valutatore;
+        this.noleggio= noleggio;
+    }
+
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
@@ -33,6 +50,11 @@ public class ValutazioneOggetto {
     @OnDelete(action = OnDeleteAction.SET_NULL)
     private Utente valutatore;
 
+    @ManyToOne
+    @JoinColumn(referencedColumnName = "noleggio_id")
+    @OnDelete(action = OnDeleteAction.SET_NULL)
+    private Noleggio noleggio;
+
     @Override
     public String toString() {
         return "ValutazioneOggetto{" +
@@ -40,6 +62,7 @@ public class ValutazioneOggetto {
                 ", descrizione='" + descrizione + '\'' +
                 ", annuncio=" + annuncio +
                 ", valutatore=" + valutatore +
+                ", noleggio=" + noleggio +
                 '}';
     }
 }

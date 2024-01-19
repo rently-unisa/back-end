@@ -13,11 +13,11 @@ public interface GestioneNoleggioService {
     List<Noleggio> getNoleggiByNoleggiatore(Utente utente);
     List<Noleggio> getRichiesteByNoleggiante(Utente noleggiante);
     List<Noleggio> getRichiesteByNoleggiatore(Utente noleggiatore);
-    boolean addNoleggio(Noleggio noleggio);
-    boolean deleteNoleggio(Noleggio noleggio);
+    Noleggio addNoleggio(Noleggio noleggio);
+    void deleteNoleggio(Noleggio noleggio);
     Noleggio updateStatoNoleggio(Noleggio noleggio);
-    List<Noleggio>  checkDisponibilita(long id_annuncio, Date inizio, Date fine);
-
+    List<Noleggio> checkDisponibilita(long id_annuncio, Date inizio, Date fine);
+    List<Noleggio> findRichieste ();
     Noleggio getNoleggio(long id);
     List<Noleggio> checkFineNoleggio(Date dateNow);
 }

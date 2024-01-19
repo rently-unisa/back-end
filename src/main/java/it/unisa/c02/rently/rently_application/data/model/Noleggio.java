@@ -11,6 +11,7 @@ import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.List;
 
+
 @Entity
 @Getter
 @Setter
@@ -19,18 +20,31 @@ public class Noleggio {
     public Noleggio() {
     }
 
-    public Noleggio(EnumStato stato, BigDecimal prezzoTotale, Date dataInizio, Date dataFine, Utente noleggiante, Utente noleggiatore, Annuncio annuncio) {
+    public Noleggio(EnumStato stato, BigDecimal prezzoTotale, Date dataInizio, Date dataFine, Date dataRichiesta, Utente noleggiante, Utente noleggiatore, Annuncio annuncio) {
         this.stato = stato;
         this.prezzoTotale = prezzoTotale;
         this.dataInizio = dataInizio;
         this.dataFine = dataFine;
+        this.dataRichiesta = dataRichiesta;
+        this.noleggiante = noleggiante;
+        this.noleggiatore = noleggiatore;
+        this.annuncio = annuncio;
+    }
+
+    public Noleggio(long id, EnumStato stato, BigDecimal prezzoTotale, Date dataInizio, Date dataFine, Date dataRichiesta, Utente noleggiante, Utente noleggiatore, Annuncio annuncio) {
+        this.id = id;
+        this.stato = stato;
+        this.prezzoTotale = prezzoTotale;
+        this.dataInizio = dataInizio;
+        this.dataFine = dataFine;
+        this.dataRichiesta = dataRichiesta;
         this.noleggiante = noleggiante;
         this.noleggiatore = noleggiatore;
         this.annuncio = annuncio;
     }
 
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column
+    @Column(name="noleggio_id")
     private long id;
 
     @Column(nullable = false)
@@ -45,6 +59,9 @@ public class Noleggio {
 
     @Column(nullable = false)
     private Date dataFine;
+
+    @Column(nullable = false)
+    private Date dataRichiesta;
 
     @ManyToOne
     @JoinColumn(referencedColumnName = "utente_id")
@@ -61,9 +78,15 @@ public class Noleggio {
     @OnDelete(action = OnDeleteAction.SET_NULL)
     private Annuncio annuncio;
 
+    @OneToMany(mappedBy="noleggio")
+    private List<ValutazioneOggetto> valutazioniOggetto;
+
+    @OneToMany(mappedBy="noleggio")
+    private List<ValutazioneUtente> valutazioniUtente;
     public enum EnumStato {
-        RICHIESTA, ACCETTATA, RIFIUTATA, INIZIO, IN_CORSO, FINE, CONCLUSO
+        RICHIESTA, ACCETTATA, RIFIUTATA, INIZIO, IN_CORSO, FINE, CONCLUSO, CONCLUSOCONVALUTAZIONE
     }
+
 
     @Override
     public String toString() {

@@ -1,9 +1,6 @@
 package it.unisa.c02.rently.rently_application.business.gestioneValutazione.service;
 
-import it.unisa.c02.rently.rently_application.data.model.Annuncio;
-import it.unisa.c02.rently.rently_application.data.model.Utente;
-import it.unisa.c02.rently.rently_application.data.model.ValutazioneOggetto;
-import it.unisa.c02.rently.rently_application.data.model.ValutazioneUtente;
+import it.unisa.c02.rently.rently_application.data.model.*;
 
 import java.util.List;
 
@@ -17,4 +14,7 @@ public interface GestioneValutazioneService {
     void deleteValutazioneOggetto(ValutazioneOggetto valutazione);
     List<ValutazioneOggetto> findAllByAnnuncio(Annuncio annuncio);
     double mediaValutazioniOggettoByAnnuncio(Annuncio annuncio);
+    boolean valutazioneNoleggianteIsPresent(Noleggio n);
+    boolean valutazioneNoleggiatoreIsPresent(Noleggio n);
+    boolean valutazioneAnnuncioIsPresent(Noleggio n);
 }

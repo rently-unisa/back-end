@@ -16,6 +16,8 @@ public interface GestioneNoleggioDAO extends JpaRepository<Noleggio, Long> {
 
     List<Noleggio> findByNoleggiante(Utente noleggiante);
     List<Noleggio> findByNoleggiatore(Utente noleggiatore);
+    @Query("select n from Noleggio n where n.stato = 'RICHIESTA'")
+    List<Noleggio> findRichieste();
     @Query("select n from Utente u, Noleggio n WHERE u = n.noleggiante and n.stato = 'RICHIESTA'")
     List<Noleggio> findRichiesteByNoleggiante(Utente noleggiante);
     @Query("select n from Utente u, Noleggio n WHERE u = n.noleggiatore and n.stato = 'RICHIESTA'")

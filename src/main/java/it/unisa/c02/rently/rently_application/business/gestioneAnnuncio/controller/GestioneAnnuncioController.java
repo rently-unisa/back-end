@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -107,12 +108,12 @@ public class GestioneAnnuncioController {
             item.setNome(model.getNome());
             item.setStrada(model.getStrada());
             item.setCitta(model.getCitta());
-            item.setCAP(model.getCAP());
+            item.setCap(model.getCap());
             item.setDescrizione(model.getDescrizione());
             item.setPrezzo(model.getPrezzo());
             item.setCategoria(Annuncio.EnumCategoria.valueOf(model.getCategoria().toUpperCase()));
             item.setCondizione(Annuncio.EnumCondizione.valueOf(model.getCondizione().toUpperCase()));
-            java.sql.Date date = model.getDataFine();
+            java.sql.Date date = Date.valueOf(model.getDataFine());
             item.setDataFine(date);
 
             Utente user = gestioneAreaPersonaleService.getDatiPrivati(model.getIdUtente());

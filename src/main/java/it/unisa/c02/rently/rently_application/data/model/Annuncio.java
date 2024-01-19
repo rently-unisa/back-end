@@ -7,7 +7,6 @@ import lombok.Setter;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.List;
@@ -24,7 +23,7 @@ public class Annuncio {
         this.nome = nome;
         this.strada = strada;
         this.citta = citta;
-        this.CAP = CAP;
+        this.cap = CAP;
         this.descrizione = descrizione;
         this.prezzo = prezzo;
         this.immagine = immagine;
@@ -41,7 +40,7 @@ public class Annuncio {
         this.nome = nome;
         this.strada = strada;
         this.citta = citta;
-        this.CAP = CAP;
+        this.cap = CAP;
         this.descrizione = descrizione;
         this.prezzo = prezzo;
         this.immagine = immagine;
@@ -67,7 +66,7 @@ public class Annuncio {
     private String citta;
 
     @Column(length=5, nullable = false)
-    private String CAP;
+    private String cap;
 
     @Column(length=1023, nullable = false)
     private String descrizione;
@@ -75,7 +74,7 @@ public class Annuncio {
     @Column(nullable = false)
     private BigDecimal prezzo;
 
-    @Column(length=255, nullable = false)
+    @Column(length=255, nullable = true)
     private String immagine;
 
     @Column(nullable = false)
@@ -115,7 +114,7 @@ public class Annuncio {
                 "nome='" + nome + '\'' +
                 ", strada='" + strada + '\'' +
                 ", citta='" + citta + '\'' +
-                ", CAP='" + CAP + '\'' +
+                ", CAP='" + cap + '\'' +
                 ", descrizione='" + descrizione + '\'' +
                 ", prezzo=" + prezzo +
                 ", immagine='" + immagine + '\'' +

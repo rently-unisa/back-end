@@ -6,9 +6,6 @@ import lombok.Setter;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.sql.Date;
 
 @Getter
 @Setter
@@ -21,7 +18,7 @@ public class AnnuncioDTO implements Serializable {
 
     private String citta;
 
-    private String CAP;
+    private String cap;
 
     private String descrizione;
 
@@ -33,7 +30,7 @@ public class AnnuncioDTO implements Serializable {
 
     private String condizione;
 
-    private Date dataFine;
+    private String dataFine;
 
     private Long idUtente;
 
@@ -43,13 +40,13 @@ public class AnnuncioDTO implements Serializable {
         item.setNome(a.getNome());
         item.setStrada(a.getStrada());
         item.setCitta(a.getCitta());
-        item.setCAP(a.getCAP());
+        item.setCap(a.getCap());
         item.setDescrizione(a.getDescrizione());
         item.setPrezzo(a.getPrezzo());
         item.setImmagine(a.getImmagine());
         item.setCategoria(String.valueOf(a.getCategoria()));
         item.setCondizione(String.valueOf(a.getCondizione()));
-        item.setDataFine(a.getDataFine());
+        item.setDataFine(a.getDataFine().toString());
         item.setIdUtente(a.getUtente().getId());
 
         return item;

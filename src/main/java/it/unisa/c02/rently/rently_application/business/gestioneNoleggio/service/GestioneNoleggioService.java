@@ -1,6 +1,5 @@
 package it.unisa.c02.rently.rently_application.business.gestioneNoleggio.service;
 
-import it.unisa.c02.rently.rently_application.data.model.Annuncio;
 import it.unisa.c02.rently.rently_application.data.model.Noleggio;
 import it.unisa.c02.rently.rently_application.data.model.Utente;
 

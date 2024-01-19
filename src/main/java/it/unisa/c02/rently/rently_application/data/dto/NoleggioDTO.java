@@ -1,7 +1,6 @@
 package it.unisa.c02.rently.rently_application.data.dto;
 
 import it.unisa.c02.rently.rently_application.data.model.Noleggio;
-import jakarta.persistence.Column;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,9 +11,6 @@ import java.sql.Date;
 @Setter
 public class NoleggioDTO {
 
-    public NoleggioDTO() {
-
-    }
 
     private long id;
 

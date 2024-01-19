@@ -61,9 +61,9 @@ public class GestioneAvvisiController {
     }
 
     @GetMapping("/notifica-arrivo-richiesta-noleggio")
-    public ResponseEntity<String> notificaArrivoRichiestaNoleggio(@RequestParam long id_noleggio){
+    public ResponseEntity<String> notificaArrivoRichiestaNoleggio(@RequestParam long idNoleggio){
         try{
-            Noleggio noleggio = noleggioService.getNoleggio(id_noleggio);
+            Noleggio noleggio = noleggioService.getNoleggio(idNoleggio);
             if(noleggio== null){
                 return responseService.InternalError();
             }
@@ -78,15 +78,14 @@ public class GestioneAvvisiController {
             }else
                 return responseService.InternalError();
         }catch(Exception e){
-            e.printStackTrace();
             return responseService.InternalError();
         }
     }
 
     @GetMapping("/notifica-richiesta-noleggio-accettata")
-    public ResponseEntity<String> notificaRichiestaNoleggioAccettata(@RequestParam long id_noleggio){
+    public ResponseEntity<String> notificaRichiestaNoleggioAccettata(@RequestParam long idNoleggio){
         try{
-            Noleggio noleggio = noleggioService.getNoleggio(id_noleggio);
+            Noleggio noleggio = noleggioService.getNoleggio(idNoleggio);
             if(noleggio== null){
                 return responseService.InternalError();
             }
@@ -107,9 +106,9 @@ public class GestioneAvvisiController {
     }
 
     @GetMapping("/notifica-richiesta-noleggio-rifiutata")
-    public ResponseEntity<String> notificaRichiestaNoleggioRifiutata(@RequestParam long id_noleggio){
+    public ResponseEntity<String> notificaRichiestaNoleggioRifiutata(@RequestParam long idNoleggio){
         try{
-            Noleggio noleggio = noleggioService.getNoleggio(id_noleggio);
+            Noleggio noleggio = noleggioService.getNoleggio(idNoleggio);
             if(noleggio== null){
                 return responseService.InternalError();
             }
@@ -130,9 +129,9 @@ public class GestioneAvvisiController {
     }
 
     @GetMapping("/notifica-inizio-noleggio")
-    public ResponseEntity<String> notificaInizioNoleggio(@RequestParam long id_noleggio){
+    public ResponseEntity<String> notificaInizioNoleggio(@RequestParam long idNoleggio){
         try{
-            Noleggio noleggio = noleggioService.getNoleggio(id_noleggio);
+            Noleggio noleggio = noleggioService.getNoleggio(idNoleggio);
             if(noleggio== null){
                 return responseService.InternalError();
             }
@@ -157,9 +156,9 @@ public class GestioneAvvisiController {
     }
 
     @GetMapping("/notifica-fine-noleggio")
-    public ResponseEntity<String> notificaFineNoleggio(@RequestParam long id_noleggio){
+    public ResponseEntity<String> notificaFineNoleggio(@RequestParam long idNoleggio){
         try{
-            Noleggio noleggio = noleggioService.getNoleggio(id_noleggio);
+            Noleggio noleggio = noleggioService.getNoleggio(idNoleggio);
             if(noleggio== null){
                 return responseService.InternalError();
             }

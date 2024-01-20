@@ -7,5 +7,5 @@ public interface GestioneChatService {
 
 
     Messaggio addMessaggio(Messaggio messaggio);
-    List<Messaggio> getChat(int id1, int id2);
+    List<Messaggio> getChat(long id1, long id2);
 }

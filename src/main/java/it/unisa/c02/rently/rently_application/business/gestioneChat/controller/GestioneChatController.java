@@ -1,14 +1,21 @@
 package it.unisa.c02.rently.rently_application.business.gestioneChat.controller;
 
+import it.unisa.c02.rently.rently_application.business.gestioneAreaPersonale.service.GestioneAreaPersonaleService;
+import it.unisa.c02.rently.rently_application.business.gestioneChat.service.GestioneChatService;
+import it.unisa.c02.rently.rently_application.commons.services.responseService.ResponseService;
+import it.unisa.c02.rently.rently_application.data.dto.MessaggioDTO;
+import it.unisa.c02.rently.rently_application.data.model.Messaggio;
+import it.unisa.c02.rently.rently_application.data.model.Utente;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/gestione-chat")
+@RequestMapping("/api/chat")
 @CrossOrigin(
         origins = {
                 "*",
@@ -21,5 +28,44 @@ import org.springframework.web.bind.annotation.RestController;
                 RequestMethod.POST
         })
 public class GestioneChatController {
+
+        private final GestioneAreaPersonaleService areaPersonaleService;
+        private final ResponseService responseService;
+        private final GestioneChatService chatService;
+
+        @PostMapping("/aggiungi-messaggio")
+        public ResponseEntity<String> aggiungiMessaggio(@RequestBody MessaggioDTO messaggioDTO) {
+
+                Messaggio messaggio = new Messaggio();
+                Utente mittente = areaPersonaleService.getDatiPrivati(messaggioDTO.getMittente());
+                Utente destinatario = areaPersonaleService.getDatiPrivati(messaggioDTO.getDestinatario());
+
+                messaggio.setDestinatario(destinatario);
+                messaggio.setMittente(mittente);
+                messaggio.setDescrizione(messaggioDTO.getDescrizione());
+                messaggio.setOrarioInvio(messaggioDTO.getOrarioInvio());
+
+                if(messaggio.getDestinatario()!= null && messaggio.getMittente()!= null){
+                        messaggio = chatService.addMessaggio(messaggio);
+                        return responseService.Ok(messaggio);
+                }
+                else
+                        return responseService.InternalError();
+        }
+
+        @PostMapping("/visualizza-chat")
+        public ResponseEntity<String> getChat (@RequestBody MessaggioDTO messaggioDTO){
+
+                List<Messaggio> chat = chatService.getChat(messaggioDTO.getDestinatario(), messaggioDTO.getMittente());
+                if(chat != null) {
+                        List<MessaggioDTO> list = new ArrayList<>();
+                        for (Messaggio m : chat) {
+                                MessaggioDTO item = new MessaggioDTO().convertFromModel(m);
+                                list.add(item);
+                        }
+                        return responseService.Ok(list);
+                }else
+                        return responseService.InternalError();
+        }
 
 }

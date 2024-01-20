@@ -19,7 +19,7 @@ public class GestioneChatServiceImpl implements GestioneChatService {
     }
 
     @Override
-    public List<Messaggio> getChat(int id1, int id2) {
-        return null;
+    public List<Messaggio> getChat(long id1, long id2) {
+        return gestioneChatDAO.getChat(id1, id2);
     }
 }

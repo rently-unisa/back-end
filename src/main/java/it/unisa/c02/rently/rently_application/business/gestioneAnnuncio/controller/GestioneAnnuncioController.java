@@ -21,6 +21,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * Controller che gestisce le operazioni relative agli annunci sulla piattaforma.
+ * Fornisce endpoint per visualizzare annunci, aggiungere annunci, visualizzare annunci di un utente
+ * e cancellare annunci dal sistema.
+ * Questo controller gestisce anche l'upload di immagini associate agli annunci tramite il servizio FilesStorageService.
+ */
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/annuncio")
@@ -37,17 +43,53 @@ methods = {
 })
 public class GestioneAnnuncioController {
 
+    /**
+     * Service di gestione dello storage dei file associati agli annunci.
+     */
     private final FilesStorageService storageService;
+
+    /**
+     * Service per gestire le risposte delle richieste HTTP.
+     */
     private final ResponseService responseService;
+
+    /**
+     * Service per effettuare le operazioni di persistenza.
+     */
     private final GestioneAnnuncioService gestioneAnnuncioService;
+
+    /**
+     * Service per effettuare le operazioni di persistenza.
+     */
     private final GestioneAreaPersonaleService gestioneAreaPersonaleService;
+
+    /**
+     * Oggetto HttpServletRequest per ottenere informazioni sulla richiesta HTTP.
+     */
     private final HttpServletRequest httpServletRequest;
+
+    /**
+     * ResourceLoader per caricare risorse come file e URL.
+     */
     private final ResourceLoader resourceLoader;
+
+    /**
+     * Percorso relativo per la directory di upload degli annunci.
+     */
     private final static String uploadsPath = "annunci";
 
+    /**
+     * Percorso assoluto configurato per la cartella di upload delle immagini degli annunci.
+     */
     @Value("${uploads.path}")
     private String uploadPath;
 
+    /**
+     * Restituisce le informazioni di un annuncio specifico in base all'identificativo.
+     *
+     * @param id Identificativo dell'annuncio da visualizzare.
+     * @return ResponseEntity contenente le informazioni dell'annuncio o un messaggio di errore.
+     */
     @GetMapping("/visualizza-annuncio")
     public ResponseEntity<String> getAnnuncio(@RequestParam long id)
     {
@@ -71,6 +113,12 @@ public class GestioneAnnuncioController {
         }
     }
 
+    /**
+     * Restituisce la lista di annunci associati a un utente specifico.
+     *
+     * @param id Identificativo dell'utente.
+     * @return ResponseEntity contenente la lista di annunci dell'utente o un messaggio di errore.
+     */
     @GetMapping("/visualizza-annunci-utente")
     public ResponseEntity<String> getAnnunciUtente(@RequestParam long id)
     {
@@ -98,7 +146,13 @@ public class GestioneAnnuncioController {
         }
     }
 
-
+    /**
+     * Aggiunge un nuovo annuncio alla piattaforma.
+     *
+     * @param model AnnuncioDTO contenente le informazioni dell'annuncio.
+     * @param image Immagine associata all'annuncio.
+     * @return ResponseEntity contenente le informazioni dell'annuncio aggiunto o un messaggio di errore.
+     */
     @PostMapping(value = "aggiungi-annuncio")
     public ResponseEntity<String> addAnnuncio(@ModelAttribute("model") AnnuncioDTO model,
                                               @RequestParam("image") MultipartFile image) {
@@ -164,6 +218,12 @@ public class GestioneAnnuncioController {
         }
     }
 
+    /**
+     * Cancella un annuncio dalla piattaforma in base all'identificativo.
+     *
+     * @param id Identificativo dell'annuncio da cancellare.
+     * @return ResponseEntity con esito positivo o messaggio di errore.
+     */
     @GetMapping("/delete-annuncio")
     public ResponseEntity<String> deleteAnnuncio(@RequestParam long id) {
         try {

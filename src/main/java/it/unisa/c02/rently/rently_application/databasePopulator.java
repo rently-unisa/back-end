@@ -141,6 +141,12 @@ public class databasePopulator implements CommandLineRunner {
         Noleggio noleggio8 = new Noleggio(8,Noleggio.EnumStato.CONCLUSO, new BigDecimal("800.00"), Date.valueOf("2024-02-7"), Date.valueOf("2024-02-16"), Date.valueOf("2024-02-4"), user14, user12, annuncio8);
         Noleggio noleggio9 = new Noleggio(9,Noleggio.EnumStato.CONCLUSO, new BigDecimal("900.00"), Date.valueOf("2024-03-01"), Date.valueOf("2024-03-04"), Date.valueOf("2024-02-27"), user15, user13, annuncio9);
         Noleggio noleggio10= new Noleggio(10,Noleggio.EnumStato.CONCLUSO,new BigDecimal("99.00"), Date.valueOf("2024-03-09"),Date.valueOf("2024-03-15"), Date.valueOf("2024-03-03"), user10, user1, annuncio10);
+        Noleggio noleggio11 = new Noleggio(11,Noleggio.EnumStato.RICHIESTA, new BigDecimal("600.00"), Date.valueOf("2024-04-4"), Date.valueOf("2024-04-11"), Date.valueOf("2024-04-1"), user1, user2, annuncio1);
+        Noleggio noleggio16 = new Noleggio(16,Noleggio.EnumStato.RICHIESTA, new BigDecimal("600.00"), Date.valueOf("2024-04-02"), Date.valueOf("2024-04-11"), Date.valueOf("2024-03-28"), user1, user2, annuncio2);
+        Noleggio noleggio12= new Noleggio(12,Noleggio.EnumStato.RICHIESTA, new BigDecimal("700.00"), Date.valueOf("2024-04-3"), Date.valueOf("2024-04-8"), Date.valueOf("2024-04-1"), user9, user7, annuncio7);
+        Noleggio noleggio13= new Noleggio(13,Noleggio.EnumStato.RICHIESTA, new BigDecimal("800.00"), Date.valueOf("2024-02-7"), Date.valueOf("2024-02-16"), Date.valueOf("2024-02-4"), user14, user12, annuncio8);
+        Noleggio noleggio14= new Noleggio(14,Noleggio.EnumStato.RICHIESTA, new BigDecimal("900.00"), Date.valueOf("2024-03-01"), Date.valueOf("2024-03-04"), Date.valueOf("2024-02-27"), user15, user13, annuncio9);
+        Noleggio noleggio15= new Noleggio(15,Noleggio.EnumStato.RICHIESTA,new BigDecimal("99.00"), Date.valueOf("2024-03-09"),Date.valueOf("2024-03-15"), Date.valueOf("2024-03-03"), user10, user1, annuncio10);
 
         this.noleggioService.addNoleggio(noleggio1);
         this.noleggioService.addNoleggio(noleggio2);
@@ -152,6 +158,13 @@ public class databasePopulator implements CommandLineRunner {
         this.noleggioService.addNoleggio(noleggio8);
         this.noleggioService.addNoleggio(noleggio9);
         this.noleggioService.addNoleggio(noleggio10);
+        this.noleggioService.addNoleggio(noleggio11);
+        this.noleggioService.addNoleggio(noleggio12);
+        this.noleggioService.addNoleggio(noleggio13);
+        this.noleggioService.addNoleggio(noleggio14);
+        this.noleggioService.addNoleggio(noleggio15);
+        this.noleggioService.addNoleggio(noleggio16);
+
 
         // Aggiunta Valutazioni Utente
 

@@ -19,6 +19,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * Questa classe gestisce le richieste relative alle valutazioni degli utenti e degli oggetti attraverso i servizi forniti da
+ * GestioneValutazioneService, GestioneAreaPersonaleService, GestioneAnnuncioService e GestioneNoleggioService.
+ * Fornisce endpoint RESTful per aggiungere, visualizzare e calcolare medie delle valutazioni.
+ * Le risposte sono gestite utilizzando il servizio ResponseService per costruire risposte standardizzate in formato JSON.
+ */
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/valutazione")
@@ -35,12 +41,37 @@ import java.util.List;
         })
 public class GestioneValutazioneController {
 
+    /**
+     * Service per effettuare le operazioni di persistenza.
+     */
     private final GestioneValutazioneService valutazioneService;
+
+    /**
+     * Service per effettuare le operazioni di persistenza.
+     */
     private final GestioneAreaPersonaleService areaPersonaleService;
+
+    /**
+     * Service per effettuare le operazioni di persistenza.
+     */
     private final GestioneAnnuncioService annuncioService;
+
+    /**
+     * Service per la gestione delle risposte alle richieste.
+     */
     private final ResponseService responseService;
+
+    /**
+     * Service per effettuare le operazioni di persistenza.
+     */
     private final GestioneNoleggioService noleggioService;
 
+    /**
+     * Endpoint per aggiungere una valutazione di un utente.
+     *
+     * @param valutazioneDTO Dati della valutazione dell'utente.
+     * @return ResponseEntity contenente l'esito dell'operazione.
+     */
     @PostMapping("/aggiungi-valutazione-utente")
     public ResponseEntity<String> aggiungiValutazioneUtente(@RequestBody ValutazioneDTO valutazioneDTO) {
 
@@ -75,6 +106,12 @@ public class GestioneValutazioneController {
             return responseService.InternalError();
     }
 
+    /**
+     * Endpoint per visualizzare le valutazioni di un utente.
+     *
+     * @param valutato Identificativo dell'utente valutato.
+     * @return ResponseEntity contenente la lista delle valutazioni dell'utente nel formato JSON.
+     */
     @GetMapping("/visualizza-valutazioni-utente")
     public ResponseEntity<String> visualizzaValutazioniUtente(@RequestParam long valutato){
 
@@ -92,6 +129,12 @@ public class GestioneValutazioneController {
             return responseService.InternalError();
     }
 
+    /**
+     * Endpoint per visualizzare la media delle valutazioni di un utente.
+     *
+     * @param valutato Identificativo dell'utente valutato.
+     * @return ResponseEntity contenente la media delle valutazioni dell'utente nel formato JSON.
+     */
     @GetMapping("/visualizza-media-valutazioni-utente")
     public ResponseEntity<String> visualizzaMediaValutazioniUtente(@RequestParam long valutato){
 
@@ -104,6 +147,12 @@ public class GestioneValutazioneController {
             return responseService.InternalError();
     }
 
+    /**
+     * Endpoint per aggiungere una valutazione di un annuncio.
+     *
+     * @param valutazioneDTO Dati della valutazione dell'annuncio.
+     * @return ResponseEntity contenente l'esito dell'operazione.
+     */
     @PostMapping("/aggiungi-valutazione-oggetto")
     public ResponseEntity<String> aggiungiValutazioneOggetto(@RequestBody ValutazioneDTO valutazioneDTO) {
 
@@ -138,6 +187,12 @@ public class GestioneValutazioneController {
             return responseService.InternalError();
     }
 
+    /**
+     * Endpoint per visualizzare le valutazioni di un annuncio.
+     *
+     * @param id Identificativo dell'annuncio.
+     * @return ResponseEntity contenente la lista delle valutazioni dell'annuncio nel formato JSON.
+     */
     @GetMapping("/visualizza-valutazioni-annuncio")
     public ResponseEntity<String> visualizzaValutazioniAnnuncio(@RequestParam long id){
 
@@ -155,6 +210,12 @@ public class GestioneValutazioneController {
             return responseService.InternalError();
     }
 
+    /**
+     * Endpoint per visualizzare la media delle valutazioni di un annuncio.
+     *
+     * @param id Identificativo dell'annuncio.
+     * @return ResponseEntity contenente la media delle valutazioni dell'annuncio nel formato JSON.
+     */
     @GetMapping("/visualizza-media-valutazioni-annuncio")
     public ResponseEntity<String> visualizzaMediaValutazioniOggetto(@RequestParam long id){
 
@@ -166,6 +227,4 @@ public class GestioneValutazioneController {
         else
             return responseService.InternalError();
     }
-
-
 }

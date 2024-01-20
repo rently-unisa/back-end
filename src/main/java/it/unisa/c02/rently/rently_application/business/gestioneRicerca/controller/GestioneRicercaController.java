@@ -24,10 +24,6 @@ import java.util.*;
  * Fornisce endpoint RESTful per cercare annunci in base a diversi criteri.
  * Le risposte vengono restituite nel formato JSON attraverso ResponseEntity<String>, utilizzando le funzionalità di
  * ResponseService per gestire la costruzione delle risposte standardizzate.
- * L'accesso ai dati viene gestito tramite GestioneRicercaService, che fornisce implementazioni concrete per la logica
- * di ricerca.
- * Alcune richieste includono anche l'URL del server per consentire la
- * corretta visualizzazione delle immagini degli annunci.
  */
 @RestController
 @RequiredArgsConstructor

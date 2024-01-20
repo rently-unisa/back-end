@@ -6,7 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Questa interfaccia definisce le specifiche per i servizi dedicati alla gestione della ricerca di annunci
+ * Questa interfaccia definisce le specifiche per i servizi dedicati alla gestione della ricerca di annunci.
  */
 public interface GestioneRicercaService {
 

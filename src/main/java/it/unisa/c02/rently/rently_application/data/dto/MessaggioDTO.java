@@ -15,7 +15,7 @@ public class MessaggioDTO {
 
     private String descrizione;
 
-    private java.sql.Timestamp orarioInvio;
+    private String orarioInvio;
 
     private long mittente;
 
@@ -25,7 +25,7 @@ public class MessaggioDTO {
         MessaggioDTO item = new MessaggioDTO();
         item.setDescrizione(m.getDescrizione());
         item.setId(m.getId());
-        item.setOrarioInvio(m.getOrarioInvio());
+        item.setOrarioInvio(String.valueOf(m.getOrarioInvio()));
         item.setDestinatario(m.getDestinatario().getId());
         item.setMittente(m.getMittente().getId());
 

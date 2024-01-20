@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,8 +38,9 @@ public class GestioneNoleggioController {
     private final GestioneAnnuncioService annuncioService;
     private final GestioneValutazioneService valutazioneService;
 
-    @GetMapping("/noleggiante")
-    public ResponseEntity<String> getNoleggiByNoleggiante(@RequestParam long idUtente) {
+
+    @PostMapping("/noleggiante")
+    public ResponseEntity<String> getNoleggiByNoleggiante(@RequestBody long idUtente) {
 
         Utente noleggiante = areaPersonaleService.getDatiPrivati(idUtente);
 
@@ -63,8 +65,8 @@ public class GestioneNoleggioController {
             return responseService.InternalError();
     }
 
-    @GetMapping("/noleggiatore")
-    public ResponseEntity<String> getNoleggiByNoleggiatore(@RequestParam long idUtente) {
+    @PostMapping("/noleggiatore")
+    public ResponseEntity<String> getNoleggiByNoleggiatore(@RequestBody long idUtente) {
 
         Utente noleggiatore = areaPersonaleService.getDatiPrivati(idUtente);
 
@@ -88,8 +90,8 @@ public class GestioneNoleggioController {
             return responseService.InternalError();
     }
 
-    @GetMapping("/richieste/noleggiante")
-    public ResponseEntity<String> getRichiesteByNoleggiante(@RequestParam long idUtente) {
+    @PostMapping("/richieste/noleggiante")
+    public ResponseEntity<String> getRichiesteByNoleggiante(@RequestBody long idUtente) {
 
         Utente noleggiante = areaPersonaleService.getDatiPrivati(idUtente);
 
@@ -106,8 +108,8 @@ public class GestioneNoleggioController {
             return responseService.InternalError();
     }
 
-    @GetMapping("/richieste/noleggiatore")
-    public ResponseEntity<String> getRichiesteByNoleggiatore(@RequestParam long idUtente) {
+    @PostMapping("/richieste/noleggiatore")
+    public ResponseEntity<String> getRichiesteByNoleggiatore(@RequestBody long idUtente) {
 
         Utente noleggiatore = areaPersonaleService.getDatiPrivati(idUtente);
 
@@ -126,16 +128,18 @@ public class GestioneNoleggioController {
     @PostMapping("/aggiungi-noleggio")
     public ResponseEntity<String> aggiungiNoleggio(@RequestBody NoleggioDTO data){
 
-        List<Noleggio> list = noleggioService.checkDisponibilita(data.getAnnuncio(), data.getDataInizio(), data.getDataFine());
+        List<Noleggio> list = noleggioService.checkDisponibilita(data.getAnnuncio(), Date.valueOf(data.getDataInizio()), Date.valueOf(data.getDataFine()));
 
         if(list == null) {
+
+
 
             Noleggio item = new Noleggio();
             item.setStato(Noleggio.EnumStato.valueOf(data.getStato()));
             item.setPrezzoTotale(data.getPrezzoTotale());
-            item.setDataInizio(data.getDataInizio());
-            item.setDataFine(data.getDataFine());
-            item.setDataRichiesta(data.getDataRichiesta());
+            item.setDataInizio(Date.valueOf(data.getDataInizio()));
+            item.setDataFine(Date.valueOf(data.getDataFine()));
+            item.setDataRichiesta(Date.valueOf(data.getDataRichiesta()));
             item.setNoleggiante(areaPersonaleService.getDatiPrivati(data.getNoleggiante()));
             item.setNoleggiatore(areaPersonaleService.getDatiPrivati(data.getNoleggiatore()));
             item.setAnnuncio(annuncioService.getAnnuncio(data.getAnnuncio()).orElse(null));
@@ -154,9 +158,9 @@ public class GestioneNoleggioController {
         Noleggio item = new Noleggio();
         item.setStato(Noleggio.EnumStato.valueOf(data.getStato()));
         item.setPrezzoTotale(data.getPrezzoTotale());
-        item.setDataInizio(data.getDataInizio());
-        item.setDataFine(data.getDataFine());
-        item.setDataRichiesta(data.getDataRichiesta());
+        item.setDataInizio(Date.valueOf(data.getDataInizio()));
+        item.setDataFine(Date.valueOf(data.getDataFine()));
+        item.setDataRichiesta(Date.valueOf(data.getDataRichiesta()));
         item.setNoleggiante(areaPersonaleService.getDatiPrivati(data.getNoleggiante()));
         item.setNoleggiatore(areaPersonaleService.getDatiPrivati(data.getNoleggiatore()));
         item.setAnnuncio(annuncioService.getAnnuncio(data.getAnnuncio()).orElse(null));

@@ -1,14 +1,16 @@
 package it.unisa.c02.rently.rently_application.business.gestioneAreaPersonale.controller;
 import it.unisa.c02.rently.rently_application.business.gestioneAreaPersonale.service.GestioneAreaPersonaleService;
 import it.unisa.c02.rently.rently_application.commons.psw.PswCoder;
+import it.unisa.c02.rently.rently_application.commons.services.regexService.RegexTester;
 import it.unisa.c02.rently.rently_application.commons.services.responseService.ResponseService;
+import it.unisa.c02.rently.rently_application.data.dto.ResponseDTO;
 import it.unisa.c02.rently.rently_application.data.dto.UtenteDTO;
 import it.unisa.c02.rently.rently_application.data.model.Utente;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.NoSuchAlgorithmException;
+import java.util.HashMap;
 
 @RestController
 @RequiredArgsConstructor
@@ -53,6 +55,20 @@ public class GestioneAreaPersonaleController {
 
     @PostMapping("/modifica-dati-utente")
     public ResponseEntity<String>  modificaUtente(@RequestBody UtenteDTO data) {
+
+        ResponseDTO message = new ResponseDTO();
+        message.message = "I parametri non rispettano le regex";
+
+        HashMap<String, String> tester = new HashMap<>();
+        tester.put(data.getEmail(), "^[A-z0-9._%+-]+@[A-z0-9.-]+\\.[A-z]{1,100}$");
+        tester.put(data.getUsername(), "^[a-zA-Z0-9]{5,100}$");
+        tester.put(data.getNome(), "^[a-zA-Z0-9]{1,100}$");
+        tester.put(data.getCognome(), "^[a-zA-Z0-9]{1,100}$");
+
+        RegexTester regexTester = new RegexTester();
+        if (!regexTester.toTest(tester)) {
+            return responseService.InternalError(message);
+        }
 
         Utente item = areaPersonaleService.getDatiPrivati(data.getId());
 

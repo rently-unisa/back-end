@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.math.BigDecimal;
-import java.sql.Date;
+
 
 @Getter
 @Setter
@@ -18,11 +18,11 @@ public class NoleggioDTO {
 
     private BigDecimal prezzoTotale;
 
-    private Date dataInizio;
+    private String dataInizio;
 
-    private Date dataFine;
+    private String dataFine;
 
-    private Date dataRichiesta;
+    private String dataRichiesta;
 
     private long noleggiante;
 
@@ -41,9 +41,9 @@ public class NoleggioDTO {
         item.setId(n.getId());
         item.setStato(String.valueOf(n.getStato()));
         item.setPrezzoTotale(n.getPrezzoTotale());
-        item.setDataInizio(n.getDataInizio());
-        item.setDataFine(n.getDataFine());
-        item.setDataRichiesta(n.getDataRichiesta());
+        item.setDataInizio(n.getDataInizio().toString());
+        item.setDataFine(n.getDataFine().toString());
+        item.setDataRichiesta(n.getDataRichiesta().toString());
         item.setNoleggiante(n.getNoleggiante().getId());
         item.setNoleggiatore(n.getNoleggiatore().getId());
         item.setAnnuncio(n.getAnnuncio().getId());

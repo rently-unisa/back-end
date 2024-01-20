@@ -4,12 +4,16 @@ import it.unisa.c02.rently.rently_application.business.gestioneAreaPersonale.ser
 import it.unisa.c02.rently.rently_application.business.gestioneAvvisi.service.GestioneAvvisiService;
 import it.unisa.c02.rently.rently_application.business.gestioneNoleggio.service.GestioneNoleggioService;
 import it.unisa.c02.rently.rently_application.commons.mail.EmailService;
+import it.unisa.c02.rently.rently_application.commons.services.regexService.RegexTester;
 import it.unisa.c02.rently.rently_application.commons.services.responseService.ResponseService;
+import it.unisa.c02.rently.rently_application.data.dto.ResponseDTO;
 import it.unisa.c02.rently.rently_application.data.dto.SegnalazioneDTO;
 import it.unisa.c02.rently.rently_application.data.model.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
 
 
 @RestController
@@ -41,6 +45,17 @@ public class GestioneAvvisiController {
         try {
             //prendo l'utente dalla sessione con @AuthenticationPrincipal UserDetails userDetails
             //controllo utente sessione
+            ResponseDTO message = new ResponseDTO();
+            message.message = "Il contenuto inserito non rispetta la lunghezza di 255 caratteri";
+
+            HashMap<String, String> tester = new HashMap<>();
+            tester.put(segnalazioneDTO.getContenuto(), "^[a-zA-Z0-9.,;:-]{1,255}$");
+
+            RegexTester regexTester = new RegexTester();
+            if (!regexTester.toTest(tester)) {
+                return responseService.InternalError(message);
+            }
+
             Segnalazione segnalazione = new Segnalazione();
             segnalazione.setContenuto(segnalazioneDTO.getContenuto());
             segnalazione.setTipo(Segnalazione.EnumTipo.valueOf(segnalazioneDTO.getTipo()));

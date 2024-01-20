@@ -3,7 +3,9 @@ import it.unisa.c02.rently.rently_application.business.gestioneAnnuncio.service.
 import it.unisa.c02.rently.rently_application.business.gestioneAreaPersonale.service.GestioneAreaPersonaleService;
 import it.unisa.c02.rently.rently_application.business.gestioneNoleggio.service.GestioneNoleggioService;
 import it.unisa.c02.rently.rently_application.business.gestioneValutazione.service.GestioneValutazioneService;
+import it.unisa.c02.rently.rently_application.commons.services.regexService.RegexTester;
 import it.unisa.c02.rently.rently_application.commons.services.responseService.ResponseService;
+import it.unisa.c02.rently.rently_application.data.dto.ResponseDTO;
 import it.unisa.c02.rently.rently_application.data.dto.ValutazioneDTO;
 import it.unisa.c02.rently.rently_application.data.model.Annuncio;
 import it.unisa.c02.rently.rently_application.data.model.Utente;
@@ -14,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 @RestController
@@ -40,6 +43,17 @@ public class GestioneValutazioneController {
 
     @PostMapping("/aggiungi-valutazione-utente")
     public ResponseEntity<String> aggiungiValutazioneUtente(@RequestBody ValutazioneDTO valutazioneDTO) {
+
+        ResponseDTO message = new ResponseDTO();
+        message.message = "La descrizione inserita non rispetta la lunghezza di 255 caratteri";
+
+        HashMap<String, String> tester = new HashMap<>();
+        tester.put(valutazioneDTO.getDescrizione(), "^[a-zA-Z0-9.,;:-]{1,255}$");
+
+        RegexTester regexTester = new RegexTester();
+        if (!regexTester.toTest(tester)) {
+            return responseService.InternalError(message);
+        }
 
         ValutazioneUtente valutazione = new ValutazioneUtente();
         Utente utente = areaPersonaleService.getDatiPrivati(valutazioneDTO.getValutatore());
@@ -92,6 +106,17 @@ public class GestioneValutazioneController {
 
     @PostMapping("/aggiungi-valutazione-oggetto")
     public ResponseEntity<String> aggiungiValutazioneOggetto(@RequestBody ValutazioneDTO valutazioneDTO) {
+
+        ResponseDTO message = new ResponseDTO();
+        message.message = "La descrizione inserita non rispetta la lunghezza di 255 caratteri";
+
+        HashMap<String, String> tester = new HashMap<>();
+        tester.put(valutazioneDTO.getDescrizione(), "^[a-zA-Z0-9.,;:-]{1,255}$");
+
+        RegexTester regexTester = new RegexTester();
+        if (!regexTester.toTest(tester)) {
+            return responseService.InternalError(message);
+        }
 
         ValutazioneOggetto valutazione = new ValutazioneOggetto();
         Utente utente = areaPersonaleService.getDatiPrivati(valutazioneDTO.getValutatore());

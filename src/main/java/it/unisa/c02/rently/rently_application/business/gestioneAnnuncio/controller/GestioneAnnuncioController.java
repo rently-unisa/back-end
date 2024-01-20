@@ -1,9 +1,11 @@
 package it.unisa.c02.rently.rently_application.business.gestioneAnnuncio.controller;
 import it.unisa.c02.rently.rently_application.business.gestioneAnnuncio.service.GestioneAnnuncioService;
 import it.unisa.c02.rently.rently_application.business.gestioneAreaPersonale.service.GestioneAreaPersonaleService;
+import it.unisa.c02.rently.rently_application.commons.services.regexService.RegexTester;
 import it.unisa.c02.rently.rently_application.commons.services.responseService.ResponseService;
 import it.unisa.c02.rently.rently_application.commons.services.storageService.FilesStorageService;
 import it.unisa.c02.rently.rently_application.data.dto.AnnuncioDTO;
+import it.unisa.c02.rently.rently_application.data.dto.ResponseDTO;
 import it.unisa.c02.rently.rently_application.data.model.Annuncio;
 import it.unisa.c02.rently.rently_application.data.model.Utente;
 import jakarta.servlet.http.HttpServletRequest;
@@ -16,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 @RestController
@@ -101,7 +104,20 @@ public class GestioneAnnuncioController {
                                               @RequestParam("image") MultipartFile image) {
 
         try {
+            ResponseDTO message = new ResponseDTO();
+            message.message = "I parametri non rispettano le regex";
 
+            HashMap<String, String> tester = new HashMap<>();
+            tester.put(model.getDescrizione(), "^[a-zA-Z0-9.,;:-]{1,1023}$");
+            tester.put(model.getStrada(), "^([A-Za-z]+\\s)+\\d+$");
+            tester.put(model.getCap(), "^[0-9]{5}$");
+            tester.put(model.getNome(), "^[a-zA-Z0-9]{1,100}$");
+            tester.put(model.getPrezzo().toString(), "^[0-9]{1,10},[0-9]{2}$");
+
+            RegexTester regexTester = new RegexTester();
+            if (!regexTester.toTest(tester)) {
+                return responseService.InternalError(message);
+            }
 
             Annuncio item = new Annuncio();
 

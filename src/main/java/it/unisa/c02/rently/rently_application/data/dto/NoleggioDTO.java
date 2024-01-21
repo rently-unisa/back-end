@@ -12,7 +12,7 @@ import java.math.BigDecimal;
 public class NoleggioDTO {
 
 
-    private long id;
+    private Long id;
 
     private String stato;
 
@@ -24,11 +24,11 @@ public class NoleggioDTO {
 
     private String dataRichiesta;
 
-    private long noleggiante;
+    private Long noleggiante;
 
-    private long noleggiatore;
+    private Long noleggiatore;
 
-    private long annuncio;
+    private Long annuncio;
 
     private boolean valutazioneAlNoleggiante;
 

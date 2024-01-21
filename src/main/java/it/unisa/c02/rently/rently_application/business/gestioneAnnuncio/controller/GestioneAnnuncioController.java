@@ -159,8 +159,9 @@ public class GestioneAnnuncioController {
 
         try {
             ResponseDTO message = new ResponseDTO();
-            message.message = "I parametri non rispettano le regex";
+            message.message = "Dati inseriti non validi";
 
+            /*
             HashMap<String, String> tester = new HashMap<>();
             tester.put(model.getDescrizione(), "^[a-zA-Z0-9.,;:-]{1,1023}$");
             tester.put(model.getStrada(), "^([A-Za-z]+\\s)+\\d+$");
@@ -172,6 +173,7 @@ public class GestioneAnnuncioController {
             if (!regexTester.toTest(tester)) {
                 return responseService.InternalError(message);
             }
+             */
 
             Annuncio item = new Annuncio();
 

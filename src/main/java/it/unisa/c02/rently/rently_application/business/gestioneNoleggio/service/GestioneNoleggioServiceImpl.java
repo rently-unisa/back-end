@@ -1,6 +1,7 @@
 package it.unisa.c02.rently.rently_application.business.gestioneNoleggio.service;
 
 import it.unisa.c02.rently.rently_application.data.dao.GestioneNoleggioDAO;
+import it.unisa.c02.rently.rently_application.data.model.Annuncio;
 import it.unisa.c02.rently.rently_application.data.model.Noleggio;
 import it.unisa.c02.rently.rently_application.data.model.Utente;
 import lombok.RequiredArgsConstructor;
@@ -53,8 +54,8 @@ public class GestioneNoleggioServiceImpl implements GestioneNoleggioService {
 
 
     @Override
-    public List<Noleggio> checkDisponibilita(long id_annuncio, Date inizio, Date fine) {
-        return noleggioDAO.checkDisponibilita( id_annuncio, inizio, fine);
+    public List<Noleggio> checkDisponibilita(Annuncio annuncio, Date inizio, Date fine) {
+        return noleggioDAO.checkDisponibilita(annuncio, inizio, fine);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package it.unisa.c02.rently.rently_application.business.gestioneNoleggio.service;
 
+import it.unisa.c02.rently.rently_application.data.model.Annuncio;
 import it.unisa.c02.rently.rently_application.data.model.Noleggio;
 import it.unisa.c02.rently.rently_application.data.model.Utente;
 
@@ -15,7 +16,7 @@ public interface GestioneNoleggioService {
     Noleggio addNoleggio(Noleggio noleggio);
     void deleteNoleggio(Noleggio noleggio);
     Noleggio updateStatoNoleggio(Noleggio noleggio);
-    List<Noleggio> checkDisponibilita(long id_annuncio, Date inizio, Date fine);
+    List<Noleggio> checkDisponibilita(Annuncio annuncio, Date inizio, Date fine);
     List<Noleggio> findRichieste ();
     Noleggio getNoleggio(long id);
     List<Noleggio> checkFineNoleggio(Date dateNow);

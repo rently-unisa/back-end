@@ -22,6 +22,8 @@ public interface GestioneNoleggioDAO extends JpaRepository<Noleggio, Long> {
      * @param noleggiante Utente che ha preso a noleggio un oggetto.
      * @return Lista di noleggi associati al noleggiante specificato.
      */
+
+    @Query("select n from Noleggio n WHERE n.noleggiante = ?1 and (n.stato != 'RICHIESTA' OR n.stato != 'ACCETTATA' OR n.stato != 'RIFIUTATA')")
     List<Noleggio> findByNoleggiante(Utente noleggiante);
 
     /**
@@ -30,6 +32,7 @@ public interface GestioneNoleggioDAO extends JpaRepository<Noleggio, Long> {
      * @param noleggiatore L'utente che ha dato a noleggio un oggetto.
      * @return Lista di noleggi associati al noleggiatore specificato.
      */
+    @Query("select n from Noleggio n WHERE n.noleggiatore = ?1 and (n.stato != 'RICHIESTA' OR n.stato != 'ACCETTATA' OR n.stato != 'RIFIUTATA')")
     List<Noleggio> findByNoleggiatore(Utente noleggiatore);
 
     /**
@@ -37,7 +40,7 @@ public interface GestioneNoleggioDAO extends JpaRepository<Noleggio, Long> {
      *
      * @return Lista di noleggi in stato 'RICHIESTA'.
      */
-    @Query("select n from Noleggio n where n.stato = 'RICHIESTA'")
+    @Query("select n from Noleggio n where (n.stato = 'RICHIESTA' and n.stato = 'RIFIUTATA')")
     List<Noleggio> findRichieste();
 
     /**
@@ -46,7 +49,7 @@ public interface GestioneNoleggioDAO extends JpaRepository<Noleggio, Long> {
      * @param noleggiante Utente che ha effettuato la richiesta di noleggio.
      * @return Lista di noleggi in stato 'RICHIESTA' associati al noleggiante specificato.
      */
-    @Query("select n from Noleggio n WHERE n.noleggiante = ?1 and n.stato = 'RICHIESTA'")
+    @Query("select n from Noleggio n WHERE n.noleggiante = ?1 and (n.stato = 'RICHIESTA' OR n.stato = 'ACCETTATA' OR n.stato = 'RIFIUTATA')")
     List<Noleggio> findRichiesteByNoleggiante(Utente noleggiante);
 
     /**
@@ -55,7 +58,7 @@ public interface GestioneNoleggioDAO extends JpaRepository<Noleggio, Long> {
      * @param noleggiatore Utente che ha ricevuto la richiesta di noleggio.
      * @return Lista di noleggi in stato 'RICHIESTA' associati al noleggiatore specificato.
      */
-    @Query("select n from Noleggio n WHERE n.noleggiatore = ?1 and n.stato = 'RICHIESTA'")
+    @Query("select n from Noleggio n WHERE n.noleggiatore = ?1 and(n.stato = 'RICHIESTA' OR n.stato = 'ACCETTATA' OR n.stato = 'RIFIUTATA')")
     List<Noleggio> findRichiesteByNoleggiatore(Utente noleggiatore);
 
     /**
@@ -66,7 +69,7 @@ public interface GestioneNoleggioDAO extends JpaRepository<Noleggio, Long> {
      * @param data_fine Data di fine del periodo di noleggio.
      * @return Lista di noleggi che interferiscono con il periodo specificato.
      */
-    @Query("SELECT n FROM Noleggio n where (n.annuncio=?1) and ((n.dataInizio>=?2 and n.dataInizio<=?3) or (n.dataFine<= ?3 and n.dataFine>=?2 )) and n.stato != 'CONCLUSO'")
+    @Query("SELECT n FROM Noleggio n where (n.annuncio=?1) and ((n.dataInizio>=?2 and n.dataInizio<=?3) or (n.dataFine<= ?3 and n.dataFine>=?2 )) and (n.stato != 'RIFIUTATA' and n.stato != 'CONCLUSO' AND n.stato != 'RICHIESTA')")
     List<Noleggio> checkDisponibilita (Annuncio annuncio, Date data_inizio, Date data_fine);
 
     /**

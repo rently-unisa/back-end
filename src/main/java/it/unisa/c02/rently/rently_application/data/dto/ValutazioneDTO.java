@@ -1,5 +1,6 @@
 package it.unisa.c02.rently.rently_application.data.dto;
 
+import it.unisa.c02.rently.rently_application.data.model.Annuncio;
 import it.unisa.c02.rently.rently_application.data.model.ValutazioneOggetto;
 import it.unisa.c02.rently.rently_application.data.model.ValutazioneUtente;
 import lombok.Getter;

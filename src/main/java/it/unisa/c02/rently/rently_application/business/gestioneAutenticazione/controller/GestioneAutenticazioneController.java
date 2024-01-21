@@ -1,5 +1,7 @@
 package it.unisa.c02.rently.rently_application.business.gestioneAutenticazione.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import it.unisa.c02.rently.rently_application.business.gestioneAutenticazione.service.GestioneAutenticazioneService;
 import it.unisa.c02.rently.rently_application.commons.psw.PswCoder;
 import it.unisa.c02.rently.rently_application.commons.services.responseService.ResponseService;
@@ -7,6 +9,7 @@ import it.unisa.c02.rently.rently_application.data.dto.ResponseDTO;
 import it.unisa.c02.rently.rently_application.data.dto.UtenteDTO;
 import it.unisa.c02.rently.rently_application.data.dto.UtenteLoginDTO;
 import it.unisa.c02.rently.rently_application.data.model.Utente;
+import it.unisa.c02.rently.rently_application.security.JwtProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +19,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.NoSuchAlgorithmException;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -51,8 +56,12 @@ public class GestioneAutenticazioneController {
 
                 UtenteDTO item = new UtenteDTO().convertFromModel(utente);
 
-                UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(utente, null, Collections.emptyList());
-                SecurityContextHolder.getContext().setAuthentication(authentication);
+                ObjectNode userNode = new ObjectMapper().convertValue(item, ObjectNode.class);
+                userNode.remove("password");
+                Map claimMap = new HashMap<>(0);
+                claimMap.put("user", userNode);
+                item.setToken(JwtProvider.createJwt(item.getEmail(), claimMap));
+
                 return responseService.Ok(item);
             } else {
                 return responseService.InternalError(response);

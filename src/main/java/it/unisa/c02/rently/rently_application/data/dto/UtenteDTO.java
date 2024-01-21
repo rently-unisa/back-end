@@ -13,7 +13,8 @@ public class UtenteDTO {
     }
 
     public UtenteDTO(long id, String username, String nome, String cognome, String email, String password,
-                     String nuovaPassword, String confermaNuovaPassword, boolean premium) {
+                     String nuovaPassword, String confermaNuovaPassword, boolean premium,
+                     String token) {
         this.id = id;
         this.username = username;
         this.nome = nome;
@@ -23,6 +24,7 @@ public class UtenteDTO {
         this.nuovaPassword = nuovaPassword;
         this.confermaNuovaPassword = confermaNuovaPassword;
         this.premium = premium;
+        this.token = token;
     }
 
     public UtenteDTO convertFromModel(Utente u)
@@ -65,4 +67,5 @@ public class UtenteDTO {
     private String confermaNuovaPassword;
 
     private boolean premium;
+    private String token;
 }

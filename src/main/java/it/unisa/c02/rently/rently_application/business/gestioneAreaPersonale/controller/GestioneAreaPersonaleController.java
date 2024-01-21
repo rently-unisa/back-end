@@ -37,6 +37,7 @@ public class GestioneAreaPersonaleController {
         Utente utente = null;
         UtenteDTO item = new UtenteDTO();
 
+
         try {
             utente= areaPersonaleService.getDatiPrivati(id);
 

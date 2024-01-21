@@ -100,7 +100,8 @@ public class GestioneValutazioneController {
 
         if(valutazione.getValutato()!= null && valutazione.getValutatore()!= null && valutazione.getNoleggio() != null){
             valutazione = valutazioneService.addValutazioneUtente(valutazione);
-            return responseService.Ok(valutazione);
+            ValutazioneDTO item = new ValutazioneDTO().convertFromValutazioneUtente(valutazione);
+            return responseService.Ok(item);
         }
         else
             return responseService.InternalError();

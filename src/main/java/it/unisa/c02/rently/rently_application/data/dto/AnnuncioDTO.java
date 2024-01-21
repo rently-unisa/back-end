@@ -34,6 +34,24 @@ public class AnnuncioDTO implements Serializable {
 
     private Long idUtente;
 
+    public AnnuncioDTO(long id, String nome, String strada, String citta, String cap, String descrizione, BigDecimal prezzo, String immagine, String categoria, String condizione, String dataFine, Long idUtente) {
+        this.id = id;
+        this.nome = nome;
+        this.strada = strada;
+        this.citta = citta;
+        this.cap = cap;
+        this.descrizione = descrizione;
+        this.prezzo = prezzo;
+        this.immagine = immagine;
+        this.categoria = categoria;
+        this.condizione = condizione;
+        this.dataFine = dataFine;
+        this.idUtente = idUtente;
+    }
+
+    public AnnuncioDTO() {
+    }
+
     public AnnuncioDTO convertFromModel(Annuncio a) {
         AnnuncioDTO item = new AnnuncioDTO();
         item.setId(a.getId());

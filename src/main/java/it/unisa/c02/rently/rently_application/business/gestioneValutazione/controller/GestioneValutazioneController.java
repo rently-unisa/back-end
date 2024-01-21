@@ -76,10 +76,10 @@ public class GestioneValutazioneController {
     public ResponseEntity<String> aggiungiValutazioneUtente(@RequestBody ValutazioneDTO valutazioneDTO) {
 
         ResponseDTO message = new ResponseDTO();
-        message.message = "La descrizione inserita non rispetta la lunghezza di 255 caratteri";
+        message.message = "Errore durante l'inserimento dei dati";
 
         HashMap<String, String> tester = new HashMap<>();
-        tester.put(valutazioneDTO.getDescrizione(), "^[a-zA-Z0-9.,;:-]{1,255}$");
+        tester.put(valutazioneDTO.getDescrizione(), "^.{1,255}$");
 
         RegexTester regexTester = new RegexTester();
         if (!regexTester.toTest(tester)) {
@@ -158,10 +158,10 @@ public class GestioneValutazioneController {
     public ResponseEntity<String> aggiungiValutazioneOggetto(@RequestBody ValutazioneDTO valutazioneDTO) {
 
         ResponseDTO message = new ResponseDTO();
-        message.message = "La descrizione inserita non rispetta la lunghezza di 255 caratteri";
+        message.message = "Errore durante l'inserimento dei dati";
 
         HashMap<String, String> tester = new HashMap<>();
-        tester.put(valutazioneDTO.getDescrizione(), "^[a-zA-Z0-9.,;:-]{1,255}$");
+        tester.put(valutazioneDTO.getDescrizione(), "^.{1,255}$");
 
         RegexTester regexTester = new RegexTester();
         if (!regexTester.toTest(tester)) {

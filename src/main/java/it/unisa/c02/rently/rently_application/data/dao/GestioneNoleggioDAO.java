@@ -23,7 +23,7 @@ public interface GestioneNoleggioDAO extends JpaRepository<Noleggio, Long> {
      * @return Lista di noleggi associati al noleggiante specificato.
      */
 
-    @Query("select n from Noleggio n WHERE n.noleggiante = ?1 and (n.stato != 'RICHIESTA' OR n.stato != 'ACCETTATA' OR n.stato != 'RIFIUTATA')")
+    @Query("select n from Noleggio n WHERE n.noleggiante = ?1 and (n.stato != 'RICHIESTA' AND n.stato != 'ACCETTATA' AND n.stato != 'RIFIUTATA')")
     List<Noleggio> findByNoleggiante(Utente noleggiante);
 
     /**
@@ -32,7 +32,7 @@ public interface GestioneNoleggioDAO extends JpaRepository<Noleggio, Long> {
      * @param noleggiatore L'utente che ha dato a noleggio un oggetto.
      * @return Lista di noleggi associati al noleggiatore specificato.
      */
-    @Query("select n from Noleggio n WHERE n.noleggiatore = ?1 and (n.stato != 'RICHIESTA' OR n.stato != 'ACCETTATA' OR n.stato != 'RIFIUTATA')")
+    @Query("select n from Noleggio n WHERE n.noleggiatore = ?1 and (n.stato != 'RICHIESTA' AND n.stato != 'ACCETTATA' AND n.stato != 'RIFIUTATA')")
     List<Noleggio> findByNoleggiatore(Utente noleggiatore);
 
     /**

@@ -161,19 +161,19 @@ public class GestioneAnnuncioController {
             ResponseDTO message = new ResponseDTO();
             message.message = "Dati inseriti non validi";
 
-            /*
+
             HashMap<String, String> tester = new HashMap<>();
-            tester.put(model.getDescrizione(), "^[a-zA-Z0-9.,;:-]{1,1023}$");
-            tester.put(model.getStrada(), "^([A-Za-z]+\\s)+\\d+$");
-            tester.put(model.getCap(), "^[0-9]{5}$");
-            tester.put(model.getNome(), "^[a-zA-Z0-9]{1,100}$");
-            tester.put(model.getPrezzo().toString(), "^[0-9]{1,10},[0-9]{2}$");
+            tester.put(model.getDescrizione(), "^[\\sa-zA-Z0-9.,:;-]{1,1023}$");
+            tester.put(model.getStrada(), "^[\\sa-zA-Z0-9.,:;-]$");
+            tester.put(model.getCap(), "[0-9]\\{5\\}(-[0-9]\\{5\\})?");
+            tester.put(model.getNome(), "^[\\sa-zA-Z0-9.,:;-]{1,100}$");
+            tester.put(model.getPrezzo().toString(), "[0-9]+,[0-9]{2}");
 
             RegexTester regexTester = new RegexTester();
             if (!regexTester.toTest(tester)) {
                 return responseService.InternalError(message);
             }
-             */
+
 
             Annuncio item = new Annuncio();
 

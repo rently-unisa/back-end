@@ -12,6 +12,12 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 
+/**
+ * Questa classe gestisce le richieste relative all'area personale degli utenti attraverso i servizi forniti da GestioneAreaPersonaleService.
+ * Fornisce endpoint RESTful per accedere e modificare i dati personali degli utenti.
+ * Le risposte vengono restituite nel formato JSON attraverso ResponseEntity<String>, utilizzando le funzionalità
+ * di ResponseService per gestire la costruzione delle risposte standardizzate.
+ */
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/area-personale")
@@ -28,15 +34,27 @@ import java.util.HashMap;
 })
 public class GestioneAreaPersonaleController {
 
+    /**
+     * Service per la gestione delle risposte alle richieste.
+     */
     private final ResponseService responseService;
 
+    /**
+     * Service per effettuare le operazioni di persistenza.
+     */
     private final GestioneAreaPersonaleService areaPersonaleService;
+
+    /**
+     * Ottiene il profilo dell'utente specificato dall'ID.
+     *
+     * @param id ID dell'utente di cui si vuole ottenere il profilo.
+     * @return ResponseEntity contenente il profilo dell'utente in formato JSON.
+     */
     @GetMapping("/profilo-utente")
     public ResponseEntity<String> profiloUtente(@RequestParam("id") long id) {
 
         Utente utente = null;
         UtenteDTO item = new UtenteDTO();
-
 
         try {
             utente= areaPersonaleService.getDatiPrivati(id);
@@ -54,6 +72,12 @@ public class GestioneAreaPersonaleController {
         return responseService.Ok(item);
     }
 
+    /**
+     * Modifica i dati dell'utente con le informazioni fornite nel corpo della richiesta.
+     *
+     * @param data UtenteDTO contenente i dati da modificare.
+     * @return ResponseEntity contenente i risultati dell'operazione di modifica.
+     */
     @PostMapping("/modifica-dati-utente")
     public ResponseEntity<String>  modificaUtente(@RequestBody UtenteDTO data) {
 

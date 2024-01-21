@@ -17,6 +17,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+
+/**
+ * Questa classe gestisce le richieste relative ai messaggi attraverso i servizi forniti da
+ * GestioneChatService, GestioneAreaPersonaleService e ResponseService.
+ * Fornisce endpoint RESTful per aggiungere e visualizzare i messaggi.
+ * Le risposte sono gestite utilizzando il servizio ResponseService per costruire risposte standardizzate in formato JSON.
+ */
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/chat")
@@ -33,9 +41,28 @@ import java.util.List;
         })
 public class GestioneChatController {
 
+        /**
+         * Service per effettuare le operazioni di persistenza.
+         */
         private final GestioneAreaPersonaleService areaPersonaleService;
+
+        /**
+         * Service per la gestione delle risposte alle richieste.
+         */
         private final ResponseService responseService;
+
+        /**
+         * Service per effettuare le operazioni di persistenza.
+         */
         private final GestioneChatService chatService;
+
+
+        /**
+         * Endpoint per aggiungere un messaggio.
+         *
+         * @param messaggioDTO Dati del messaggio da aggiungere.
+         * @return ResponseEntity contenente l'esito dell'operazione.
+         */
 
         @PostMapping("/aggiungi-messaggio")
         public ResponseEntity<String> aggiungiMessaggio(@RequestBody MessaggioDTO messaggioDTO) {
@@ -68,6 +95,12 @@ public class GestioneChatController {
                         return responseService.InternalError();
         }
 
+        /**
+         * Endpoint per visualizzare una chat tra due utenti.
+         *
+         * @param messaggioDTO contiene gli id degli utenti di cui visualizzare la chat.
+         * @return ResponseEntity contenente l'esito dell'operazione.
+         */
         @PostMapping("/visualizza-chat")
         public ResponseEntity<String> getChat (@RequestBody MessaggioDTO messaggioDTO){
 

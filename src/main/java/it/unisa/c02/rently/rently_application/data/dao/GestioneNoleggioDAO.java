@@ -1,5 +1,6 @@
 package it.unisa.c02.rently.rently_application.data.dao;
 
+import it.unisa.c02.rently.rently_application.data.model.Annuncio;
 import it.unisa.c02.rently.rently_application.data.model.Noleggio;
 import it.unisa.c02.rently.rently_application.data.model.Utente;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -45,7 +46,7 @@ public interface GestioneNoleggioDAO extends JpaRepository<Noleggio, Long> {
      * @param noleggiante Utente che ha effettuato la richiesta di noleggio.
      * @return Lista di noleggi in stato 'RICHIESTA' associati al noleggiante specificato.
      */
-    @Query("select n from Utente u, Noleggio n WHERE u = n.noleggiante and n.stato = 'RICHIESTA'")
+    @Query("select n from Noleggio n WHERE n.noleggiante = ?1 and n.stato = 'RICHIESTA'")
     List<Noleggio> findRichiesteByNoleggiante(Utente noleggiante);
 
     /**
@@ -54,19 +55,19 @@ public interface GestioneNoleggioDAO extends JpaRepository<Noleggio, Long> {
      * @param noleggiatore Utente che ha ricevuto la richiesta di noleggio.
      * @return Lista di noleggi in stato 'RICHIESTA' associati al noleggiatore specificato.
      */
-    @Query("select n from Utente u, Noleggio n WHERE u = n.noleggiatore and n.stato = 'RICHIESTA'")
+    @Query("select n from Noleggio n WHERE n.noleggiatore = ?1 and n.stato = 'RICHIESTA'")
     List<Noleggio> findRichiesteByNoleggiatore(Utente noleggiatore);
 
     /**
      * Verifica la disponibilità di un annuncio in un determinato periodo di tempo.
      *
-     * @param id_annuncio Identificativo dell'annuncio.
+     * @param annuncio Identificativo dell'annuncio.
      * @param data_inizio Data di inizio del periodo di noleggio.
      * @param data_fine Data di fine del periodo di noleggio.
      * @return Lista di noleggi che interferiscono con il periodo specificato.
      */
     @Query("SELECT n FROM Noleggio n where (n.annuncio=?1) and ((n.dataInizio>=?2 and n.dataInizio<=?3) or (n.dataFine<= ?3 and n.dataFine>=?2 )) and n.stato != 'CONCLUSO'")
-    List<Noleggio> checkDisponibilita (long id_annuncio, Date data_inizio, Date data_fine);
+    List<Noleggio> checkDisponibilita (Annuncio annuncio, Date data_inizio, Date data_fine);
 
     /**
      * Verifica la presenza di noleggi in corso la cui data di fine è precedente o uguale alla data attuale.

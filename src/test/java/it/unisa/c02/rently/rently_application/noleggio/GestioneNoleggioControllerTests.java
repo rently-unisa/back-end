@@ -40,9 +40,6 @@ public class GestioneNoleggioControllerTests {
     @MockBean
     private GestioneNoleggioService noleggioService;
 
-    @Autowired
-    private ObjectMapper objectMapper;
-
     @Test
     @WithMockUser(username = "user1", roles = {"USER"})
     void testGetRichiesteByNoleggiante() throws Exception {

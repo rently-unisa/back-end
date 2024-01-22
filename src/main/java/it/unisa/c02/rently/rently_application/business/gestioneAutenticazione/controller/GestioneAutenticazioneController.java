@@ -102,8 +102,6 @@ public class GestioneAutenticazioneController {
         ResponseDTO response = new ResponseDTO();
         response.message = "";
 
-        ResponseDTO message = new ResponseDTO();
-        message.message = "I parametri non rispettano le regex";
 
         HashMap<String, String> tester = new HashMap<>();
         tester.put(data.getEmail(), "^[A-z0-9._%+-]+@[A-z0-9.-]+\\.[A-z]{1,100}$");
@@ -114,7 +112,8 @@ public class GestioneAutenticazioneController {
 
         RegexTester regexTester = new RegexTester();
         if (!regexTester.toTest(tester)) {
-            return responseService.InternalError(message);
+            response.message = "I dati inseriti non sono validi";
+            return responseService.InternalError(response);
         }
 
         try {
@@ -124,6 +123,19 @@ public class GestioneAutenticazioneController {
             utente.setPassword( new PswCoder().codificaPassword(data.getPassword()));
             utente.setNome(data.getNome());
             utente.setCognome(data.getCognome());
+
+            if(autenticazioneService.checkUsername(utente.getUsername()))
+            {
+                response.message = "Username già esistente!";
+                return responseService.InternalError(response);
+            }
+
+            if(autenticazioneService.checkEmail(utente.getEmail()))
+            {
+                response.message = "Email già esistente!";
+                return responseService.InternalError(response);
+            }
+
             autenticazioneService.signUp(utente);
 
             if(utente.getUsername().equals("") || utente.getPassword().equals(""))

@@ -89,7 +89,9 @@ public class GestioneChatController {
 
                 if(messaggio.getDestinatario()!= null && messaggio.getMittente()!= null){
                         messaggio = chatService.addMessaggio(messaggio);
-                        return responseService.Ok(messaggio);
+                        MessaggioDTO messaggioItem = new MessaggioDTO().convertFromModel(messaggio);
+
+                        return responseService.Ok(messaggioItem);
                 }
                 else
                         return responseService.InternalError();
@@ -104,7 +106,10 @@ public class GestioneChatController {
         @PostMapping("/visualizza-chat")
         public ResponseEntity<String> getChat (@RequestBody MessaggioDTO messaggioDTO){
 
-                List<Messaggio> chat = chatService.getChat(messaggioDTO.getDestinatario(), messaggioDTO.getMittente());
+                Utente dest = areaPersonaleService.getDatiPrivati(messaggioDTO.getDestinatario());
+                Utente mitt = areaPersonaleService.getDatiPrivati(messaggioDTO.getMittente());
+
+                List<Messaggio> chat = chatService.getChat(dest, mitt);
                 if(chat != null) {
                         List<MessaggioDTO> list = new ArrayList<>();
                         for (Messaggio m : chat) {

@@ -2,6 +2,7 @@ package it.unisa.c02.rently.rently_application.business.gestioneChat.service;
 
 import it.unisa.c02.rently.rently_application.data.dao.GestioneChatDAO;
 import it.unisa.c02.rently.rently_application.data.model.Messaggio;
+import it.unisa.c02.rently.rently_application.data.model.Utente;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -32,7 +33,7 @@ public class GestioneChatServiceImpl implements GestioneChatService {
      * {@inheritDoc}
      */
     @Override
-    public List<Messaggio> getChat(long id1, long id2) {
+    public List<Messaggio> getChat(Utente id1, Utente id2) {
         return gestioneChatDAO.getChat(id1, id2);
     }
 }

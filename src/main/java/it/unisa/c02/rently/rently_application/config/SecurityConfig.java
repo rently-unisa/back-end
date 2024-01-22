@@ -18,6 +18,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -48,10 +51,20 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorizationManagerRequestMatcherRegistry ->
                         authorizationManagerRequestMatcherRegistry
                                 .requestMatchers("/api/autenticazione/login").permitAll()
-                                .anyRequest().permitAll())
+                                .requestMatchers("/api/ricerca/premium").permitAll()
+                                .requestMatchers("/api/ricerca/all").permitAll()
+                                .requestMatchers("/api/annuncio/visualizza-annuncio").permitAll()
+                                .requestMatchers("/api/autenticazione/signup").permitAll()
+                                .requestMatchers("/api/valutazione/visualizza-valutazioni-annuncio").permitAll()
+                                .requestMatchers("/api/valutazione/visualizza-valutazioni-utente").permitAll()
+                                .requestMatchers("/api/area-personale/profilo-utente").permitAll()
+                                .requestMatchers("/api/annuncio/visualizza-annunci-utente").permitAll()
+                                .anyRequest().authenticated())
                 .sessionManagement(httpSecuritySessionManagementConfigurer -> httpSecuritySessionManagementConfigurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
         return http.build();
     }
+
+
 
 }

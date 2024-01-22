@@ -71,7 +71,7 @@ public class GestioneChatController {
                 message.message = "Il contenuto del messaggio è sbagliato";
 
                 HashMap<String, String> tester = new HashMap<>();
-                tester.put(messaggioDTO.getDescrizione(), "^[\\s\\S]{1,2000}$");
+                tester.put(messaggioDTO.getDescrizione(), "^[\\W\\sa-zA-Z0-9.,:;'-_]{1,2000}$");
 
                 RegexTester regexTester = new RegexTester();
                 if (!regexTester.toTest(tester)) {

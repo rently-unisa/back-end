@@ -83,10 +83,10 @@ public class GestioneAvvisiController {
             //prendo l'utente dalla sessione con @AuthenticationPrincipal UserDetails userDetails
             //controllo utente sessione
             ResponseDTO message = new ResponseDTO();
-            message.message = "Il contenuto inserito non rispetta la lunghezza di 255 caratteri";
+            message.message = "Il contenuto inserito non rispetta la regex";
 
             HashMap<String, String> tester = new HashMap<>();
-            tester.put(segnalazioneDTO.getContenuto(), "^[a-zA-Z0-9.,;:-]{1,255}$");
+            tester.put(segnalazioneDTO.getContenuto(), "^[\\sa-zA-Z0-9.,:;'-]{1,255}$");
 
             RegexTester regexTester = new RegexTester();
             if (!regexTester.toTest(tester)) {

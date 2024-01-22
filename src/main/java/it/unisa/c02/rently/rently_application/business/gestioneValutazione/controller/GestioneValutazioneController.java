@@ -198,17 +198,18 @@ public class GestioneValutazioneController {
     public ResponseEntity<String> visualizzaValutazioniAnnuncio(@RequestParam long id){
 
         Annuncio annuncio = annuncioService.getAnnuncio(id).orElse(null);
+        List<ValutazioneOggetto> valutazioni = new ArrayList<>();
+        List<ValutazioneDTO> list = new ArrayList<>();
+
         if(annuncio!= null){
-            List<ValutazioneOggetto> valutazioni = valutazioneService.findAllByAnnuncio(annuncio);
-            List<ValutazioneDTO> list = new ArrayList<>();
+            valutazioni = valutazioneService.findAllByAnnuncio(annuncio);
+            list = new ArrayList<>();
             for (ValutazioneOggetto vo: valutazioni) {
                 ValutazioneDTO item = new ValutazioneDTO().convertFromValutazioneOggetto(vo);
                 list.add(item);
             }
-            return responseService.Ok(list);
         }
-        else
-            return responseService.InternalError();
+        return responseService.Ok(list);
     }
 
     /**

@@ -36,7 +36,7 @@ public interface GestioneNoleggioDAO extends JpaRepository<Noleggio, Long> {
     List<Noleggio> findByNoleggiatore(Utente noleggiatore);
 
     /**
-     * Recupera i noleggi in stato 'RICHIESTA'.
+     * Recupera i noleggi in stato 'RICHIESTA' e 'RIFIUTATA'.
      *
      * @return Lista di noleggi in stato 'RICHIESTA'.
      */

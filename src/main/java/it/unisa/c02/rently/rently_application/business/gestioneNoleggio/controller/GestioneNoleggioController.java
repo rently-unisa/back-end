@@ -17,6 +17,13 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Questa classe gestisce le richieste relative ai noleggi attraverso i servizi forniti da GestioneAreaPersonaleService,
+ * GestioneAnnuncioService, GestioneNoleggioService, GestioneValutazioneService e ResponseService.
+ * Fornisce endpoint RESTful per accedere e aggiungere noleggi sulla piattaforma.
+ * Le risposte vengono restituite nel formato JSON attraverso ResponseEntity<String>, utilizzando le funzionalità
+ * di ResponseService per gestire la costruzione delle risposte standardizzate.
+ */
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/noleggio")
@@ -33,13 +40,38 @@ import java.util.List;
         })
 public class GestioneNoleggioController {
 
+    /**
+     * Service per effettuare le operazioni di persistenza.
+     */
     private final GestioneNoleggioService noleggioService;
+
+    /**
+     * Service per la gestione delle risposte alle richieste.
+     */
     private final ResponseService responseService;
+
+    /**
+     * Service per effettuare le operazioni di persistenza.
+     */
     private final GestioneAreaPersonaleService areaPersonaleService;
+
+    /**
+     * Service per effettuare le operazioni di persistenza.
+     */
     private final GestioneAnnuncioService annuncioService;
+
+    /**
+     * Service per effettuare le operazioni di persistenza.
+     */
     private final GestioneValutazioneService valutazioneService;
 
 
+    /**
+     * Restituisce tutti i noleggi, eccetto le richieste, effettuati da un noleggiante passato come parametro.
+     *
+     * @param idUtente ID del noleggiante di cui si vogliono ricevere i noleggi.
+     * @return ResponseEntity contenente la lista dei noleggi del noleggiante o un messaggio di errore in formato JSON.
+     */
     @GetMapping("/noleggiante")
     public ResponseEntity<String> getNoleggiByNoleggiante(@RequestParam long idUtente) {
 
@@ -66,6 +98,12 @@ public class GestioneNoleggioController {
             return responseService.InternalError();
     }
 
+    /**
+     * Restituisce tutti i noleggi, eccetto le richieste, effettuati da un noleggiatore passato come parametro.
+     *
+     * @param idUtente ID del noleggiatore di cui si vogliono ricevere i noleggi.
+     * @return ResponseEntity contenente la lista dei noleggi del noleggiatore o un messaggio di errore in formato JSON.
+     */
     @GetMapping("/noleggiatore")
     public ResponseEntity<String> getNoleggiByNoleggiatore(@RequestParam long idUtente) {
 
@@ -91,6 +129,12 @@ public class GestioneNoleggioController {
             return responseService.InternalError();
     }
 
+    /**
+     * Restituisce tutte le richieste, anche in stato RIFIUTATA e ACCETTATA, effettuate da un noleggiante passato come parametro.
+     *
+     * @param idUtente ID del noleggiante di cui si vogliono ricevere le richieste.
+     * @return ResponseEntity contenente la lista delle richieste del noleggiante o un messaggio di errore in formato JSON.
+     */
     @GetMapping("/richieste/noleggiante")
     public ResponseEntity<String> getRichiesteByNoleggiante(@RequestParam long idUtente) {
 
@@ -109,6 +153,12 @@ public class GestioneNoleggioController {
             return responseService.InternalError();
     }
 
+    /**
+     * Restituisce tutte le richieste, anche in stato RIFIUTATA e ACCETTATA, effettuate da un noleggiatore passato come parametro.
+     *
+     * @param idUtente ID del noleggiatore di cui si vogliono ricevere le richieste.
+     * @return ResponseEntity contenente la lista delle richieste del noleggiatore o un messaggio di errore in formato JSON.
+     */
     @GetMapping("/richieste/noleggiatore")
     public ResponseEntity<String> getRichiesteByNoleggiatore(@RequestParam long idUtente) {
 
@@ -127,6 +177,12 @@ public class GestioneNoleggioController {
             return responseService.InternalError();
     }
 
+    /**
+     * Restituisce le informazioni di un noleggio specifico in base all'identificativo.
+     *
+     * @param idNoleggio Identificativo del noleggio da visualizzare.
+     * @return ResponseEntity contenente le informazioni del noleggio o un messaggio di errore in formato JSON.
+     */
     @GetMapping("/visualizza-noleggio")
     public ResponseEntity<String> getNoleggio(@RequestParam long idNoleggio) {
 
@@ -142,6 +198,12 @@ public class GestioneNoleggioController {
         }
     }
 
+    /**
+     * Aggiunge un nuovo noleggio alla piattaforma.
+     *
+     * @param data NoleggioDTO contenente le informazioni del noleggio.
+     * @return ResponseEntity contenente le informazioni del noleggio aggiunto o un messaggio di errore in formato JSON.
+     */
     @PostMapping("/aggiungi-noleggio")
     public ResponseEntity<String> aggiungiNoleggio(@RequestBody NoleggioDTO data){
 
@@ -184,6 +246,14 @@ public class GestioneNoleggioController {
             return responseService.InternalError();
         }
     }
+
+
+    /**
+     * Modofica un noleggio presente sulla piattaforma.
+     *
+     * @param data NoleggioDTO contenente le informazioni del noleggio modificate.
+     * @return ResponseEntity contenente le informazioni del noleggio modificato o un messaggio di errore in formato JSON.
+     */
     @PostMapping("/salva-noleggio")
     public ResponseEntity<String> salvaNoleggio(@RequestBody NoleggioDTO data){
 

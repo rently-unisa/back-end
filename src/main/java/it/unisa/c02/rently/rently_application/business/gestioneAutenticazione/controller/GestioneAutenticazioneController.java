@@ -134,6 +134,12 @@ public class GestioneAutenticazioneController {
 
             UtenteDTO item = new UtenteDTO().convertFromModel(utente);
 
+            ObjectNode userNode = new ObjectMapper().convertValue(item, ObjectNode.class);
+            userNode.remove("password");
+            Map claimMap = new HashMap<>(0);
+            claimMap.put("user", userNode);
+            item.setToken(JwtProvider.createJwt(item.getEmail(), claimMap));
+
             return responseService.Ok(item);
         } catch (Exception ex)
         {

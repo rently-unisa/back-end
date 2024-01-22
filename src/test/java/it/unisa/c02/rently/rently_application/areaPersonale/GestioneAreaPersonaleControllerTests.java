@@ -38,7 +38,7 @@ public class GestioneAreaPersonaleControllerTests {
 
     @Test
     @WithMockUser(username = "user1", roles = {"USER"})
-    public void testModificaUtenteConPassword() throws Exception {
+     void testModificaUtenteConPassword() throws Exception {
 
         UtenteDTO utenteDTO = new UtenteDTO();
         utenteDTO.setNome("Mario");
@@ -70,7 +70,7 @@ public class GestioneAreaPersonaleControllerTests {
 
     @Test
     @WithMockUser(username = "user1", roles = {"USER"})
-    public void testModificaUtenteSenzaPassword() throws Exception {
+     void testModificaUtenteSenzaPassword() throws Exception {
 
         UtenteDTO utenteDTO = new UtenteDTO();
         utenteDTO.setNome("Mario");
@@ -101,7 +101,7 @@ public class GestioneAreaPersonaleControllerTests {
 
     @Test
     @WithMockUser(username = "user1", roles = {"USER"})
-    public void testModificaUtenteReturnServerError() throws Exception {
+     void testModificaUtenteReturnServerError() throws Exception {
 
         UtenteDTO utenteDTO = new UtenteDTO();
         utenteDTO.setNome("Mario");
@@ -129,7 +129,7 @@ public class GestioneAreaPersonaleControllerTests {
 
     @Test
     @WithMockUser(username = "user1", roles = {"USER"})
-    public void testModificaUtenteReturnServerErrorRegex() throws Exception {
+     void testModificaUtenteReturnServerErrorRegex() throws Exception {
 
         UtenteDTO utenteDTO = new UtenteDTO();
         utenteDTO.setNome("Mario");

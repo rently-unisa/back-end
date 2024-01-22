@@ -15,7 +15,7 @@ public class MessaggioDTO {
      * Costruttore senza argomenti.
      */
     public MessaggioDTO() {
-
+        //Costruttore vuoto
     }
 
     /**

@@ -11,13 +11,13 @@ import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
-import java.util.logging.Logger;
+
 
 @Component
 public class JwtProvider {
 
 
-    public static final String issuer = "demo-api-app";
+    public static final String ISSUER = "demo-api-app";
     public static String secret;
     public static String prefix;
     public static String headerParam;
@@ -33,7 +33,7 @@ public class JwtProvider {
     }
 
     public static String createJwt(String subject, Map<String, Object> payloadClaims) {
-        JWTCreator.Builder builder = JWT.create().withSubject(subject).withIssuer(issuer);
+        JWTCreator.Builder builder = JWT.create().withSubject(subject).withIssuer(ISSUER);
         final DateTime now = DateTime.now();
         builder.withIssuedAt(now.toDate()).withExpiresAt(now.plusDays(1).toDate());
 

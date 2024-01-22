@@ -32,7 +32,7 @@ public class FilesStorageServiceImpl implements FilesStorageService {
             }
 
 
-            //root = Paths.get(basePath);
+           
             root = targetDirectory;
             Files.createDirectories(root);
         } catch (IOException e) {

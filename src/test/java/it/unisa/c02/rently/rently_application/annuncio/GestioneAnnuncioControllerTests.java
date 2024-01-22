@@ -1,6 +1,5 @@
 package it.unisa.c02.rently.rently_application.annuncio;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import it.unisa.c02.rently.rently_application.business.gestioneAnnuncio.service.GestioneAnnuncioService;
 import it.unisa.c02.rently.rently_application.commons.services.storageService.FilesStorageService;
 import it.unisa.c02.rently.rently_application.data.model.Annuncio;
@@ -54,7 +53,7 @@ public class GestioneAnnuncioControllerTests {
 
     @Test
     @WithMockUser(username = "user1", roles = {"USER"})
-    public void testAggiungiAnnuncio() throws Exception {
+     void testAggiungiAnnuncio() throws Exception {
 
         MockMultipartFile imageFile = new MockMultipartFile(
                 "image",
@@ -103,7 +102,7 @@ public class GestioneAnnuncioControllerTests {
 
     @Test
     @WithMockUser(username = "user1", roles = {"USER"})
-    public void testAggiungiAnnuncioReturnServerError() throws Exception {
+     void testAggiungiAnnuncioReturnServerError() throws Exception {
 
         MockMultipartFile imageFile = new MockMultipartFile(
                 "image",
@@ -150,7 +149,7 @@ public class GestioneAnnuncioControllerTests {
 
     @Test
     @WithMockUser(username = "user1", roles = {"USER"})
-    public void testAggiungiAnnuncioReturnServerErrorRegex() throws Exception {
+     void testAggiungiAnnuncioReturnServerErrorRegex() throws Exception {
 
         MockMultipartFile imageFile = new MockMultipartFile(
                 "image",
@@ -184,7 +183,7 @@ public class GestioneAnnuncioControllerTests {
 
     @Test
     @WithMockUser(username = "user1", roles = {"USER"})
-    public void testAggiungiAnnuncioReturnServerErrorMissingData() throws Exception {
+     void testAggiungiAnnuncioReturnServerErrorMissingData() throws Exception {
 
         MockMultipartFile imageFile = new MockMultipartFile(
                 "image",

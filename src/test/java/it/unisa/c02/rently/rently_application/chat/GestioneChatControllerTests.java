@@ -43,7 +43,7 @@ public class GestioneChatControllerTests {
 
     @Test
     @WithMockUser(username = "user1", roles = {"USER"})
-    public void testAggiungiMessaggio() throws Exception {
+     void testAggiungiMessaggio() throws Exception {
 
         MessaggioDTO messaggioDTO = new MessaggioDTO();
         messaggioDTO.setDescrizione("Contenuto del messaggio");
@@ -73,7 +73,7 @@ public class GestioneChatControllerTests {
 
     @Test
     @WithMockUser(username = "user1", roles = {"USER"})
-    public void testAggiungiMessaggioReturnServerError() throws Exception {
+     void testAggiungiMessaggioReturnServerError() throws Exception {
 
         MessaggioDTO messaggioDTO = new MessaggioDTO();
         messaggioDTO.setDescrizione("Contenuto del messaggio");
@@ -102,7 +102,7 @@ public class GestioneChatControllerTests {
 
     @Test
     @WithMockUser(username = "user1", roles = {"USER"})
-    public void testAggiungiMessaggioReturnServerErrorRegex() throws Exception {
+     void testAggiungiMessaggioReturnServerErrorRegex() throws Exception {
 
         MessaggioDTO messaggioDTO = new MessaggioDTO();
         messaggioDTO.setDescrizione("");

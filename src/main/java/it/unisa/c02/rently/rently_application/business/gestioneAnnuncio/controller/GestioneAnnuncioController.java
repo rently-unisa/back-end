@@ -220,6 +220,70 @@ public class GestioneAnnuncioController {
         }
     }
 
+
+    @PostMapping(value = "modifica-annuncio")
+    public ResponseEntity<String> modifyAnnuncio(@ModelAttribute("model") AnnuncioDTO model,
+                                              @RequestParam(value="image", required=false) MultipartFile image) {
+
+        try {
+            ResponseDTO message = new ResponseDTO();
+            message.message = "Dati inseriti non validi";
+
+            Annuncio item = gestioneAnnuncioService.getAnnuncio(model.getId()).orElse(null);
+            if(item != null)
+            {
+                item.setNome(model.getNome());
+                item.setStrada(model.getStrada());
+                item.setCitta(model.getCitta());
+                item.setCap(model.getCap());
+                item.setDescrizione(model.getDescrizione());
+                item.setPrezzo(model.getPrezzo());
+                item.setCategoria(Annuncio.EnumCategoria.valueOf(model.getCategoria().toUpperCase()));
+                item.setCondizione(Annuncio.EnumCondizione.valueOf(model.getCondizione().toUpperCase()));
+                java.sql.Date date = Date.valueOf(model.getDataFine());
+                item.setDataFine(date);
+
+                Utente user = gestioneAreaPersonaleService.getDatiPrivati(model.getIdUtente());
+                if (user != null) {
+                    item.setUtente(user);
+                }
+
+
+                Annuncio newItem = gestioneAnnuncioService.updateAnnuncio(item);
+
+                if(image != null)
+                {
+                    ClassLoader classLoader = getClass().getClassLoader();
+
+                    String resourcePath = uploadPath ;
+                    String basePath = resourcePath + "annunci" + "\\" + newItem.getId() + "\\";
+                    storageService.init(basePath);
+
+                    String fileName = storageService.generateRandomFileName();
+                    String extension = image.getOriginalFilename().substring(image.getOriginalFilename().lastIndexOf('.') + 1);
+                    fileName = (new StringBuilder()).append(fileName).append(".").append(extension).toString();
+
+                    storageService.deleteAll();
+                    storageService.save(image, fileName);
+                    newItem.setImmagine(fileName);
+
+                    gestioneAnnuncioService.updateAnnuncio(newItem);
+                }
+
+                AnnuncioDTO annuncioDto = new AnnuncioDTO().convertFromModel(newItem);
+
+                return responseService.Ok(annuncioDto);
+            }
+            else {
+                return responseService.InternalError();
+            }
+        }
+        catch (Exception ex) {
+            return responseService.InternalError();
+        }
+    }
+
+
     /**
      * Cancella un annuncio dalla piattaforma in base all'identificativo.
      *

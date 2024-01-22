@@ -12,6 +12,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.sql.Timestamp;
@@ -41,6 +42,7 @@ public class GestioneChatControllerTests {
     private ObjectMapper objectMapper;
 
     @Test
+    @WithMockUser(username = "user1", roles = {"USER"})
     public void testAggiungiMessaggio() throws Exception {
 
         MessaggioDTO messaggioDTO = new MessaggioDTO();
@@ -70,6 +72,7 @@ public class GestioneChatControllerTests {
     }
 
     @Test
+    @WithMockUser(username = "user1", roles = {"USER"})
     public void testAggiungiMessaggioReturnServerError() throws Exception {
 
         MessaggioDTO messaggioDTO = new MessaggioDTO();
@@ -98,6 +101,7 @@ public class GestioneChatControllerTests {
 
 
     @Test
+    @WithMockUser(username = "user1", roles = {"USER"})
     public void testAggiungiMessaggioReturnServerErrorRegex() throws Exception {
 
         MessaggioDTO messaggioDTO = new MessaggioDTO();

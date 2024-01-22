@@ -161,7 +161,6 @@ public class GestioneAnnuncioController {
             ResponseDTO message = new ResponseDTO();
             message.message = "Dati inseriti non validi";
 
-
             HashMap<String, String> tester = new HashMap<>();
             tester.put(model.getDescrizione(), "^[\\sa-zA-Z0-9.,:;'-]{1,1023}$");
             tester.put(model.getStrada(), "^[\\sa-zA-Z0-9.,:;'-]+$");
@@ -173,7 +172,6 @@ public class GestioneAnnuncioController {
             if (!regexTester.toTest(tester)) {
                 return responseService.InternalError(message);
             }
-
 
             Annuncio item = new Annuncio();
 

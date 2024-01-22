@@ -21,11 +21,13 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-public class SecurityConfig {
+public class SecurityConfig implements WebMvcConfigurer {
 
     @Autowired
     private GestioneAutenticazioneDAO userRepository;
@@ -41,6 +43,11 @@ public class SecurityConfig {
     }
 
 
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/static/**")
+                .addResourceLocations("classpath:/static/");
+    }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -59,6 +66,8 @@ public class SecurityConfig {
                                 .requestMatchers("/api/valutazione/visualizza-valutazioni-utente").permitAll()
                                 .requestMatchers("/api/area-personale/profilo-utente").permitAll()
                                 .requestMatchers("/api/annuncio/visualizza-annunci-utente").permitAll()
+                                .requestMatchers("/annunci/**").permitAll()  // Consentire l'accesso alle immagini sotto /annunci/
+                                .requestMatchers("/static/**").permitAll()  // Consentire l'accesso ai file sotto /static
                                 .anyRequest().authenticated())
                 .sessionManagement(httpSecuritySessionManagementConfigurer -> httpSecuritySessionManagementConfigurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 

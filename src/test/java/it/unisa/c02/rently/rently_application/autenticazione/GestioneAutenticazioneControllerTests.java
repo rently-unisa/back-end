@@ -92,7 +92,7 @@ public class GestioneAutenticazioneControllerTests {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(utenteDTO)))
                 .andExpect(status().is5xxServerError())
-                .andExpect(jsonPath("$.message", is("I parametri non rispettano le regex")));
+                .andExpect(jsonPath("$.message", is("I dati inseriti non sono validi")));
 
     }
 }

@@ -5,6 +5,7 @@ import it.unisa.c02.rently.rently_application.business.gestioneAutenticazione.se
 import it.unisa.c02.rently.rently_application.business.gestioneNoleggio.service.GestioneNoleggioService;
 import it.unisa.c02.rently.rently_application.business.gestioneValutazione.service.GestioneValutazioneService;
 import it.unisa.c02.rently.rently_application.commons.psw.PswCoder;
+import it.unisa.c02.rently.rently_application.data.dao.*;
 import it.unisa.c02.rently.rently_application.data.model.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
@@ -17,10 +18,11 @@ import java.sql.Date;
 @RequiredArgsConstructor
 public class databasePopulator implements CommandLineRunner {
 
-    private final GestioneAnnuncioService annuncioService;
-    private final GestioneValutazioneService valutazioneService;
-    private final GestioneNoleggioService noleggioService;
-    private final GestioneAutenticazioneService utenteService;
+    private final GestioneAnnuncioDAO annuncioService;
+    private final GestioneValutazioneUtenteDAO valutazioneUtenteService;
+    private final GestioneValutazioneOggettoDAO valutazioneOggettoService;
+    private final GestioneNoleggioDAO noleggioService;
+    private final GestioneAutenticazioneDAO utenteService;
     private final PswCoder pswCoder;
 
 
@@ -47,21 +49,21 @@ public class databasePopulator implements CommandLineRunner {
         Utente user14 =new Utente(14,"user14", "Simona", "Rosa", "simona.rosa@email.com", pswCoder.codificaPassword("simona_secure"), true);
         Utente user15 =new Utente(15,"user15", "Federico", "Giallo", "federico.giallo@email.com", pswCoder.codificaPassword("fede_pass"), true);
 
-        this.utenteService.signUp(user1);
-        this.utenteService.signUp(user2);
-        this.utenteService.signUp(user3);
-        this.utenteService.signUp(user4);
-        this.utenteService.signUp(user5);
-        this.utenteService.signUp(user6);
-        this.utenteService.signUp(user7);
-        this.utenteService.signUp(user8);
-        this.utenteService.signUp(user9);
-        this.utenteService.signUp(user10);
-        this.utenteService.signUp(user11);
-        this.utenteService.signUp(user12);
-        this.utenteService.signUp(user13);
-        this.utenteService.signUp(user14);
-        this.utenteService.signUp(user15);
+        this.utenteService.save(user1);
+        this.utenteService.save(user2);
+        this.utenteService.save(user3);
+        this.utenteService.save(user4);
+        this.utenteService.save(user5);
+        this.utenteService.save(user6);
+        this.utenteService.save(user7);
+        this.utenteService.save(user8);
+        this.utenteService.save(user9);
+        this.utenteService.save(user10);
+        this.utenteService.save(user11);
+        this.utenteService.save(user12);
+        this.utenteService.save(user13);
+        this.utenteService.save(user14);
+        this.utenteService.save(user15);
 
 
         // Aggiunta degli Annunci
@@ -97,36 +99,36 @@ public class databasePopulator implements CommandLineRunner {
         Annuncio annuncio29 = new Annuncio(29l,"Cuffie senza fili", "Corso Italia", "Roma", "00192", "Cuffie Sony WH-1000XM4", new BigDecimal("30.00"), "img29.jpg", Annuncio.EnumCategoria.ELETTRONICA, Annuncio.EnumCondizione.DISCRETA, Date.valueOf("2025-05-20"), user14, null, null);
         Annuncio annuncio30 = new Annuncio(30l,"Bicicletta elettrica", "Via Toledo", "Napoli", "80121", "Bicicletta elettrica Ancheer", new BigDecimal("120.00"), "img30.jpg", Annuncio.EnumCategoria.SPORT, Annuncio.EnumCondizione.OTTIMA, Date.valueOf("2024-12-05"), user15, null, null);
 
-        this.annuncioService.addAnnuncio(annuncio1);
-        this.annuncioService.addAnnuncio(annuncio2);
-        this.annuncioService.addAnnuncio(annuncio3);
-        this.annuncioService.addAnnuncio(annuncio4);
-        this.annuncioService.addAnnuncio(annuncio5);
-        this.annuncioService.addAnnuncio(annuncio6);
-        this.annuncioService.addAnnuncio(annuncio7);
-        this.annuncioService.addAnnuncio(annuncio8);
-        this.annuncioService.addAnnuncio(annuncio9);
-        this.annuncioService.addAnnuncio(annuncio10);
-        this.annuncioService.addAnnuncio(annuncio11);
-        this.annuncioService.addAnnuncio(annuncio12);
-        this.annuncioService.addAnnuncio(annuncio13);
-        this.annuncioService.addAnnuncio(annuncio14);
-        this.annuncioService.addAnnuncio(annuncio15);
-        this.annuncioService.addAnnuncio(annuncio16);
-        this.annuncioService.addAnnuncio(annuncio17);
-        this.annuncioService.addAnnuncio(annuncio18);
-        this.annuncioService.addAnnuncio(annuncio19);
-        this.annuncioService.addAnnuncio(annuncio20);
-        this.annuncioService.addAnnuncio(annuncio21);
-        this.annuncioService.addAnnuncio(annuncio22);
-        this.annuncioService.addAnnuncio(annuncio23);
-        this.annuncioService.addAnnuncio(annuncio24);
-        this.annuncioService.addAnnuncio(annuncio25);
-        this.annuncioService.addAnnuncio(annuncio26);
-        this.annuncioService.addAnnuncio(annuncio27);
-        this.annuncioService.addAnnuncio(annuncio28);
-        this.annuncioService.addAnnuncio(annuncio29);
-        this.annuncioService.addAnnuncio(annuncio30);
+        this.annuncioService.save(annuncio1);
+        this.annuncioService.save(annuncio2);
+        this.annuncioService.save(annuncio3);
+        this.annuncioService.save(annuncio4);
+        this.annuncioService.save(annuncio5);
+        this.annuncioService.save(annuncio6);
+        this.annuncioService.save(annuncio7);
+        this.annuncioService.save(annuncio8);
+        this.annuncioService.save(annuncio9);
+        this.annuncioService.save(annuncio10);
+        this.annuncioService.save(annuncio11);
+        this.annuncioService.save(annuncio12);
+        this.annuncioService.save(annuncio13);
+        this.annuncioService.save(annuncio14);
+        this.annuncioService.save(annuncio15);
+        this.annuncioService.save(annuncio16);
+        this.annuncioService.save(annuncio17);
+        this.annuncioService.save(annuncio18);
+        this.annuncioService.save(annuncio19);
+        this.annuncioService.save(annuncio20);
+        this.annuncioService.save(annuncio21);
+        this.annuncioService.save(annuncio22);
+        this.annuncioService.save(annuncio23);
+        this.annuncioService.save(annuncio24);
+        this.annuncioService.save(annuncio25);
+        this.annuncioService.save(annuncio26);
+        this.annuncioService.save(annuncio27);
+        this.annuncioService.save(annuncio28);
+        this.annuncioService.save(annuncio29);
+        this.annuncioService.save(annuncio30);
 
 
         // Aggiunta Noleggio
@@ -148,60 +150,60 @@ public class databasePopulator implements CommandLineRunner {
         Noleggio noleggio14= new Noleggio(14l,Noleggio.EnumStato.RICHIESTA, new BigDecimal("900.00"), Date.valueOf("2024-03-01"), Date.valueOf("2024-03-04"), Date.valueOf("2024-02-27"), user15, user13, annuncio9);
         Noleggio noleggio15= new Noleggio(15l,Noleggio.EnumStato.RICHIESTA,new BigDecimal("99.00"), Date.valueOf("2024-03-09"),Date.valueOf("2024-03-15"), Date.valueOf("2024-03-03"), user10, user1, annuncio10);
 
-        this.noleggioService.addNoleggio(noleggio1);
-        this.noleggioService.addNoleggio(noleggio2);
-        this.noleggioService.addNoleggio(noleggio3);
-        this.noleggioService.addNoleggio(noleggio4);
-        this.noleggioService.addNoleggio(noleggio5);
-        this.noleggioService.addNoleggio(noleggio6);
-        this.noleggioService.addNoleggio(noleggio7);
-        this.noleggioService.addNoleggio(noleggio8);
-        this.noleggioService.addNoleggio(noleggio9);
-        this.noleggioService.addNoleggio(noleggio10);
-        this.noleggioService.addNoleggio(noleggio11);
-        this.noleggioService.addNoleggio(noleggio12);
-        this.noleggioService.addNoleggio(noleggio13);
-        this.noleggioService.addNoleggio(noleggio14);
-        this.noleggioService.addNoleggio(noleggio15);
-        this.noleggioService.addNoleggio(noleggio16);
+        this.noleggioService.save(noleggio1);
+        this.noleggioService.save(noleggio2);
+        this.noleggioService.save(noleggio3);
+        this.noleggioService.save(noleggio4);
+        this.noleggioService.save(noleggio5);
+        this.noleggioService.save(noleggio6);
+        this.noleggioService.save(noleggio7);
+        this.noleggioService.save(noleggio8);
+        this.noleggioService.save(noleggio9);
+        this.noleggioService.save(noleggio10);
+        this.noleggioService.save(noleggio11);
+        this.noleggioService.save(noleggio12);
+        this.noleggioService.save(noleggio13);
+        this.noleggioService.save(noleggio14);
+        this.noleggioService.save(noleggio15);
+        this.noleggioService.save(noleggio16);
 
 
         // Aggiunta Valutazioni Utente
 
-        this.valutazioneService.addValutazioneUtente(new ValutazioneUtente(1,8, "Transazione veloce e comunicazione cordiale.", user2, user1, noleggio1));
-        this.valutazioneService.addValutazioneUtente(new ValutazioneUtente(2,9, "Ottimo acquirente, pagamento puntuale e piacevole interazione.", user1, user2,noleggio1));
-        this.valutazioneService.addValutazioneUtente(new ValutazioneUtente(3,7, "Buon venditore, spedizione rapida e disponibilità.", user4, user3, noleggio3));
-        this.valutazioneService.addValutazioneUtente(new ValutazioneUtente(4,10, "Consigliato! Persona affidabile, cortese e rispettosa.", user3, user4,noleggio3));
-        this.valutazioneService.addValutazioneUtente(new ValutazioneUtente(5,2, "Interazione complicata, problemi di comunicazione.", user6, user5, noleggio5));
-        this.valutazioneService.addValutazioneUtente(new ValutazioneUtente(6,8, "Venditore affidabile, risposte rapide e gentili.", user7, user9, noleggio7));
-        this.valutazioneService.addValutazioneUtente(new ValutazioneUtente(7,10, "Cliente eccezionale, sempre cortese e rispettoso.", user9, user7, noleggio7 ));
-        this.valutazioneService.addValutazioneUtente(new ValutazioneUtente(8,5, "Ritardo nella comunicazione, esperienza meno positiva.", user5, user6, noleggio5));
-        this.valutazioneService.addValutazioneUtente(new ValutazioneUtente(9,9, "Acquirente serio, piacevole da trattare e affidabile.", user10, user8, noleggio6));
-        this.valutazioneService.addValutazioneUtente(new ValutazioneUtente(10,3, "Pessima esperienza, scarsa comunicazione e mancanza di rispetto.", user1, user10, noleggio10));
-        this.valutazioneService.addValutazioneUtente(new ValutazioneUtente(11,6, "Buona comunicazione durante la transazione.", user8, user10, noleggio6));
-        this.valutazioneService.addValutazioneUtente(new ValutazioneUtente(12,7, "Pagamento rapido, transazione piacevole.", user3, user2, noleggio2));
-        this.valutazioneService.addValutazioneUtente(new ValutazioneUtente(13,9, "Persona affidabile, prodotto ricevuto in perfette condizioni.", user2, user3,noleggio2));
-        this.valutazioneService.addValutazioneUtente(new ValutazioneUtente(14,5, "Inesattezze nella descrizione personale.", user14, user12, noleggio8));
-        this.valutazioneService.addValutazioneUtente(new ValutazioneUtente(15,8, "Imballaggio professionale e spedizione veloce.", user12, user14, noleggio8));
-        this.valutazioneService.addValutazioneUtente(new ValutazioneUtente(16,8, "Venditore molto disponibile, nessun problema con la consegna.", user8, user5, noleggio4));
-        this.valutazioneService.addValutazioneUtente(new ValutazioneUtente(17,10, "Cliente eccezionale, sempre soddisfatto della nostra interazione.", user5, user8, noleggio4));
-        this.valutazioneService.addValutazioneUtente(new ValutazioneUtente(18,6, "Prodotto danneggiato durante la spedizione, venditore cordiale.", user13, user15, noleggio9));
-        this.valutazioneService.addValutazioneUtente(new ValutazioneUtente(19,9, "Transazione senza intoppi, acquirente affidabile.", user15, user13, noleggio9));
-        this.valutazioneService.addValutazioneUtente(new ValutazioneUtente(20,2, "Risposte tardive, esperienza negativa nella nostra interazione.", user10, user1, noleggio10));
+        this.valutazioneUtenteService.save(new ValutazioneUtente(1,8, "Transazione veloce e comunicazione cordiale.", user2, user1, noleggio1));
+        this.valutazioneUtenteService.save(new ValutazioneUtente(2,9, "Ottimo acquirente, pagamento puntuale e piacevole interazione.", user1, user2,noleggio1));
+        this.valutazioneUtenteService.save(new ValutazioneUtente(3,7, "Buon venditore, spedizione rapida e disponibilità.", user4, user3, noleggio3));
+        this.valutazioneUtenteService.save(new ValutazioneUtente(4,10, "Consigliato! Persona affidabile, cortese e rispettosa.", user3, user4,noleggio3));
+        this.valutazioneUtenteService.save(new ValutazioneUtente(5,2, "Interazione complicata, problemi di comunicazione.", user6, user5, noleggio5));
+        this.valutazioneUtenteService.save(new ValutazioneUtente(6,8, "Venditore affidabile, risposte rapide e gentili.", user7, user9, noleggio7));
+        this.valutazioneUtenteService.save(new ValutazioneUtente(7,10, "Cliente eccezionale, sempre cortese e rispettoso.", user9, user7, noleggio7 ));
+        this.valutazioneUtenteService.save(new ValutazioneUtente(8,5, "Ritardo nella comunicazione, esperienza meno positiva.", user5, user6, noleggio5));
+        this.valutazioneUtenteService.save(new ValutazioneUtente(9,9, "Acquirente serio, piacevole da trattare e affidabile.", user10, user8, noleggio6));
+        this.valutazioneUtenteService.save(new ValutazioneUtente(10,3, "Pessima esperienza, scarsa comunicazione e mancanza di rispetto.", user1, user10, noleggio10));
+        this.valutazioneUtenteService.save(new ValutazioneUtente(11,6, "Buona comunicazione durante la transazione.", user8, user10, noleggio6));
+        this.valutazioneUtenteService.save(new ValutazioneUtente(12,7, "Pagamento rapido, transazione piacevole.", user3, user2, noleggio2));
+        this.valutazioneUtenteService.save(new ValutazioneUtente(13,9, "Persona affidabile, prodotto ricevuto in perfette condizioni.", user2, user3,noleggio2));
+        this.valutazioneUtenteService.save(new ValutazioneUtente(14,5, "Inesattezze nella descrizione personale.", user14, user12, noleggio8));
+        this.valutazioneUtenteService.save(new ValutazioneUtente(15,8, "Imballaggio professionale e spedizione veloce.", user12, user14, noleggio8));
+        this.valutazioneUtenteService.save(new ValutazioneUtente(16,8, "Venditore molto disponibile, nessun problema con la consegna.", user8, user5, noleggio4));
+        this.valutazioneUtenteService.save(new ValutazioneUtente(17,10, "Cliente eccezionale, sempre soddisfatto della nostra interazione.", user5, user8, noleggio4));
+        this.valutazioneUtenteService.save(new ValutazioneUtente(18,6, "Prodotto danneggiato durante la spedizione, venditore cordiale.", user13, user15, noleggio9));
+        this.valutazioneUtenteService.save(new ValutazioneUtente(19,9, "Transazione senza intoppi, acquirente affidabile.", user15, user13, noleggio9));
+        this.valutazioneUtenteService.save(new ValutazioneUtente(20,2, "Risposte tardive, esperienza negativa nella nostra interazione.", user10, user1, noleggio10));
 
 
         // Aggiunta Valutazioni Oggetto
 
-        this.valutazioneService.addValutazioneOggetto(new ValutazioneOggetto(1,9, "Prodotto di ottima qualità, corrisponde alla descrizione.", annuncio1, user1, noleggio1));
-        this.valutazioneService.addValutazioneOggetto(new ValutazioneOggetto(2,8, "Consegna rapida, imballaggio curato.", annuncio2, user3, noleggio2));
-        this.valutazioneService.addValutazioneOggetto(new ValutazioneOggetto(3,7, "Prodotto leggermente diverso dalla descrizione.", annuncio3, user3, noleggio3));
-        this.valutazioneService.addValutazioneOggetto(new ValutazioneOggetto(4,9, "Molto soddisfatto dell'acquisto, ottimo rapporto qualità-prezzo.", annuncio4, user5, noleggio4));
-        this.valutazioneService.addValutazioneOggetto(new ValutazioneOggetto(5,4, "Prodotto difettoso, per nulla soddisfatto.", annuncio5, user5, noleggio5));
-        this.valutazioneService.addValutazioneOggetto(new ValutazioneOggetto(6,8, "Venditore affidabile, prodotto conforme alla descrizione.", annuncio6, user10, noleggio6));
-        this.valutazioneService.addValutazioneOggetto(new ValutazioneOggetto(7,9, "Prodotto esattamente come descritto, spedizione veloce.", annuncio7, user9, noleggio7));
-        this.valutazioneService.addValutazioneOggetto(new ValutazioneOggetto(8,10, "Prodotto ricevuto in perfette condizioni.", annuncio8, user14, noleggio8));
-        this.valutazioneService.addValutazioneOggetto(new ValutazioneOggetto(9,6, "Prodotto un po' danneggiato durante la spedizione.", annuncio9, user15, noleggio9));
-        this.valutazioneService.addValutazioneOggetto(new ValutazioneOggetto(10,2, "Prodotto non funzionante, molto deluso.", annuncio10, user10, noleggio10));
+        this.valutazioneOggettoService.save(new ValutazioneOggetto(1,9, "Prodotto di ottima qualità, corrisponde alla descrizione.", annuncio1, user1, noleggio1));
+        this.valutazioneOggettoService.save(new ValutazioneOggetto(2,8, "Consegna rapida, imballaggio curato.", annuncio2, user3, noleggio2));
+        this.valutazioneOggettoService.save(new ValutazioneOggetto(3,7, "Prodotto leggermente diverso dalla descrizione.", annuncio3, user3, noleggio3));
+        this.valutazioneOggettoService.save(new ValutazioneOggetto(4,9, "Molto soddisfatto dell'acquisto, ottimo rapporto qualità-prezzo.", annuncio4, user5, noleggio4));
+        this.valutazioneOggettoService.save(new ValutazioneOggetto(5,4, "Prodotto difettoso, per nulla soddisfatto.", annuncio5, user5, noleggio5));
+        this.valutazioneOggettoService.save(new ValutazioneOggetto(6,8, "Venditore affidabile, prodotto conforme alla descrizione.", annuncio6, user10, noleggio6));
+        this.valutazioneOggettoService.save(new ValutazioneOggetto(7,9, "Prodotto esattamente come descritto, spedizione veloce.", annuncio7, user9, noleggio7));
+        this.valutazioneOggettoService.save(new ValutazioneOggetto(8,10, "Prodotto ricevuto in perfette condizioni.", annuncio8, user14, noleggio8));
+        this.valutazioneOggettoService.save(new ValutazioneOggetto(9,6, "Prodotto un po' danneggiato durante la spedizione.", annuncio9, user15, noleggio9));
+        this.valutazioneOggettoService.save(new ValutazioneOggetto(10,2, "Prodotto non funzionante, molto deluso.", annuncio10, user10, noleggio10));
 
 
 

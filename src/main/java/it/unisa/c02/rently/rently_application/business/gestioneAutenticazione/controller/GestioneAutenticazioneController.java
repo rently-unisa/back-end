@@ -106,8 +106,8 @@ public class GestioneAutenticazioneController {
         HashMap<String, String> tester = new HashMap<>();
         tester.put(data.getEmail(), "^[A-z0-9._%+-]+@[A-z0-9.-]+\\.[A-z]{1,100}$");
         tester.put(data.getUsername(), "^[a-zA-Z0-9.,'-_]{5,100}$");
-        tester.put(data.getNome(), "^[\\sa-zA-Z0-9.,']{1,100}$");
-        tester.put(data.getCognome(), "^[\\sa-zA-Z0-9.,']{1,100}$");
+        tester.put(data.getNome(), "^[\\sa-zA-Z0-9.,'èéòàùì]{1,100}$");
+        tester.put(data.getCognome(), "^[\\sa-zA-Z0-9.,'èéòàùì]{1,100}$");
         tester.put(data.getPassword(),"^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$");
 
         RegexTester regexTester = new RegexTester();

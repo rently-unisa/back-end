@@ -79,7 +79,7 @@ public class GestioneValutazioneController {
         message.message = "Errore durante l'inserimento dei dati";
 
         HashMap<String, String> tester = new HashMap<>();
-        tester.put(valutazioneDTO.getDescrizione(), "^[\\sa-zA-Z0-9.,:;'-?!]{1,255}$");
+        tester.put(valutazioneDTO.getDescrizione(), "^[\\sa-zA-Z0-9.,:;'-?!èéòàùì]{1,255}$");
 
         RegexTester regexTester = new RegexTester();
         if (!regexTester.toTest(tester)) {

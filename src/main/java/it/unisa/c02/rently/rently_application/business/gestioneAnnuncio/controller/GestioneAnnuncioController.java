@@ -162,10 +162,10 @@ public class GestioneAnnuncioController {
             message.message = "Dati inseriti non validi";
 
             HashMap<String, String> tester = new HashMap<>();
-            tester.put(model.getDescrizione(), "^[\\sa-zA-Z0-9.,:;'-]{1,1023}$");
-            tester.put(model.getStrada(), "^[\\sa-zA-Z0-9.,:;'-]+$");
+            tester.put(model.getDescrizione(), "^[\\sa-zA-Z0-9.,:;'-èéòàùì]{1,1023}$");
+            tester.put(model.getStrada(), "^[\\sa-zA-Z0-9.,:;'-èéòàùì]+$");
             tester.put(model.getCap(), "^[0-9]{5}$");
-            tester.put(model.getNome(), "^[\\sa-zA-Z0-9.,']{1,100}$");
+            tester.put(model.getNome(), "^[\\sa-zA-Z0-9.,'èéòàùì]{1,100}$");
             tester.put(model.getPrezzo().toString(), "^[0-9]{1,10}[.,][0-9]{2}$");
 
             RegexTester regexTester = new RegexTester();

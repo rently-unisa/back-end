@@ -198,11 +198,11 @@ public class GestioneValutazioneController {
     public ResponseEntity<String> visualizzaValutazioniAnnuncio(@RequestParam long id){
 
         Annuncio annuncio = annuncioService.getAnnuncio(id).orElse(null);
-        List<ValutazioneOggetto> valutazioni = new ArrayList<>();
+
         List<ValutazioneDTO> list = new ArrayList<>();
 
         if(annuncio!= null){
-            valutazioni = valutazioneService.findAllByAnnuncio(annuncio);
+            List<ValutazioneOggetto> valutazioni = valutazioneService.findAllByAnnuncio(annuncio);
             list = new ArrayList<>();
             for (ValutazioneOggetto vo: valutazioni) {
                 ValutazioneDTO item = new ValutazioneDTO().convertFromValutazioneOggetto(vo);

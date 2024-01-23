@@ -65,12 +65,12 @@ public interface GestioneNoleggioDAO extends JpaRepository<Noleggio, Long> {
      * Verifica la disponibilità di un annuncio in un determinato periodo di tempo.
      *
      * @param annuncio Identificativo dell'annuncio.
-     * @param data_inizio Data di inizio del periodo di noleggio.
-     * @param data_fine Data di fine del periodo di noleggio.
+     * @param dataInizio Data di inizio del periodo di noleggio.
+     * @param dataFine Data di fine del periodo di noleggio.
      * @return Lista di noleggi che interferiscono con il periodo specificato.
      */
     @Query("SELECT n FROM Noleggio n where (n.annuncio=?1) and ((n.dataInizio>=?2 and n.dataInizio<=?3) or (n.dataFine<= ?3 and n.dataFine>=?2 )) and (n.stato != 'RIFIUTATA' and n.stato != 'CONCLUSO' AND n.stato != 'RICHIESTA')")
-    List<Noleggio> checkDisponibilita (Annuncio annuncio, Date data_inizio, Date data_fine);
+    List<Noleggio> checkDisponibilita (Annuncio annuncio, Date dataInizio, Date dataFine);
 
     /**
      * Verifica la presenza di noleggi in corso la cui data di fine è precedente o uguale alla data attuale.

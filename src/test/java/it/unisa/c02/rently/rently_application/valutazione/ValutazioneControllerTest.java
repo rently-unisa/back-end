@@ -63,7 +63,7 @@ public class ValutazioneControllerTest {
      */
     @Test
     @WithMockUser(username = "user1", roles = {"USER"})
-    public void testAggiungiValutazioneUtente() throws Exception {
+     void testAggiungiValutazioneUtente() throws Exception {
 
         ValutazioneDTO valutazioneUtenteDTO = new ValutazioneDTO(8, "Transazione veloce e comunicazione cordiale.", 1, 2, 1);
 
@@ -93,7 +93,7 @@ public class ValutazioneControllerTest {
 
     @Test
     @WithMockUser(username = "user1", roles = {"USER"})
-    public void testAggiungiValutazioneUtenteReturnServerErrorVoto() throws Exception {
+     void testAggiungiValutazioneUtenteReturnServerErrorVoto() throws Exception {
 
         ValutazioneDTO valutazioneUtenteDTO = new ValutazioneDTO(15, "Transazione veloce e comunicazione cordiale.", 1, 2, 1);
 
@@ -117,7 +117,7 @@ public class ValutazioneControllerTest {
 
     @Test
     @WithMockUser(username = "user1", roles = {"USER"})
-    public void testAggiungiValutazioneUtenteReturnServerError() throws Exception {
+     void testAggiungiValutazioneUtenteReturnServerError() throws Exception {
 
         ValutazioneDTO valutazioneUtenteDTO = new ValutazioneDTO(15, "Transazione veloce e comunicazione cordiale.", 1, 2, 1);
 
@@ -141,7 +141,7 @@ public class ValutazioneControllerTest {
 
     @Test
     @WithMockUser(username = "user1", roles = {"USER"})
-    public void testAggiungiValutazioneUtenteReturnServerErrorRegex() throws Exception{
+     void testAggiungiValutazioneUtenteReturnServerErrorRegex() throws Exception{
 
         ValutazioneDTO valutazioneUtenteDTO = new ValutazioneDTO(15, "", 1, 2, 1);
 

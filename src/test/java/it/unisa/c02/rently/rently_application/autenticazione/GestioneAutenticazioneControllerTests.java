@@ -37,7 +37,7 @@ public class GestioneAutenticazioneControllerTests {
     private ObjectMapper objectMapper;
 
     @Test
-    public void testSignUp() throws Exception {
+     void testSignUp() throws Exception {
 
         UtenteDTO utenteDTO = new UtenteDTO();
         utenteDTO.setUsername("user1");
@@ -58,7 +58,7 @@ public class GestioneAutenticazioneControllerTests {
     }
 
     @Test
-    public void testSignUpReturnServerError() throws Exception {
+     void testSignUpReturnServerError() throws Exception {
 
         UtenteDTO utenteDTO = new UtenteDTO();
         utenteDTO.setUsername("user1");
@@ -78,7 +78,7 @@ public class GestioneAutenticazioneControllerTests {
 
     @Test
     @WithMockUser(username = "user1", roles = {"USER"})
-    public void testModificaUtenteReturnServerErrorRegex() throws Exception {
+     void testModificaUtenteReturnServerErrorRegex() throws Exception {
 
         UtenteDTO utenteDTO = new UtenteDTO();
         utenteDTO.setUsername("user1");

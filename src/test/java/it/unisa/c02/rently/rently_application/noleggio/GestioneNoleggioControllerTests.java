@@ -1,20 +1,26 @@
 package it.unisa.c02.rently.rently_application.noleggio;
 
-import it.unisa.c02.rently.rently_application.business.gestioneAreaPersonale.service.GestioneAreaPersonaleService;
+import it.unisa.c02.rently.rently_application.business.gestioneAnnuncio.service.GestioneAnnuncioService;
 import it.unisa.c02.rently.rently_application.business.gestioneNoleggio.service.GestioneNoleggioService;
+import it.unisa.c02.rently.rently_application.commons.services.storageService.FilesStorageService;
 import it.unisa.c02.rently.rently_application.data.model.Annuncio;
 import it.unisa.c02.rently.rently_application.data.model.Noleggio;
+import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.security.test.context.support.WithMockUser;
+import it.unisa.c02.rently.rently_application.business.gestioneAreaPersonale.service.GestioneAreaPersonaleService;
 import it.unisa.c02.rently.rently_application.data.model.Utente;
-
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-
-
-import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.RequestBuilder;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.multipart.MultipartFile;
+
+
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.ArrayList;
@@ -22,10 +28,14 @@ import java.util.List;
 
 import static org.hamcrest.Matchers.is;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.doNothing;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import org.springframework.web.context.WebApplicationContext;
 
 
 @SpringBootTest
@@ -40,6 +50,9 @@ public class GestioneNoleggioControllerTests {
 
     @MockBean
     private GestioneNoleggioService noleggioService;
+
+    @Autowired
+    private WebApplicationContext webApplicationContext;
 
     @Test
     @WithMockUser(username = "user1", roles = {"USER"})
@@ -59,6 +72,9 @@ public class GestioneNoleggioControllerTests {
             list.add(mockNoleggio2);
 
             given(noleggioService.getRichiesteByNoleggiante(any(Utente.class))).willReturn(list);
+
+
+            MockMvc mockMvc= MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
 
             mockMvc.perform(get("/api/noleggio/richieste/noleggiante")
                             .param("idUtente", "1"))

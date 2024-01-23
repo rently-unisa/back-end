@@ -7,6 +7,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.stream.Stream;
 
+import lombok.NoArgsConstructor;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,7 @@ import org.springframework.util.FileSystemUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
+@NoArgsConstructor
 public class FilesStorageServiceImpl implements FilesStorageService {
 
     private Path root;
@@ -21,7 +23,17 @@ public class FilesStorageServiceImpl implements FilesStorageService {
     @Override
     public void init(String basePath) {
         try {
-            root = Paths.get(basePath);
+
+            Path targetDirectory = Paths.get(basePath).toAbsolutePath().normalize();
+
+            // Assicurati che la directory di destinazione esista
+            if (!targetDirectory.toFile().exists()) {
+                targetDirectory.toFile().mkdirs();
+            }
+
+
+           
+            root = targetDirectory;
             Files.createDirectories(root);
         } catch (IOException e) {
             throw new RuntimeException("Could not initialize folder for upload!");

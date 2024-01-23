@@ -19,6 +19,12 @@ import org.springframework.web.bind.annotation.*;
 import java.lang.reflect.Array;
 import java.util.*;
 
+/**
+ * Questa classe gestisce le richieste di ricerca di annunci attraverso i servizi offerti da GestioneRicercaService.
+ * Fornisce endpoint RESTful per cercare annunci in base a diversi criteri.
+ * Le risposte vengono restituite nel formato JSON attraverso ResponseEntity<String>, utilizzando le funzionalità di
+ * ResponseService per gestire la costruzione delle risposte standardizzate.
+ */
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/ricerca")
@@ -35,10 +41,27 @@ import java.util.*;
         })
 public class GestioneRicercaController {
 
+    /**
+     * Service per effettuare le operazioni di persistenza.
+     */
     private final GestioneRicercaService ricercaService;
+
+    /**
+     * Service per la gestione delle risposte alle richieste.
+     */
     private final ResponseService responseService;
+
+    /**
+     * Oggetto HttpServletRequest per ottenere informazioni sulla richiesta HTTP corrente.
+     */
     private final HttpServletRequest httpServletRequest;
 
+    /**
+     * Restituisce una lista di annunci che corrispondono alla categoria specificata.
+     *
+     * @param categoria Categoria degli annunci da cercare.
+     * @return ResponseEntity contenente la lista di annunci nel formato JSON.
+     */
     @GetMapping("/categoria")
     public ResponseEntity<String>  searchByCategoria(@RequestParam String categoria) {
         List<Annuncio> annunci = ricercaService.searchByCategoria(categoria);
@@ -50,6 +73,12 @@ public class GestioneRicercaController {
         return responseService.Ok(list);
     }
 
+    /**
+     * Restituisce una lista di annunci che corrispondono alla condizione specificata.
+     *
+     * @param condizione Condizione degli annunci da cercare.
+     * @return ResponseEntity contenente la lista di annunci nel formato JSON.
+     */
     @GetMapping("/condizione")
     public ResponseEntity<String> searchByCondizione(@RequestParam String condizione) {
         List<Annuncio> annunci = ricercaService.searchByCondizione(condizione);
@@ -61,6 +90,13 @@ public class GestioneRicercaController {
         return responseService.Ok(list);
     }
 
+    /**
+     * Restituisce una lista di annunci pubblicati tra le date specificate.
+     *
+     * @param inizio Data di inizio periodo di ricerca.
+     * @param fine Data di fine periodo di ricerca.
+     * @return ResponseEntity contenente la lista di annunci nel formato JSON.
+     */
     @GetMapping("/data")
     public ResponseEntity<String> searchByData(@RequestParam Date inizio, @RequestParam Date fine) {
         List<Annuncio> annunci = ricercaService.searchByData(inizio, fine);
@@ -72,6 +108,12 @@ public class GestioneRicercaController {
         return responseService.Ok(list);
     }
 
+    /**
+     * Restituisce una lista di annunci che contengono la descrizione specificata.
+     *
+     * @param descrizione Descrizione da cercare negli annunci.
+     * @return ResponseEntity contenente la lista di annunci nel formato JSON.
+     */
     @GetMapping("/descrizione")
     public ResponseEntity<String> searchByDescrizione(@RequestParam String descrizione) {
         List<Annuncio> annunci =  ricercaService.searchByDescrizione(descrizione);
@@ -83,6 +125,11 @@ public class GestioneRicercaController {
         return responseService.Ok(list);
     }
 
+    /**
+     * Restituisce una lista di tutti gli annunci presenti sulla piattaforma.
+     *
+     * @return ResponseEntity contenente la lista di annunci nel formato JSON.
+     */
     @GetMapping("/all")
     public ResponseEntity<String> searchAll() {
         List<Annuncio> annunci =  ricercaService.searchAll();
@@ -103,6 +150,11 @@ public class GestioneRicercaController {
         return responseService.Ok(list);
     }
 
+    /**
+     * Restituisce una lista di annunci di utenti premium presenti sulla piattaforma.
+     *
+     * @return ResponseEntity contenente la lista di annunci di utenti premium nel formato JSON.
+     */
     @GetMapping("/premium")
     public ResponseEntity<String> searchAnnunciPremium() {
         List<Annuncio> annunci =  ricercaService.searchAnnunciPremium();

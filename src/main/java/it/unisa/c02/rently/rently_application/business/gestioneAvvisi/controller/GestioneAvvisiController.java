@@ -4,14 +4,25 @@ import it.unisa.c02.rently.rently_application.business.gestioneAreaPersonale.ser
 import it.unisa.c02.rently.rently_application.business.gestioneAvvisi.service.GestioneAvvisiService;
 import it.unisa.c02.rently.rently_application.business.gestioneNoleggio.service.GestioneNoleggioService;
 import it.unisa.c02.rently.rently_application.commons.mail.EmailService;
+import it.unisa.c02.rently.rently_application.commons.services.regexService.RegexTester;
 import it.unisa.c02.rently.rently_application.commons.services.responseService.ResponseService;
+import it.unisa.c02.rently.rently_application.data.dto.ResponseDTO;
 import it.unisa.c02.rently.rently_application.data.dto.SegnalazioneDTO;
 import it.unisa.c02.rently.rently_application.data.model.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 
+
+/**
+ * Questa classe gestisce le richieste relative alle segnalazioni e alle notifiche attraverso i servizi forniti da
+ * GestioneAvvisiService, GestioneAreaPersonaleService, GestioneAnnuncioService, GestioneNoleggioService,
+ * EmailService e ResponseService.
+ * Fornisce endpoint RESTful per aggiungere segnalazioni e inviare notifiche relative ai noleggi.
+ * Le risposte sono gestite utilizzando il servizio ResponseService per costruire risposte standardizzate in formato JSON.
+ */
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/avvisi")
@@ -28,23 +39,64 @@ import org.springframework.web.bind.annotation.*;
         })
 public class GestioneAvvisiController {
 
+    /**
+     * Service per effettuare le operazioni di persistenza.
+     */
     private final GestioneAvvisiService avvisiService;
+
+    /**
+     * Service per effettuare le operazioni di persistenza.
+     */
     private final GestioneAreaPersonaleService areaPersonaleService;
+
+    /**
+     * Service per la gestione delle risposte alle richieste.
+     */
     private final ResponseService responseService;
+
+    /**
+     * Service per la gestione dell'invio delle mail.
+     */
     private final EmailService emailService;
+
+    /**
+     * Service per effettuare le operazioni di persistenza.
+     */
     private final GestioneAnnuncioService annuncioService;
+
+    /**
+     * Service per effettuare le operazioni di persistenza.
+     */
     private final GestioneNoleggioService noleggioService;
 
+
+    /**
+     * Endpoint per aggiungere una segnalazione.
+     *
+     * @param segnalazioneDTO Dati della segnalazione da aggiungere.
+     * @return ResponseEntity contenente l'esito dell'operazione.
+     */
     @PostMapping("/aggiungi-segnalazione")
     public ResponseEntity<String> aggiungiSegnalazione(@RequestBody SegnalazioneDTO segnalazioneDTO) {
 
         try {
             //prendo l'utente dalla sessione con @AuthenticationPrincipal UserDetails userDetails
             //controllo utente sessione
+            ResponseDTO message = new ResponseDTO();
+            message.message = "Il contenuto inserito non rispetta la regex";
+
+            HashMap<String, String> tester = new HashMap<>();
+            tester.put(segnalazioneDTO.getContenuto(), "^[\\sa-zA-Z0-9.,:;'-]{1,255}$");
+
+            RegexTester regexTester = new RegexTester();
+            if (!regexTester.toTest(tester)) {
+                return responseService.InternalError(message);
+            }
+
             Segnalazione segnalazione = new Segnalazione();
             segnalazione.setContenuto(segnalazioneDTO.getContenuto());
             segnalazione.setTipo(Segnalazione.EnumTipo.valueOf(segnalazioneDTO.getTipo()));
-            Utente user = areaPersonaleService.getDatiPrivati(segnalazione.getId());
+            Utente user = areaPersonaleService.getDatiPrivati(segnalazioneDTO.getSegnalatore());
             if (user != null) {
                 segnalazione.setSegnalatore(user);
             }
@@ -60,6 +112,13 @@ public class GestioneAvvisiController {
         }
     }
 
+
+    /**
+     * Endpoint per inviare una notifica al noleggiatore relativa all'arrivo di una richiesta noleggio.
+     *
+     * @param idNoleggio id del noleggio relativo alla notifica.
+     * @return ResponseEntity contenente l'esito dell'operazione.
+     */
     @GetMapping("/notifica-arrivo-richiesta-noleggio")
     public ResponseEntity<String> notificaArrivoRichiestaNoleggio(@RequestParam long idNoleggio){
         try{
@@ -82,6 +141,13 @@ public class GestioneAvvisiController {
         }
     }
 
+
+    /**
+     * Endpoint per inviare una notifica al noleggiante relativa all'accettazione di una richiesta noleggio.
+     *
+     * @param idNoleggio id del noleggio relativo alla notifica.
+     * @return ResponseEntity contenente l'esito dell'operazione.
+     */
     @GetMapping("/notifica-richiesta-noleggio-accettata")
     public ResponseEntity<String> notificaRichiestaNoleggioAccettata(@RequestParam long idNoleggio){
         try{
@@ -105,6 +171,13 @@ public class GestioneAvvisiController {
         }
     }
 
+
+    /**
+     * Endpoint per inviare una notifica al noleggiante relativa al rifiuto di una richiesta noleggio.
+     *
+     * @param idNoleggio id del noleggio relativo alla notifica.
+     * @return ResponseEntity contenente l'esito dell'operazione.
+     */
     @GetMapping("/notifica-richiesta-noleggio-rifiutata")
     public ResponseEntity<String> notificaRichiestaNoleggioRifiutata(@RequestParam long idNoleggio){
         try{
@@ -128,6 +201,13 @@ public class GestioneAvvisiController {
         }
     }
 
+
+    /**
+     * Endpoint per inviare una notifica al noleggiante e al noleggiatore relativa all'inizio di un noleggio.
+     *
+     * @param idNoleggio id del noleggio relativo alla notifica.
+     * @return ResponseEntity contenente l'esito dell'operazione.
+     */
     @GetMapping("/notifica-inizio-noleggio")
     public ResponseEntity<String> notificaInizioNoleggio(@RequestParam long idNoleggio){
         try{
@@ -155,6 +235,13 @@ public class GestioneAvvisiController {
         }
     }
 
+
+    /**
+     * Endpoint per inviare una notifica al noleggiante e al noleggiatore relativa alla fine di un noleggio.
+     *
+     * @param idNoleggio id del noleggio relativo alla notifica.
+     * @return ResponseEntity contenente l'esito dell'operazione.
+     */
     @GetMapping("/notifica-fine-noleggio")
     public ResponseEntity<String> notificaFineNoleggio(@RequestParam long idNoleggio){
         try{

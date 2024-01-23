@@ -86,7 +86,7 @@ public class GestioneAvvisiController {
             message.message = "Il contenuto inserito non rispetta la regex";
 
             HashMap<String, String> tester = new HashMap<>();
-            tester.put(segnalazioneDTO.getContenuto(), "^[\\sa-zA-Z0-9.,:;'-]{1,255}$");
+            tester.put(segnalazioneDTO.getContenuto(), "^[\\sa-zA-Z0-9.,:;'-èéòàùì]{1,255}$");
 
             RegexTester regexTester = new RegexTester();
             if (!regexTester.toTest(tester)) {

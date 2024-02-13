@@ -25,7 +25,7 @@ public class GestioneRicercaServiceImpl implements GestioneRicercaService {
      * {@inheritDoc}
      */
     @Override
-    public List<Annuncio> searchByCategoria(String categoria) {
+    public List<Annuncio> searchByCategoria(Annuncio.EnumCategoria categoria) {
         return annuncioDAO.findByCategoria(categoria);
     }
 

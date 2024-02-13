@@ -29,7 +29,8 @@ public interface GestioneAnnuncioDAO extends JpaRepository<Annuncio, Long> {
      * @param categoria Categoria degli annunci desiderati.
      * @return Lista di annunci della categoria specificata.
      */
-    List<Annuncio> findByCategoria(String categoria);
+    @Query("select a from Annuncio a WHERE  a.categoria=?1")
+    List<Annuncio> findByCategoria(Annuncio.EnumCategoria categoria);
 
     /**
      * Restituisce tutti gli annunci con una specifica condizione.

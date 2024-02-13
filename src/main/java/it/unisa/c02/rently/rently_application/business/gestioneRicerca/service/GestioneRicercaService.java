@@ -16,7 +16,7 @@ public interface GestioneRicercaService {
      * @param categoria Categoria degli annunci da cercare.
      * @return Lista di annunci che appartengono alla categoria specificata.
      */
-    List<Annuncio> searchByCategoria(String categoria);
+    List<Annuncio> searchByCategoria(Annuncio.EnumCategoria categoria);
 
     /**
      * Restituisce una lista di annunci che corrispondono alla condizione specificata.

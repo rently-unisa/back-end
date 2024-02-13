@@ -64,7 +64,7 @@ public class GestioneRicercaController {
      */
     @GetMapping("/categoria")
     public ResponseEntity<String>  searchByCategoria(@RequestParam String categoria) {
-        List<Annuncio> annunci = ricercaService.searchByCategoria(categoria);
+        List<Annuncio> annunci = ricercaService.searchByCategoria(Annuncio.EnumCategoria.valueOf(categoria));
         List<AnnuncioDTO> list = new ArrayList<AnnuncioDTO>();
         for (Annuncio a: annunci) {
             AnnuncioDTO item = new AnnuncioDTO().convertFromModel(a);

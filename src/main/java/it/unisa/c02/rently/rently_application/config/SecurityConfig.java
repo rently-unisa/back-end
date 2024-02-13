@@ -62,7 +62,13 @@ public class SecurityConfig implements WebMvcConfigurer {
                                 .requestMatchers("/api/area-personale/profilo-utente").permitAll()
                                 .requestMatchers("/api/annuncio/visualizza-annunci-utente").permitAll()
                                 .requestMatchers("/annunci/**").permitAll()  // Consentire l'accesso alle immagini sotto /annunci/
-                                .requestMatchers("/static/**").permitAll()  // Consentire l'accesso ai file sotto /static
+                                .requestMatchers("/api/avvisi/notifica-richiesta-noleggio-rifiutata").permitAll()
+                                .requestMatchers("/api/avvisi/notifica-richiesta-noleggio-accettata").permitAll()
+                                .requestMatchers("/api/avvisi/notifica-arrivo-richiesta-noleggio").permitAll()
+                                .requestMatchers("/api/avvisi/notifica-inizio-noleggio").permitAll()
+                                .requestMatchers("/api/avvisi/notifica-fine-noleggio").permitAll()
+                                .requestMatchers("/api/FIA/predict").permitAll()
+                                .requestMatchers("/api/FIA/annunciCategoria").permitAll()
                                 .anyRequest().authenticated())
                 .sessionManagement(httpSecuritySessionManagementConfigurer -> httpSecuritySessionManagementConfigurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 

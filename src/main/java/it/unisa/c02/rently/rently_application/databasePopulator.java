@@ -32,7 +32,7 @@ public class databasePopulator implements CommandLineRunner {
         // Aggiunta degli Utenti
 
 
-        Utente user1 =new Utente(1,"user1", "Mario", "Rossi", "mario.rossi@email.com", pswCoder.codificaPassword("password123"), false);
+        Utente user1 =new Utente(1,"user1", "Mario", "Rossi", "tearosadesimone@gmail.com", pswCoder.codificaPassword("password123"), false);
         Utente user2 =new Utente(2,"user2", "Luca", "Bianchi", "luca.bianchi@email.com", pswCoder.codificaPassword("securePass"), false);
         Utente user3 =new Utente(3,"user3", "Laura", "Verdi", "laura.verdi@email.com", pswCoder.codificaPassword("pass123"), false);
         Utente user4 =new Utente(4,"user4", "Alessia", "Neri", "alessia.neri@email.com", pswCoder.codificaPassword("alessia_pass"), false);
